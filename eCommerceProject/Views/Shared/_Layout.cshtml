@@ -4,9 +4,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewBag.Title - My ASP.NET Application</title>
-	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+	<link rel="icon" type="image/png" href="~/Content/ImageProduct/icons/favicon.png" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="~/Content/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
@@ -14,21 +14,21 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="~/Content/fonts/linearicons-v1.0.0/icon-font.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/slick/slick.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/MagnificPopup/magnific-popup.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/MagnificPopup/magnific-popup.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="./vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="~/Content/util.css">
 	<link rel="stylesheet" type="text/css" href="~/Content/main.css">
@@ -37,7 +37,7 @@
 </head>
 <body class="animsition">
 	<!-- Header -->
-	<header>
+	<header class="header-v4">
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
@@ -79,16 +79,18 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li class="active-menu">
-								<a href="index.html">Home</a>
-								<ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul>
+								<a> @Html.ActionLink("Home", "Index", "Home")</a>
+
 							</li>
 
 							<li>
 								<a href="product.html">Shop</a>
+								<ul class="sub-menu">
+									<li><a href="index.html">Shop ALL</a></li>
+									<li><a href="home-02.html">TOP</a></li>
+									<li><a href="home-03.html">BOTTOM</a></li>
+									<li><a href="home-03.html">Accessories</a></li>
+								</ul>
 							</li>
 
 							<li class="label1" data-label1="hot">
@@ -329,31 +331,31 @@
 	
 
 	<!--===============================================================================================-->
-	<script src="./vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/animsition/js/animsition.min.js"></script>
+	<script src="~/vendor/animsition/js/animsition.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/bootstrap/js/popper.js"></script>
-	<script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="~/vendor/bootstrap/js/popper.js"></script>
+	<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/select2/select2.min.js"></script>
+	<script src="~/vendor/select2/select2.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/daterangepicker/moment.min.js"></script>
-	<script src="./vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="~/vendor/daterangepicker/moment.min.js"></script>
+	<script src="~/vendor/daterangepicker/daterangepicker.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/slick/slick.min.js"></script>
+	<script src="~/vendor/slick/slick.min.js"></script>
 	<script src="~/Scripts/slick-custom.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/parallax100/parallax100.js"></script>
+	<script src="~/vendor/parallax100/parallax100.js"></script>
 	<script>$('.parallax100').parallax100();</script>
 	<!--===============================================================================================-->
-	<script src="./vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<script src="~/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/isotope/isotope.pkgd.min.js"></script>
+	<script src="~/vendor/isotope/isotope.pkgd.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/sweetalert/sweetalert.min.js"></script>
+	<script src="~/vendor/sweetalert/sweetalert.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="./vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="~/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="~/Scripts/main.js"></script>
 	@*@Scripts.Render("~/bundles/jquery")
 		@Scripts.Render("~/bundles/bootstrap")*@

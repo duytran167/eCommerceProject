@@ -936,6 +936,8 @@
     <Content Include="Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_topbar.cshtml" />
+    <Content Include="Views\Home\_footer.cshtml" />
+    <Content Include="Views\Home\ProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
