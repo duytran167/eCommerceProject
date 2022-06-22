@@ -1,22 +1,40 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
-    }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+<div class="top-bar">
+	<div class="content-topbar flex-sb-m h-full container">
+		<div class="left-top-bar">
+			Free shipping for standard order over $100
+		</div>
+
+		<div class="right-top-bar flex-w h-full">
+			<a href="#" class="flex-c-m trans-04 p-lr-25">
+				Help & FAQs
+			</a>
+
+
+
+			@if (Request.IsAuthenticated)
+			{
+				using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+				{
+
+					@Html.AntiForgeryToken()
+					
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "flex-c-m trans-04 p-lr-25" })
+					
+					<a class="flex-c-m trans-04 p-lr-25" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+
+				}
+			}
+			else
+			{
+
+				<a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "flex-c-m trans-04 p-lr-25" })</a>
+				<a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "flex-c-m trans-04 p-lr-25" })</a>
+			}
+
+
+
+		</div>
+	</div>
+</div>
