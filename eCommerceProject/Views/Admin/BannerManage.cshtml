@@ -1,0 +1,69 @@
+﻿@model IEnumerable<eCommerceProject.Models.BannerSlider>
+@{
+	ViewBag.Title = "StaffManagement";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2>My Staff </h2>
+
+<br />
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+	Add New Employee
+</button>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="formStudentId">
+				@{
+					Html.RenderAction("CreateBanner", "Admin");
+				}
+			</div>
+		</div>
+	</div>
+</div>
+<table class="table">
+	<thead>
+		<tr>
+
+			<th scope="col">Tilte</th>
+			<th scope="col">Description</th>
+			<th scope="col">ImagePath</th>
+			<th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+
+				<td>@item.Title</td>
+				<td>@item.Description</td>
+				<td><img class="col" src="@Url.Content(@item.ImagePath)" /></td>
+				<td>
+					@Html.ActionLink("Delete", "DeleteStaff", "QAManager",
+											new { id = item.Id },
+											new { @class = "btn btn-danger" })
+					@Html.ActionLink("Update", "UpdateStaff", "QAManager",
+											new { id = item.Id },
+											new { @class = "btn btn-success" })
+					@Html.ActionLink("Detail", "DetailsStaff", "QAManager",
+											new { id = item.Id },
+											new { @class = "btn btn-info" })
+
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@section scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	
+}

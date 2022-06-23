@@ -938,6 +938,9 @@
     <Content Include="Views\Shared\_topbar.cshtml" />
     <Content Include="Views\Home\_footer.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
+    <Content Include="Views\Admin\BannerManage.cshtml" />
+    <Content Include="Views\Admin\CreateBanner.cshtml" />
+    <Content Include="Views\Home\BannerSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
