@@ -45,7 +45,7 @@
 
 				<td>@item.Title</td>
 				<td>@item.Description</td>
-				<td><img src="@Url.Content(@item.ImagePath)" /></td>
+				<td><img class="col" src="@Url.Content(@item.ImagePath)" /></td>
 				<td>
 					@Html.ActionLink("Delete", "DeleteStaff", "QAManager",
 											new { id = item.Id },
@@ -65,5 +65,5 @@
 @section scripts{
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-	
+
 }

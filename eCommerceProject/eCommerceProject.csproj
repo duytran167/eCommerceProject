@@ -186,6 +186,10 @@
     <Compile Include="Migrations\202206210125230_AddBannerSlider.Designer.cs">
       <DependentUpon>202206210125230_AddBannerSlider.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206230334520_addtimecreateforbanner2.cs" />
+    <Compile Include="Migrations\202206230334520_addtimecreateforbanner2.Designer.cs">
+      <DependentUpon>202206230334520_addtimecreateforbanner2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BannerSlider.cs" />
@@ -955,6 +959,7 @@
     <Content Include="Views\Home\ProductDetail.cshtml" />
     <Content Include="Views\Admin\BannerManage.cshtml" />
     <Content Include="Views\Admin\CreateBanner.cshtml" />
+    <Content Include="Views\Home\BannerSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -983,6 +988,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206210125230_AddBannerSlider.resx">
       <DependentUpon>202206210125230_AddBannerSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206230334520_addtimecreateforbanner2.resx">
+      <DependentUpon>202206230334520_addtimecreateforbanner2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
