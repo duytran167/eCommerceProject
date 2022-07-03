@@ -34,6 +34,9 @@ namespace eCommerceProject.Controllers
 		{
 			return View();
 		}
+
+
+		//-------------------------------- Banner-------------------------------------------------------
 		public ActionResult BannerManage()
 		{
 
@@ -41,8 +44,6 @@ namespace eCommerceProject.Controllers
 
 			return View(banner);
 		}
-
-		//Create Banner
 		[HttpGet]
 		public ActionResult CreateBanner()
 		{
@@ -77,11 +78,62 @@ namespace eCommerceProject.Controllers
 				db.BannerSliders.Add(newBanner);
 				db.SaveChanges();
 				_context.SaveChanges();
+				TempData["success"] = "Create Image Success";
 				return RedirectToAction("BannerManage");
 			}
 
 			return View(banner);
 
+		}
+		public ActionResult DeleteBanner(int id)
+		{
+			var removeBanner = _context.BannerSliders.SingleOrDefault(t => t.Id == id);
+			_context.BannerSliders.Remove(removeBanner);
+			_context.SaveChanges();
+			TempData["error"] = "Delete Successfully!";
+			return RedirectToAction("BannerManage");
+		}
+		[HttpGet]
+		public ActionResult UpdateBanner(int id)
+		{
+			var banner = _context.BannerSliders
+							 .SingleOrDefault(t => t.Id == id);
+			var updateBanner = new BannerSlider()
+			{
+				Title = banner.Title,
+				Description = banner.Description,
+				ImagePath = banner.ImagePath,
+
+
+
+			};
+
+			return View(updateBanner);
+		}
+		[HttpPost]
+		public async Task<ActionResult> UpdateBanner(
+		[Bind(Include = "Id,Title,Description,ImageFile")] BannerSlider banner)
+		{
+			if (ModelState.IsValid)
+			{
+				string fileName = Path.GetFileNameWithoutExtension(banner.ImageFile.FileName);
+				string exe = Path.GetExtension(banner.ImageFile.FileName);
+				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+				banner.ImagePath = "~/Content/Banner/" + fileName;
+				fileName = Path.Combine(Server.MapPath("~/Content/Banner/"), fileName);
+				banner.ImageFile.SaveAs(fileName);
+
+				var post = _context.BannerSliders.FirstOrDefault(t => t.Id == banner.Id);
+				post.Title = banner.Title;
+				post.Description = banner.Description;
+				post.ImagePath = banner.ImagePath;
+
+
+				_context.SaveChanges();
+				TempData["success"] = "Update Image Successfully";
+				return RedirectToAction("BannerManage", "Admin");
+			}
+			return View(banner);
 		}
 
 		// GET: Admin/Create

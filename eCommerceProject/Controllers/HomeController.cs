@@ -52,6 +52,12 @@ namespace eCommerceProject.Controllers
 
 			return View();
 		}
+		public ActionResult PopUpNoti()
+		{
+
+
+			return View();
+		}
 
 	}
 }

@@ -37,16 +37,22 @@
 
 </head>
 <body class="animsition">
+
+
 	<!-- Header -->
 	<header class="header-v4">
+
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
+
+
+
 			@Html.Partial("_LoginPartial")
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
-
+					@Html.Partial("PopUpNoti", "Home")
 					<!-- Logo desktop -->
 					<a href="#" class="logo">
 						<img src="~/Content/ImageProduct/icons/logo-01.png" alt="IMG-LOGO">
@@ -305,7 +311,7 @@
 	</div>
 
 	@RenderBody()
-	
+
 
 	<!--=================================================================================================-->
 	<script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -335,6 +341,44 @@
 	<script src="~/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="~/Scripts/main.js"></script>
 	<script src="~/Scripts/bootstrap"></script>
+	<input type="hidden" id="success" value="@TempData["success"]" />
+	<input type="hidden" id="info" value="@TempData["info"]" />
+	<input type="hidden" id="info" value="@TempData["warning"]" />
+	<input type="hidden" id="error" value="@TempData["error"]" />
+
+	<script>
+		$(function () {
+			if ($('#success').val()) {
+				displayMessage($('#success').val(), 'success');
+			}
+			if ($('#info').val()) {
+				displayMessage($('#info').val(), 'info');
+			}
+			if ($('#warning').val()) {
+				displayMessage($('#warning').val(), 'warning');
+			}
+			if ($('#error').val()) {
+				displayMessage($('#error').val(), 'error');
+			}
+		});
+		var displayMessage = function (message, msgType) {
+			toastr.options = {
+				"closeButton": true,
+				"debug": false,
+				"positionClass": "toast-top-right",
+				"onClick": null,
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "8000",
+				"extendedTimeOut": "1000",
+				"showEasing": "swing",
+				"hideEasing": "linear",
+				"showMethod": "fadeIn",
+				"hideMethod": "fadeOut"
+			};
+			toastr[msgType](message);
+		};
+	</script>
 	@*@Scripts.Render("~/bundles/jquery")
 		@Scripts.Render("~/bundles/bootstrap")*@
 	@RenderSection("scripts", required: false)

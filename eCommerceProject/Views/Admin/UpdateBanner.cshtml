@@ -1,20 +1,21 @@
 ﻿@model eCommerceProject.Models.BannerSlider
 @{
-	ViewBag.Title = "Create Banner";
+	ViewBag.Title = "Update Banner";
 	Layout = "~/Views/Shared/_BlankLayout.cshtml";
 }
 
-<h2>Create Banner</h2>
-@using (Html.BeginForm("CreateBanner", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<h2>Update Banner</h2>
+@using (Html.BeginForm("UpdateBanner", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-	<form id="employeeInfoId">
+	<form id="updateBanner">
 
 		<div class="panel panel-body" style="min-height:256px">
 
 
-			@Html.AntiForgeryToken()
+		
 			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 			<div class="col-md-12">
+
 				<div class="form-group">
 					@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
 					<div class="col-md-10">
@@ -57,12 +58,13 @@
 			</div>
 
 		</div>
-
 	</form>
 }
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-<script>
 
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+	
+<script>
 	$(document).ready(function () {
 
 		$("#imageBrowes").change(function () {
@@ -111,6 +113,4 @@
 		$("#imgPreview").hide();
 
 	}
-
-
 </script>

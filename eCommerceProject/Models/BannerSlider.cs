@@ -14,10 +14,12 @@ namespace eCommerceProject.Models
 
 		public string Description { get; set; }
 
+
 		[DisplayName("Upload File")]
 		public string ImagePath { get; set; }
 
 		[NotMapped]
 		public HttpPostedFileBase ImageFile { get; set; }
+
 	}
 }

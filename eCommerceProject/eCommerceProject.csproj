@@ -584,6 +584,8 @@
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="Content\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -802,6 +804,8 @@
     <Content Include="assets\scss\_variables-dark.scss" />
     <Content Include="assets\scss\_variables.scss" />
     <Content Include="assets\libs\popper.js\umd\popper.js.flow" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -830,6 +834,8 @@
     <Content Include="Scripts\slick.js" />
     <Content Include="Scripts\slick.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="vendor\animate\animate.css" />
     <Content Include="vendor\animsition\css\animsition.css" />
     <Content Include="vendor\animsition\css\animsition.min.css" />
@@ -960,6 +966,9 @@
     <Content Include="Views\Admin\BannerManage.cshtml" />
     <Content Include="Views\Admin\CreateBanner.cshtml" />
     <Content Include="Views\Home\BannerSlider.cshtml" />
+    <Content Include="Views\Home\PopUpNoti.cshtml" />
+    <Content Include="Views\Admin\UpdateBanner.cshtml" />
+    <Content Include="Scripts\toastr.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
