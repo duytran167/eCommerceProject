@@ -190,6 +190,10 @@
     <Compile Include="Migrations\202206230334520_addtimecreateforbanner2.Designer.cs">
       <DependentUpon>202206230334520_addtimecreateforbanner2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207040232050_addDateTimeforSlide.cs" />
+    <Compile Include="Migrations\202207040232050_addDateTimeforSlide.Designer.cs">
+      <DependentUpon>202207040232050_addDateTimeforSlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BannerSlider.cs" />
@@ -1000,6 +1004,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206230334520_addtimecreateforbanner2.resx">
       <DependentUpon>202206230334520_addtimecreateforbanner2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207040232050_addDateTimeforSlide.resx">
+      <DependentUpon>202207040232050_addDateTimeforSlide.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

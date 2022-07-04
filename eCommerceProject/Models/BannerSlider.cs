@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
@@ -13,6 +14,7 @@ namespace eCommerceProject.Models
 		public string Title { get; set; }
 
 		public string Description { get; set; }
+		public DateTime ArticleDate { get; set; }
 
 
 		[DisplayName("Upload File")]
@@ -20,6 +22,5 @@ namespace eCommerceProject.Models
 
 		[NotMapped]
 		public HttpPostedFileBase ImageFile { get; set; }
-
 	}
 }

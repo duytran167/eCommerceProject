@@ -51,7 +51,7 @@ namespace eCommerceProject.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> CreateBanner([Bind(Include = "Id,Title,Description,ImageFile")] BannerSlider banner)
+		public async Task<ActionResult> CreateBanner([Bind(Include = "Id,Title,Description,ImageFile,ArticleDate")] BannerSlider banner)
 		{
 
 
@@ -73,6 +73,7 @@ namespace eCommerceProject.Controllers
 				{
 					Title = banner.Title,
 					Description = banner.Description,
+					ArticleDate = banner.ArticleDate,
 					ImagePath = banner.ImagePath,
 				};
 				db.BannerSliders.Add(newBanner);
