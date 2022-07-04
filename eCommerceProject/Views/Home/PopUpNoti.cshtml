@@ -1,0 +1,123 @@
+﻿
+@{
+	ViewBag.Title = "Home Page";
+	Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+<style>
+	
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 12.5px;
+ 
+}
+
+.subscribe-container {
+  width: 100vw;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+}
+.subscribe-container.show {
+  display: flex;
+}
+
+.subscribe {
+  display: flex;
+  background-color: #fff;
+  width: 90%;
+  max-width: 600px;
+
+  position: relative;
+}
+	.subscribe .close {
+		cursor: pointer;
+		position: absolute;
+		font-size: 3rem;
+		top: -20px;
+		right: -20px;
+		background: #fff;
+		height: 33px;
+		width: 35px;
+		text-align: center;
+		line-height: 30px;
+		border-radius: 10px;
+		box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+	}
+
+		.subscribe .close:hover {
+			color: #f00;
+		}
+
+.subscribe .img {
+  min-width: 260px;
+  background: #2193b0;
+  background: -webkit-linear-gradient(to right bottom, #6dd5ed, #2193b0);
+  background: linear-gradient(to right bottom, GRAY, WHITE);
+  PADDING: 5PX;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.subscribe .img img {
+  width: 100%;
+  filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+  animation: animate_subs_img 1s alternate infinite linear;
+}
+
+
+
+
+.subscribe .content form button:hover {
+  box-shadow: none;
+}
+
+@@keyframes animate_subs_img {
+  to {
+    filter: drop-shadow(10px 10px 25px rgba(0, 0, 0, 0.6));
+  }
+}
+
+@@media screen and (max-width: 650px) {
+  .subscribe {
+    display: block;
+    max-width: 350px;
+  }
+  .subscribe .img {
+    min-width: auto;
+    border-radius: 10px 10px 0 0;
+  }
+}
+</style>
+<div id="subs-cont" class="subscribe-container show fade modal">
+	<div class="subscribe">
+		<span id="subs-close" class="close">&times;</span>
+		<div class="img">
+			<img src="https://theme.hstatic.net/1000351433/1000808186/14/slideshow_1.jpg?v=122">
+		</div>
+
+	</div>
+</div>
+<script>
+	const subs_cont_elm = document.getElementById("subs-cont");
+	const btn_sub_close = document.getElementById("subs-close");
+
+	btn_sub_close.addEventListener("click", () => {
+		subs_cont_elm.classList.remove("show");
+
+		/* Code To Show Subscribe Modale After 2 Seconds */
+		setTimeout(() => {
+			subs_cont_elm.classList.add("show");
+		}, 1000 * 1800000);
+	});
+</script>
