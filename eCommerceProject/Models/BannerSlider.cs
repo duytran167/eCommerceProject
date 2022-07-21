@@ -6,7 +6,7 @@ using System.Web;
 
 namespace eCommerceProject.Models
 {
-	public class BannerSlider
+	public partial class BannerSlider
 	{
 		public int Id { get; set; }
 		[Required]
@@ -14,13 +14,17 @@ namespace eCommerceProject.Models
 		public string Title { get; set; }
 
 		public string Description { get; set; }
-		public DateTime ArticleDate { get; set; }
-
+		public DateTime? ArticleDate { get; set; }
+		public BannerSlider()
+		{
+			ArticleDate = DateTime.Now;
+		}
 
 		[DisplayName("Upload File")]
 		public string ImagePath { get; set; }
 
 		[NotMapped]
 		public HttpPostedFileBase ImageFile { get; set; }
+
 	}
 }

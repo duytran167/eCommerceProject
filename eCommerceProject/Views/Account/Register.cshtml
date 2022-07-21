@@ -60,7 +60,7 @@
 	}
 </style>
 <div class="fontTittle">
-	<span class="ltext-103 cl2 respon2">
+	<span class="ltext-111 cl2 respon2">
 		@ViewBag.Title
 	</span>
 </div>
@@ -70,9 +70,9 @@
 
 <form>
 
-	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	
 	<div class="ctn">
-
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 		@Html.LabelFor(m => m.FullName, new { @class = "" })
 		@Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
 
@@ -84,8 +84,8 @@
 		@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 		<br />
 
-		@Html.LabelFor(m => m.User.Address, new { @class = "" })
-		@Html.TextBoxFor(m => m.User.Address, new { @class = "form-control" })
+		@Html.LabelFor(m => m.Customer.Address, new { @class = "" })
+		@Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control" })
 
 
 		@Html.LabelFor(m => m.Password, new { @class = "control-label" })

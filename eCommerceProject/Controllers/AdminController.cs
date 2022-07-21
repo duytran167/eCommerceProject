@@ -35,12 +35,18 @@ namespace eCommerceProject.Controllers
 			return View();
 		}
 
+		public ActionResult Seller()
+		{
+
+			return View(db.Sellers.ToList());
+		}
+
 
 		//-------------------------------- Banner-------------------------------------------------------
 		public ActionResult BannerManage()
 		{
 
-			var banner = _context.BannerSliders.ToList();
+			var banner = _context.BannerSliders.OrderByDescending(m => m.ArticleDate).ToList();
 
 			return View(banner);
 		}
@@ -51,23 +57,21 @@ namespace eCommerceProject.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> CreateBanner([Bind(Include = "Id,Title,Description,ImageFile,ArticleDate")] BannerSlider banner)
+		public async Task<ActionResult> CreateBanner([Bind(Include = "Id,Title,Description,ArticleDate,ImageFile")] BannerSlider banner)
 		{
+
 
 
 
 			if (ModelState.IsValid)
 			{
+				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
 				string fileName = Path.GetFileNameWithoutExtension(banner.ImageFile.FileName);
 				string exe = Path.GetExtension(banner.ImageFile.FileName);
 				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				banner.ImagePath = "~/Content/Banner/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/Banner/"), fileName);
+				banner.ImagePath = "~/Content/ImageProduct/Banner/" + fileName;
+				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/Banner/"), fileName);
 				banner.ImageFile.SaveAs(fileName);
-
-
-
-
 
 				var newBanner = new BannerSlider()
 				{
@@ -120,8 +124,8 @@ namespace eCommerceProject.Controllers
 				string fileName = Path.GetFileNameWithoutExtension(banner.ImageFile.FileName);
 				string exe = Path.GetExtension(banner.ImageFile.FileName);
 				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				banner.ImagePath = "~/Content/Banner/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/Banner/"), fileName);
+				banner.ImagePath = "~/Content/ImageProduct/Banner/" + fileName;
+				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/Banner/"), fileName);
 				banner.ImageFile.SaveAs(fileName);
 
 				var post = _context.BannerSliders.FirstOrDefault(t => t.Id == banner.Id);
