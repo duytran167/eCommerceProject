@@ -1,7 +1,9 @@
-﻿using eCommerceProject.Models;
+﻿using eCommerceProject.Enums;
+using eCommerceProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -69,7 +71,21 @@ namespace eCommerceProject.Controllers
 			{
 				return View(model);
 			}
-
+			// Require the user to have a confirmed email before they can log on.
+			var user = await UserManager.FindByNameAsync(model.Email);
+			if (user != null)
+			{
+				if (user.StatusID == 3)
+				{
+					ViewBag.errorMessage = "Your Account Is Disable.";
+					return View("Error");
+				}
+				if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+				{
+					ViewBag.errorMessage = "You must have a confirmed email to log on.";
+					return View("Error");
+				}
+			}
 			// This doesn't count login failures towards account lockout
 			// To enable password failures to trigger account lockout, change to shouldLockout: true
 			var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -141,6 +157,7 @@ namespace eCommerceProject.Controllers
 		public ActionResult Register()
 		{
 			return View();
+
 		}
 
 		//
@@ -152,27 +169,138 @@ namespace eCommerceProject.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = new User()
+				var user = new Customer()
 				{
 					UserName = model.Email,
 					Email = model.Email,
 					FullName = model.FullName,
-					Address = model.User.Address,
-					PhoneNumber = model.PhoneNumber
+					Address = model.Address,
+					PhoneNumber = model.PhoneNumber,
+					StatusID = (int)AccountStatus.Active
 				};
 				var result = await UserManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
-					result = await UserManager.AddToRoleAsync(user.Id, "User");
+					result = await UserManager.AddToRoleAsync(user.Id, "Customer");
 					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+					//send mail access
+					string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					var callbackUrl = Url.Action("ConfirmEmail", "Account",
+						 new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					await UserManager.SendEmailAsync(user.Id,
+						 "Confirm your account", "Please confirm your account by clicking <a href=\""
+						 + callbackUrl + "\">here</a>");
+					// Uncomment to debug locally 
+					// TempData["ViewBagLink"] = callbackUrl;
 
-					return RedirectToAction("Index", "Home");
+					ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
+													+ "before you can log in.";
+
+					return View("Info");
+
+
 
 				}
 				AddErrors(result);
 			}
 
+
+			// If we got this far, something failed, redisplay form
+			return View(model);
+		}
+
+		[Authorize(Roles = "Admin,Seller")]
+		public ActionResult CreateAccount()
+		{
+			var register = new RegisterViewModel()
+			{
+				Roles = new List<string>() { "Seller", "Customer" },
+
+			};
+			return View(register);
+		}
+		[HttpPost]
+		[Authorize(Roles = "Admin,Seller")]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> CreateAccount(RegisterViewModel model)
+		{
+			if (User.IsInRole("Admin"))
+			{
+				if (model.RoleName == "Seller")
+				{
+					var user = new Seller() { UserName = model.Email, Email = model.Email, FullName = model.FullName, PhoneNumber = model.PhoneNumber, StatusID = (int)AccountStatus.Active };
+					var result = await UserManager.CreateAsync(user, model.Password);
+					if (result.Succeeded)
+					{
+						result = await UserManager.AddToRoleAsync(user.Id, model.RoleName);
+						//await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+						// Send an email with this link
+						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+						TempData["success"] = "Create Account Success!";
+						return RedirectToAction("Index", "Seller");
+					}
+					AddErrors(result);
+				}
+				if (model.RoleName == "Customer")
+				{
+					var user = new Customer()
+					{
+						UserName = model.Email,
+						Email = model.Email,
+						FullName = model.FullName,
+						Address = model.Address,
+						PhoneNumber = model.PhoneNumber,
+						StatusID = (int)AccountStatus.Active
+					};
+					var result = await UserManager.CreateAsync(user, model.Password);
+					if (result.Succeeded)
+					{
+						result = await UserManager.AddToRoleAsync(user.Id, model.RoleName);
+						//await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+						// Send an email with this link
+						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+						TempData["success"] = "Create Account Success!";
+						return RedirectToAction("Index", "AdminCustomers");
+					}
+					AddErrors(result);
+				}
+			}
+			if (User.IsInRole("Seller"))
+			{
+				var user = new Customer()
+				{
+					UserName = model.Email,
+					Email = model.Email,
+					FullName = model.FullName,
+					Address = model.Customer.Address,
+					PhoneNumber = model.PhoneNumber,
+					StatusID = (int)AccountStatus.Active
+				};
+				var result = await UserManager.CreateAsync(user, model.Password);
+				if (result.Succeeded)
+				{
+					result = await UserManager.AddToRoleAsync(user.Id, "Customer");
+					//await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+					// Send an email with this link
+					string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+					TempData["success"] = "Create Account Success!";
+					return RedirectToAction("Customers", "Seller");
+				}
+				AddErrors(result);
+			}
 			// If we got this far, something failed, redisplay form
 			return View(model);
 		}

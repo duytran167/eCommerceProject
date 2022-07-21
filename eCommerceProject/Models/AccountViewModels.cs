@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using eCommerceProject.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace eCommerceProject.Models
@@ -60,6 +61,8 @@ namespace eCommerceProject.Models
 
 		[Display(Name = "Remember me?")]
 		public bool RememberMe { get; set; }
+		public int StatusID { get; set; }
+		public AccountStatus Status { get; set; }
 	}
 
 	public class RegisterViewModel
@@ -83,7 +86,11 @@ namespace eCommerceProject.Models
 		[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 		public string ConfirmPassword { get; set; }
 		public string PhoneNumber { get; set; }
-		public User User { get; set; }
+		public string Address { get; set; }
+		public Customer Customer { get; set; }
+		public string RoleName { get; set; }
+		public List<string> Roles { get; internal set; }
+		public Seller Seller { get; set; }
 
 
 	}

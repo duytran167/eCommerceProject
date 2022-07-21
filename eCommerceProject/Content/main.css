@@ -367,16 +367,18 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   margin: 0px 4px 0px 14px;
 }
 
-.main-menu > li > a {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 18px;
-  color: #333;
-  padding: 5px 0px;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-}
+  .main-menu > li > a {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    padding: 5px 0px;
+    transition: all 0.4s;
+    font-weight: bold;
+    text-transform: uppercase;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+  }
 
 .header-v3 .main-menu > li > a {
   color: #fff;
@@ -386,8 +388,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .sub-menu {
   list-style-type: none;
   position: absolute;
-  top:0;
-  left:100%;
+  top: 0;
+  left: 100%;
   min-width: 178px;
   max-width: 225px;
   background-color: #fff;
@@ -396,26 +398,27 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   padding: 5px 0;
-
+  font-weight: bold;
+  text-transform: uppercase;
   box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
   -webkit-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
   -o-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
   -ms-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
-
   visibility: hidden;
-  opacity: 0; 
+  opacity: 0;
 }
 
-.sub-menu li {
-  position: relative;
-  background-color: transparent;
-
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-}
+  .sub-menu li {
+    position: relative;
+    background-color: transparent;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+  }
 
 .main-menu > li > .sub-menu {
   top:100%;
@@ -425,6 +428,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .sub-menu a {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 14px;
+  font-weight:bold;
+  text-transform: uppercase;
   line-height: 1.5;
   color: #555;
   display: block;
@@ -2051,10 +2056,11 @@ input.num-product::-webkit-inner-spin-button {
 
 .block1-txt {
   background-color: rgba(103,117,214,0.0);
+   text-align:right;
 }
 
 /*---------------------------------------------*/
-.block1-name {color: #333; width:60%; text-align:right;}
+.block1-name {color: #333; width:60%; text-align:right; }
 .block1-info {
   color: #555;
   width: 100%;
@@ -2083,7 +2089,7 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .block1-txt:hover {
-  background-color: rgba(103,117,214,0.8);
+  
 }
 
 .block1-txt:hover .block1-txt-child2 {
@@ -2446,13 +2452,16 @@ input.num-product::-webkit-inner-spin-button {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 28px;
   line-height: 1.1;
+  color: #fff;
 }
 
 .ltext-103 {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 36px;
   line-height: 1.1;
+  font-weight:bold;
   text-transform: uppercase;
+  color:#fff;
 }
 
 .ltext-104 {
@@ -2490,6 +2499,20 @@ input.num-product::-webkit-inner-spin-button {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 36px;
   line-height: 1.2;
+}
+.ltext-110 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 32px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.ltext-111 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 36px;
+  line-height: 1.1;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: black;
 }
 
 
@@ -2676,7 +2699,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .size-208 {
-  width: 34.5%;
+  width: 3.5%;
 }
 
 .size-209 {

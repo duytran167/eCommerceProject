@@ -1,4 +1,5 @@
-﻿using eCommerceProject.Models;
+﻿using eCommerceProject.Enums;
+using eCommerceProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -38,6 +39,9 @@ namespace eCommerceProject
 				user.UserName = "admin@admin.com";
 				user.Email = "admin@admin.com";
 				user.FullName = "Admin";
+				user.Address = "Admin";
+				user.EmailConfirmed = true;
+				user.StatusID = (int)AccountStatus.Active;
 				string userPWD = "admin123";
 
 				var chkUser = UserManager.Create(user, userPWD);
@@ -49,13 +53,20 @@ namespace eCommerceProject
 
 				}
 			}
+			if (!roleManager.RoleExists("Seller"))
+			{
+				var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+				role.Name = "Seller";
+				roleManager.Create(role);
+
+			}
 
 
 			// creating Creating Manager role   
-			if (!roleManager.RoleExists("User"))
+			if (!roleManager.RoleExists("Customer"))
 			{
 				var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-				role.Name = "User";
+				role.Name = "Customer";
 				roleManager.Create(role);
 
 			}

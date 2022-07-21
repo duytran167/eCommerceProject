@@ -19,8 +19,9 @@ namespace eCommerceProject.Controllers
 			_context = new ApplicationDbContext();
 			_usermanager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 		}
-		public ActionResult Index()
+		public ActionResult Index(Customer user)
 		{
+
 			return View();
 		}
 
@@ -58,6 +59,11 @@ namespace eCommerceProject.Controllers
 
 			return View();
 		}
+		public ActionResult Category()
+		{
+			var banner = _context.Categories.ToList();
 
+			return View(banner);
+		}
 	}
 }

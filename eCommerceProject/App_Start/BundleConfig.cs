@@ -27,7 +27,9 @@ namespace eCommerceProject
 								"~/Scripts/bootstrap.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
-								"~/Content/bootstrap.css",
+								"~/Content/bootstrap.min.css",
+								"~/assets/vendors/datatables/dataTables.bootstrap.min.css",
+								"~/assets/css/app.min.css",
 
 								"~/Content/site.css"));
 		}
