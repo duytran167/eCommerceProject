@@ -1,0 +1,103 @@
+﻿@model eCommerceProject.Models.ApplicationUser
+
+@{
+	ViewBag.Title = "UpdateImage";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>UpdateImage</h2>
+
+
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>ApplicationUser</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.Id)
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="row py-4">
+			<div class="col-lg-6 mx-auto">
+
+				<!-- Upload image input-->
+				<div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+					@Html.Label("Update Avatar", new { @class = "control-label col-md" })
+					@Html.TextBoxFor(m => m.ImageFile, new { type = "file", id = "upload", onchange = "readURL(this);" })
+					@Html.ValidationMessageFor(model => model.ImagePath, "*required", new { @class = "text-danger" })
+					<input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
+					<label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+					<div class="input-group-append">
+						<label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+					</div>
+				</div>
+
+				<!-- Uploaded image area-->
+				<p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+				<div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+
+			</div>
+		</div>
+
+
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+<script>
+	/*  ==========================================
+		SHOW UPLOADED IMAGE
+* ========================================== */
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#imageResult')
+					.attr('src', e.target.result);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$(function () {
+		$('#upload').on('change', function () {
+			readURL(input);
+		});
+	});
+
+	/*  ==========================================
+			SHOW UPLOADED IMAGE NAME
+	* ========================================== */
+	var input = document.getElementById('upload');
+	var infoArea = document.getElementById('upload-label');
+
+	input.addEventListener('change', showFileName);
+	function showFileName(event) {
+		var input = event.srcElement;
+		var fileName = input.files[0].name;
+		infoArea.textContent = 'File name: ' + fileName;
+	}
+
+	</script>
+}

@@ -1,9 +1,12 @@
 ﻿using eCommerceProject.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace eCommerceProject.Models
 {
@@ -13,6 +16,11 @@ namespace eCommerceProject.Models
 		public string Address { get; set; }
 		public string FullName { get; set; }
 		public int StatusID { get; set; }
+		[DisplayName("Upload File")]
+		public string ImagePath { get; set; }
+
+		[NotMapped]
+		public HttpPostedFileBase ImageFile { get; set; }
 		public AccountStatus Status { get; set; }
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -34,7 +42,8 @@ namespace eCommerceProject.Models
 		public DbSet<BannerSlider> BannerSliders { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Seller> Sellers { get; set; }
-
+		public DbSet<BlogPost> BlogPosts { get; set; }
+		public DbSet<BlogCategory> BlogCategories { get; set; }
 		public static ApplicationDbContext Create()
 		{
 			return new ApplicationDbContext();
