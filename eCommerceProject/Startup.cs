@@ -41,6 +41,7 @@ namespace eCommerceProject
 				user.FullName = "Admin";
 				user.Address = "Admin";
 				user.EmailConfirmed = true;
+				user.ImagePath = "";
 				user.StatusID = (int)AccountStatus.Active;
 				string userPWD = "admin123";
 

@@ -1,0 +1,257 @@
+﻿@model eCommerceProject.Models.BlogPost
+
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+	<h2 class="header-title">Blog Post</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Blog List</a>
+			<span class="breadcrumb-item active">@Model.Title</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="container">
+			<h2 class="font-weight-normal m-b-10">@Model.Title @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) | <button type="button" value="Delete" class="btn btn-danger" onclick="remove(@Model.Id)"><i class="fas fa-trash"></i></button> </h2>
+			<div class="d-flex align-items-center m-r-10">
+				@if (Model.isPublic == true)
+				{
+
+					<div class="badge badge-success badge-dot m-r-10"></div>
+					<div class="m-r-10">In Public</div>
+
+				}
+				@if (Model.isPublic == false)
+				{
+
+					<div class="badge badge-danger badge-dot m-r-10"></div>
+					<div class="m-r-10">Not Public</div>
+
+
+				}
+				@if (Model.isHotNews == true)
+				{
+
+					<div class="badge badge-success badge-dot m-r-10"></div>
+					<div class="m-r-10">In Hot News</div>
+
+				}
+				@if (Model.isHotNews == false)
+				{
+
+					<div class="badge badge-danger badge-dot m-r-10"></div>
+					<div class="m-r-10">Not Hot News</div>
+
+				}
+			</div>
+			<div class="d-flex m-b-30">
+				<div class="avatar avatar-cyan avatar-img">
+					<img src="assets/images/avatars/thumb-6.jpg" alt="">
+				</div>
+				<div class="m-l-15">
+					<a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">@Model.User.FullName</a>
+					<p class="m-b-0 text-muted font-size-13">@Model.CreateDate</p>
+				</div>
+			</div>
+			<img alt="" class="img-fluid w-100" src="@Url.Content(Model.ImagePath)">
+			<div class="m-t-30">
+				<p><strong>@Model.ShortContents</strong></p>
+				<br />
+				@Html.Raw(@Model.Contents)
+			</div>
+			<div class="d-flex m-t-40 align-items-center">
+				<span class="m-r-15">Share this post: </span>
+				<ul class="list-inline m-b-0">
+					<li class="list-inline-item">
+						<button class="font-size-16 btn btn-hover btn-icon btn-rounded">
+							<i class="anticon anticon-facebook"></i>
+						</button>
+					</li>
+					<li class="list-inline-item">
+						<button class="font-size-16 btn btn-hover btn-icon btn-rounded">
+							<i class="anticon anticon-twitter"></i>
+						</button>
+					</li>
+					<li class="list-inline-item">
+						<button class="font-size-16 btn btn-hover btn-icon btn-rounded">
+							<i class="anticon anticon-instagram"></i>
+						</button>
+					</li>
+				</ul>
+			</div>
+			<hr>
+			<h5>Comments (28)</h5>
+			<div class="m-t-20">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item p-h-0">
+						<div class="media m-b-15">
+							<div class="avatar avatar-image">
+								<img src="assets/images/avatars/thumb-8.jpg" alt="">
+							</div>
+							<div class="media-body m-l-20">
+								<h6 class="m-b-0">
+									<a href="" class="text-dark">Lillian Stone</a>
+								</h6>
+								<span class="font-size-13 text-gray">28th Jul 2018</span>
+							</div>
+						</div>
+						<span>The palatable sensation we lovingly refer to as The Cheeseburger has a distinguished and illustrious history. It was born from humble roots, only to rise to well-seasoned greatness.</span>
+						<div class="m-t-15">
+							<ul class="list-inline text-right">
+								<li class="d-inline-block m-r-20">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-like"></i>
+										<span>43</span>
+									</a>
+								</li>
+								<li class="d-inline-block m-r-30">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-message"></i>
+										<span>Reply</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="list-group-item p-h-0">
+						<div class="media m-b-15">
+							<div class="avatar avatar-image">
+								<img src="assets/images/avatars/thumb-9.jpg" alt="">
+							</div>
+							<div class="media-body m-l-20">
+								<h6 class="m-b-0">
+									<a href="" class="text-dark">Victor Terry</a>
+								</h6>
+								<span class="font-size-13 text-gray">28th Jul 2018</span>
+							</div>
+						</div>
+						<span>The palatable sensation we lovingly refer to as The Cheeseburger has a distinguished and illustrious history. It was born from humble roots, only to rise to well-seasoned greatness.</span>
+						<div class="m-t-15">
+							<ul class="list-inline text-right">
+								<li class="d-inline-block m-r-20">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-like"></i>
+										<span>18</span>
+									</a>
+								</li>
+								<li class="d-inline-block m-r-30">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-message"></i>
+										<span>Reply</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="list-group-item p-h-0">
+						<div class="media m-b-15">
+							<div class="avatar avatar-image">
+								<img src="assets/images/avatars/thumb-10.jpg" alt="">
+							</div>
+							<div class="media-body m-l-20">
+								<h6 class="m-b-0">
+									<a href="" class="text-dark">Wilma Young</a>
+								</h6>
+								<span class="font-size-13 text-gray">28th Jul 2018</span>
+							</div>
+						</div>
+						<span>The palatable sensation we lovingly refer to as The Cheeseburger has a distinguished and illustrious history. It was born from humble roots, only to rise to well-seasoned greatness.</span>
+						<div class="m-t-15">
+							<ul class="list-inline text-right">
+								<li class="d-inline-block m-r-20">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-like"></i>
+										<span>95</span>
+									</a>
+								</li>
+								<li class="d-inline-block m-r-30">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-message"></i>
+										<span>Reply</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="m-t-30">
+				<nav>
+					<ul class="pagination justify-content-end">
+						<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+						<li class="page-item active"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#">Next</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+<p>
+
+	@Html.ActionLink("Back to List", "Index")
+</p>
+@section scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+
+		function remove(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover your image!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Admin/BlogPosts/Delete/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/BlogPosts/");
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/BlogPosts/");
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/BlogPosts/");
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+
+	</script>
+}

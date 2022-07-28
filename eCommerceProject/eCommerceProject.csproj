@@ -47,11 +47,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.96.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.96.0\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.16.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.16.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
@@ -166,6 +175,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -217,13 +227,16 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\AdminCustomersController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminCustomersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BlogCategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BlogPostsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Enums\AccountStatus.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,9 +281,42 @@
     <Compile Include="Migrations\202207190845363_AddressUser.Designer.cs">
       <DependentUpon>202207190845363_AddressUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207230322072_addBlogPost.cs" />
+    <Compile Include="Migrations\202207230322072_addBlogPost.Designer.cs">
+      <DependentUpon>202207230322072_addBlogPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207250305024_dropbit.cs" />
+    <Compile Include="Migrations\202207250305024_dropbit.Designer.cs">
+      <DependentUpon>202207250305024_dropbit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207250308487_addbit.cs" />
+    <Compile Include="Migrations\202207250308487_addbit.Designer.cs">
+      <DependentUpon>202207250308487_addbit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207250309471_addBi1.cs" />
+    <Compile Include="Migrations\202207250309471_addBi1.Designer.cs">
+      <DependentUpon>202207250309471_addBi1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207250710132_addfkandformatkey.cs" />
+    <Compile Include="Migrations\202207250710132_addfkandformatkey.Designer.cs">
+      <DependentUpon>202207250710132_addfkandformatkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207250711433_addfkandformatkey2.cs" />
+    <Compile Include="Migrations\202207250711433_addfkandformatkey2.Designer.cs">
+      <DependentUpon>202207250711433_addfkandformatkey2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207260739487_addblogcategory.cs" />
+    <Compile Include="Migrations\202207260739487_addblogcategory.Designer.cs">
+      <DependentUpon>202207260739487_addblogcategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207280352238_addAvatarforUser.cs" />
+    <Compile Include="Migrations\202207280352238_addAvatarforUser.Designer.cs">
+      <DependentUpon>202207280352238_addAvatarforUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BannerSlider.cs" />
+    <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1282,6 +1328,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Compile Include="Models\BlogCategory.cs" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_BlankLayout.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1501,35 +1550,35 @@
     <Content Include="vendor\slick\slick-theme.scss" />
     <Content Include="vendor\slick\slick.less" />
     <Content Include="vendor\slick\slick.scss" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_BlankLayout.cshtml" />
-    <Content Include="Views\Shared\_footer.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Shared\_right_sidebar.cshtml" />
-    <Content Include="Views\Shared\_sidebar.cshtml" />
-    <Content Include="Views\Shared\_topbar.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_footer.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_right_sidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_sidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_topbar.cshtml" />
     <Content Include="Views\Home\_footer.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
-    <Content Include="Views\Admin\BannerManage.cshtml" />
-    <Content Include="Views\Admin\CreateBanner.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\BannerManage.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\CreateBanner.cshtml" />
     <Content Include="Views\Home\BannerSlider.cshtml" />
     <Content Include="Views\Home\PopUpNoti.cshtml" />
-    <Content Include="Views\Admin\UpdateBanner.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\UpdateBanner.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
-    <Content Include="Views\Category\CreateCategory.cshtml" />
-    <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Category\UpdateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\CreateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\UpdateCategory.cshtml" />
     <Content Include="Views\Home\Category.cshtml" />
-    <Content Include="Views\AdminCustomers\Delete.cshtml" />
-    <Content Include="Views\AdminCustomers\Details.cshtml" />
-    <Content Include="Views\AdminCustomers\Edit.cshtml" />
-    <Content Include="Views\AdminCustomers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCustomers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCustomers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCustomers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminCustomers\Index.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Account\CreateAccount.cshtml" />
-    <Content Include="Views\Seller\Delete.cshtml" />
-    <Content Include="Views\Seller\Details.cshtml" />
-    <Content Include="Views\Seller\Edit.cshtml" />
-    <Content Include="Views\Seller\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Seller\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Seller\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Seller\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Seller\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -1540,11 +1589,28 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Areas\Admin\Views\Admin\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogPosts\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogPosts\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogPosts\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogPosts\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogCategories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogCategories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogCategories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BlogCategories\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_footer.cshtml" />
+    <Content Include="Views\Shared\_topbar.cshtml" />
+    <Content Include="Views\Shared\_sidebar.cshtml" />
+    <Content Include="Views\Shared\_right_sidebar.cshtml" />
+    <Content Include="Views\Manage\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Content\ImageProduct\Banner\" />
     <Folder Include="Content\ImageProduct\Category\" />
+    <Folder Include="Content\ImageProduct\ImageBlog\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1581,6 +1647,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207190845363_AddressUser.resx">
       <DependentUpon>202207190845363_AddressUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207230322072_addBlogPost.resx">
+      <DependentUpon>202207230322072_addBlogPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207250305024_dropbit.resx">
+      <DependentUpon>202207250305024_dropbit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207250308487_addbit.resx">
+      <DependentUpon>202207250308487_addbit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207250309471_addBi1.resx">
+      <DependentUpon>202207250309471_addBi1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207250710132_addfkandformatkey.resx">
+      <DependentUpon>202207250710132_addfkandformatkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207250711433_addfkandformatkey2.resx">
+      <DependentUpon>202207250711433_addfkandformatkey2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207260739487_addblogcategory.resx">
+      <DependentUpon>202207260739487_addblogcategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207280352238_addAvatarforUser.resx">
+      <DependentUpon>202207280352238_addAvatarforUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
