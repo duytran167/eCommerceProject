@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace eCommerceProject.Areas.Admin.Controllers
 {
 	[Authorize(Roles = "Admin")]
+
 	public class AdminController : Controller
 	{
 		// GET: Admin

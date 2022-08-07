@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,8 +34,9 @@ namespace eCommerceProject.Models
 		public DateTime CreateDate { get; set; }
 		public string UserId { get; set; }
 		public ApplicationUser User { get; set; }
-		public int CategoryID { get; set; }
-		public IEnumerable<BlogCategory> BlogCategories { get; set; }
+		public int BlogCategoriesID { get; set; }
+		public BlogCategory BlogCategories { get; set; }
+		public int BlogPostView { get; set; }
 
 		public BlogPost()
 		{

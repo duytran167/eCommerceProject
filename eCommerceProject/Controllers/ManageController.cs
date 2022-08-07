@@ -78,7 +78,7 @@ namespace eCommerceProject.Controllers
 			return View(model);
 		}
 		// edit profile
-		public ActionResult EditProfile(int? id)
+		public ActionResult EditProfile(string id)
 		{
 			if (id == null)
 			{
@@ -93,7 +93,7 @@ namespace eCommerceProject.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditProfile([Bind(Include = "Id,ImageFile")] ApplicationUser blogPost)
+		public ActionResult EditProfile([Bind(Include = "Id,ImageFile,PhoneNumber,Address,FullName")] ApplicationUser blogPost)
 		{
 			if (ModelState.IsValid)
 			{
@@ -109,7 +109,9 @@ namespace eCommerceProject.Controllers
 				var post = db.Users.FirstOrDefault(t => t.Id == blogPost.Id);
 
 				post.ImagePath = blogPost.ImagePath;
-
+				post.FullName = blogPost.FullName;
+				post.Address = blogPost.Address;
+				post.PhoneNumber = blogPost.PhoneNumber;
 
 
 

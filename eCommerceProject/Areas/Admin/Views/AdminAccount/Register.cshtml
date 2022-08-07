@@ -1,0 +1,121 @@
+﻿@model eCommerceProject.Models.RegisterViewModel
+@{
+	ViewBag.Title = "Register";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+	@@font-face {
+		font-family: 'Courier Prime', monospace;
+		src: url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+	}
+
+
+	button {
+		background-color: black;
+		width: 100%;
+		color: white;
+		padding: 15px;
+		margin: 10px 0px;
+		border: none;
+		cursor: pointer;
+	}
+
+	label {
+		font-family: 'Courier Prime', monospace;
+		font-size: 15px;
+	}
+
+	input[type=text], input[type=password] {
+		width: 100%;
+		margin: 8px 0;
+		padding: 20px 30px;
+		display: inline-block;
+		border: 2px solid black;
+		box-sizing: border-box;
+		height: 40px;
+	}
+
+	.fontTittle {
+		text-align: center;
+		padding-top: 50px;
+		padding-bottom: 40px;
+	}
+
+	button:hover {
+		opacity: 0.7;
+	}
+
+	.ctn {
+		justify-content: center;
+		margin: auto;
+		width: 30%;
+		padding-bottom: 200px;
+	}
+
+	@@media (max-width: 767px) {
+		.ctn {
+			justify-content: center;
+			margin: auto;
+			width: 70%;
+		}
+	}
+</style>
+<div class="fontTittle">
+	<span class="ltext-111 cl2 respon2">
+		@ViewBag.Title
+	</span>
+</div>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{@Html.AntiForgeryToken()
+
+<form>
+
+	
+	<div class="ctn">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.LabelFor(m => m.FullName, new { @class = "" })
+		@Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+
+		@Html.LabelFor(m => m.PhoneNumber, new { @class = "" })
+		@Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+
+		@Html.LabelFor(m => m.Email, new { @class = "" })
+		@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+		<br />
+
+		@Html.LabelFor(m => m.Customer.Address, new { @class = "" })
+		@Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control" })
+
+
+		@Html.LabelFor(m => m.Password, new { @class = "control-label" })
+		@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+		<br />
+
+		@Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+		@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+
+
+		<button type="submit" value="Register">Register</button>
+
+	</div>
+
+
+</form>
+
+}
+
+<!-- Footer -->
+@{
+	Html.RenderAction("_footer", "Home");
+}
+
+
+
+
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

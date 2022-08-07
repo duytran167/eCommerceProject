@@ -1,4 +1,4 @@
-﻿@model eCommerceProject.Models.BlogPost
+﻿@model eCommerceProject.ViewModel.BlogVM
 
 @{
 	ViewBag.Title = "Create";
@@ -27,10 +27,10 @@
 	<hr />
 	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 	<div class="form-group">
-		@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.LabelFor(model => model.BlogPost.Title, htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
-			@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+			@Html.EditorFor(model => model.BlogPost.Title, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.BlogPost.Title, "", new { @class = "text-danger" })
 		</div>
 	</div>
 	<div class="form-group">
@@ -41,29 +41,29 @@
 	</div>
 
 	<div class="form-group">
+
 		@Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
-			@Html.EditorFor(model => model.ShortContents, new { htmlAttributes = new { @class = "form-control col-md-12" } })
-			@Html.ValidationMessageFor(model => model.ShortContents, "", new { @class = "text-danger" })
+			@Html.EditorFor(m => m.BlogPost.ShortContents, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+			@Html.ValidationMessageFor(model => model.BlogPost.ShortContents, "", new { @class = "text-danger" })
 		</div>
 	</div>
 
 	<div class="form-group">
-		@Html.LabelFor(model => model.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.LabelFor(model => model.BlogPost.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
-			@Html.TextAreaFor(model => model.Contents, new { @class = "form-control content-editor" })
-			@Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+			@Html.TextAreaFor(model => model.BlogPost.Contents, new { @class = "form-control content-editor" })
+			@Html.ValidationMessageFor(model => model.BlogPost.Contents, "", new { @class = "text-danger" })
 		</div>
 	</div>
 
 	<div class="form-group">
-		@Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.LabelFor(model => model.BlogPost.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.ImageFile, new { type = "file", id = "imageBrowes", @class = "form-control" })
-			@Html.ValidationMessageFor(model => model.ImagePath, "*required", new { @class = "text-danger" })
+			@Html.TextBoxFor(m => m.BlogPost.ImageFile, new { type = "file", id = "imageBrowes", @class = "form-control" })
+			@Html.ValidationMessageFor(model => model.BlogPost.ImagePath, "*required", new { @class = "text-danger" })
 		</div>
 		<hr />
-
 
 		<div id="imgPreview" class="col-md-10" style="display:none">
 			<img class="img-responsive col-md-12" id="targetImg" />
@@ -78,25 +78,25 @@
 	<div class="form-group">
 		@Html.Label("Public", htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
-			@Html.CheckBoxFor(model => model.isPublic, new { data_toggle = "toggle", data_onstyle = "success" })
+			@Html.CheckBoxFor(model => model.BlogPost.isPublic, new { data_toggle = "toggle", data_onstyle = "success" })
 
-			@Html.ValidationMessageFor(m => m.isPublic, "", new { @class = "text-danger" })
+			@Html.ValidationMessageFor(m => m.BlogPost.isPublic, "", new { @class = "text-danger" })
 		</div>
 	</div>
 
 	<div class="form-group">
 		@Html.Label("Hot News", htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
-			@Html.CheckBoxFor(model => model.isHotNews, new { data_toggle = "toggle", data_onstyle = "success" })
+			@Html.CheckBoxFor(model => model.BlogPost.isHotNews, new { data_toggle = "toggle", data_onstyle = "success" })
 
-			@Html.ValidationMessageFor(m => m.isHotNews, "", 
+			@Html.ValidationMessageFor(m => m.BlogPost.isHotNews, "", 
 				 
 				 new { @class = "text-danger" })
 
 		</div>
 	</div>
 
-	@Html.HiddenFor(m => m.UserId)
+	@Html.HiddenFor(m => m.BlogPost.UserId)
 
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-10">

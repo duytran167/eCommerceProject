@@ -208,7 +208,8 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="@Url.Action("Index","BlogPosts")" class="waves-effect">
+						
+						<a href="@Url.Action("Index","BlogPosts", new { area = "Admin" }, null)" class="waves-effect">
 							<i class="ti-home"></i>
 							<span>Blogs List</span>
 						</a>
