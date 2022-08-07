@@ -81,6 +81,9 @@
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
+    <Reference Include="NaCl, Version=0.1.13.0, Culture=neutral, PublicKeyToken=827c20e50a9775fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\NaCl.Net.0.1.13\lib\net472\NaCl.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -89,6 +92,9 @@
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PusherServer, Version=4.6.1.0, Culture=neutral, PublicKeyToken=892cb56c732dfd7e, processorArchitecture=MSIL">
+      <HintPath>..\packages\PusherServer.4.6.1\lib\net472\PusherServer.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid, Version=9.28.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\SendGrid.9.28.0\lib\net452\SendGrid.dll</HintPath>
@@ -102,20 +108,23 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -123,6 +132,24 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -140,32 +167,8 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -228,9 +231,30 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminAccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
+    <Compile Include="Areas\Admin\Services\SharedServices.cs" />
+    <Compile Include="Enums\EntityEnums.cs" />
+    <Compile Include="Migrations\202208020841560_updatecomment.cs" />
+    <Compile Include="Migrations\202208020841560_updatecomment.Designer.cs">
+      <DependentUpon>202208020841560_updatecomment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050236137_updateBlogCategories.cs" />
+    <Compile Include="Migrations\202208050236137_updateBlogCategories.Designer.cs">
+      <DependentUpon>202208050236137_updateBlogCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050514349_updateBlogCategories2.cs" />
+    <Compile Include="Migrations\202208050514349_updateBlogCategories2.Designer.cs">
+      <DependentUpon>202208050514349_updateBlogCategories2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050748535_add2CategoriesForBlog2.cs" />
+    <Compile Include="Migrations\202208050748535_add2CategoriesForBlog2.Designer.cs">
+      <DependentUpon>202208050748535_add2CategoriesForBlog2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\BlogVM.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminCustomersController.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogPostsController.cs" />
@@ -313,11 +337,32 @@
     <Compile Include="Migrations\202207280352238_addAvatarforUser.Designer.cs">
       <DependentUpon>202207280352238_addAvatarforUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208020251201_addCommentAndSubvComment.cs" />
+    <Compile Include="Migrations\202208020251201_addCommentAndSubvComment.Designer.cs">
+      <DependentUpon>202208020251201_addCommentAndSubvComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208020403146_addCommentView.cs" />
+    <Compile Include="Migrations\202208020403146_addCommentView.Designer.cs">
+      <DependentUpon>202208020403146_addCommentView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208020405139_addCommentView3.cs" />
+    <Compile Include="Migrations\202208020405139_addCommentView3.Designer.cs">
+      <DependentUpon>202208020405139_addCommentView3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208020434431_addCommentView25.cs" />
+    <Compile Include="Migrations\202208020434431_addCommentView25.Designer.cs">
+      <DependentUpon>202208020434431_addCommentView25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208020435127_addCommentView2.cs" />
+    <Compile Include="Migrations\202208020435127_addCommentView2.Designer.cs">
+      <DependentUpon>202208020435127_addCommentView2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BannerSlider.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -1331,6 +1376,26 @@
     <Compile Include="Models\BlogCategory.cs" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_BlankLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\AddPhoneNumber.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\ChangePassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\EditProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\ManageLogins.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\SetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\VerifyPhoneNumber.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ConfirmEmail.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\CreateAccount.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ExternalLoginFailure.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ForgotPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ResetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\SendCode.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\VerifyCode.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1611,6 +1676,7 @@
     <Folder Include="Content\ImageProduct\Banner\" />
     <Folder Include="Content\ImageProduct\Category\" />
     <Folder Include="Content\ImageProduct\ImageBlog\" />
+    <Folder Include="Content\ImageUser\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1671,6 +1737,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207280352238_addAvatarforUser.resx">
       <DependentUpon>202207280352238_addAvatarforUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208020251201_addCommentAndSubvComment.resx">
+      <DependentUpon>202208020251201_addCommentAndSubvComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208020403146_addCommentView.resx">
+      <DependentUpon>202208020403146_addCommentView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208020405139_addCommentView3.resx">
+      <DependentUpon>202208020405139_addCommentView3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208020434431_addCommentView25.resx">
+      <DependentUpon>202208020434431_addCommentView25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208020435127_addCommentView2.resx">
+      <DependentUpon>202208020435127_addCommentView2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208020841560_updatecomment.resx">
+      <DependentUpon>202208020841560_updatecomment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050236137_updateBlogCategories.resx">
+      <DependentUpon>202208050236137_updateBlogCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050514349_updateBlogCategories2.resx">
+      <DependentUpon>202208050514349_updateBlogCategories2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050748535_add2CategoriesForBlog2.resx">
+      <DependentUpon>202208050748535_add2CategoriesForBlog2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

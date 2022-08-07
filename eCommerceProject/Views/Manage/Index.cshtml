@@ -5,6 +5,20 @@
 	ViewBag.Title = "Manage";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+	.active {
+		color: #02a499;
+	}
+
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+</style>
+
 <div class="page-header">
 	<h2 class="header-title">Profile</h2>
 	<div class="header-sub-title">
@@ -23,7 +37,7 @@
 					<div class="d-md-flex align-items-center">
 						<div class="text-center text-sm-left ">
 							<div class="avatar avatar-image" style="width: 150px; height:150px">
-								<img src="assets/images/avatars/thumb-3.jpg" alt="">
+								<img style="object-fit:cover" src=@Url.Content(Model.User.ImagePath) alt="">
 							</div>
 						</div>
 						<div class="text-center text-sm-left m-v-15 p-l-30">
@@ -51,8 +65,29 @@
 									</ul>
 								}
 							</h2>
-							<p class="text-opacity font-size-13">@@Marshallnich</p>
-							<p class="text-dark m-b-20">Frontend Developer, UI/UX Designer</p>
+							<p class="text-opacity font-size-13">
+								@if (Model.User.StatusID == 1)
+								{
+
+								<a><span class="active">●</span> Actived</a>
+
+								}
+								@if (Model.User.StatusID == 2)
+								{
+
+							<a><span class="unactive">●</span> Unactive</a>
+
+
+								}
+								@if (Model.User.StatusID == 3)
+								{
+
+							<a><span class="disabled">●</span> Disabled</a>
+
+								}
+
+							</p>
+							<p class="text-dark m-b-20">Name: <strong>@Model.User.FullName</strong></p>
 							<a class="btn btn-danger btn-tone" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
 							@if (Model.HasPassword)
 							{
@@ -78,7 +113,7 @@
 										<i class="m-r-10 text-primary anticon anticon-mail"></i>
 										<span>Email: </span>
 									</p>
-									<p class="col font-weight-semibold"> @Model.UserName</p>
+									<p class="col font-weight-semibold"> @Model.User.Email</p>
 								</li>
 								<li class="row">
 									<p class="col-sm-4 col-4 font-weight-semibold text-dark m-b-5">
