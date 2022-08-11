@@ -137,15 +137,18 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		[ValidateInput(false)]
 		public ActionResult Create(ViewModel.BlogVM model)
 		{
+
 			if (ModelState.IsValid)
 			{
 				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
 				string fileName = Path.GetFileNameWithoutExtension(model.BlogPost.ImageFile.FileName);
+
 				string exe = Path.GetExtension(model.BlogPost.ImageFile.FileName);
 				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
 				model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
 				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
 				model.BlogPost.ImageFile.SaveAs(fileName);
+
 
 				var userId = User.Identity.GetUserId();
 
@@ -179,6 +182,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			var course = db.BlogPosts.SingleOrDefault(t => t.Id == id);
+
+
 			var blogPost = new ViewModel.BlogVM()
 			{
 				Id = id,
@@ -202,13 +207,18 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+
 				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+
 				string fileName = Path.GetFileNameWithoutExtension(model.BlogPost.ImageFile.FileName);
+
 				string exe = Path.GetExtension(model.BlogPost.ImageFile.FileName);
 				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
 				model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
 				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
 				model.BlogPost.ImageFile.SaveAs(fileName);
+
+
 				//get user id
 				var userId = User.Identity.GetUserId();
 				var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);

@@ -34,14 +34,14 @@
 		</div>
 	</div>
 	<div class="form-group">
-		@Html.LabelFor(m => m.BlogPost.BlogCategoriesID, new { @class = "col-md-2 control-label" })
+		@Html.Label("Category", new { @class = "col-md-2 control-label" })
 		<div class="col-md-10">
-			@Html.DropDownListFor(m => m.BlogPost.BlogCategoriesID, new SelectList(Model.BlogCategories, "Id", "CategoryName"), new { @class = "dropdown" })
+			@Html.DropDownListFor(m => m.BlogPost.BlogCategoriesID, new SelectList(Model.BlogCategories, "Id", "CategoryName"),"Select Category", new { @class = "dropdown form-control col-md-12" })
 		</div>
 	</div>
 
 	<div class="form-group">
-		@Html.LabelFor(model => model.BlogPost.ShortContents, htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.Label("Short Contents", htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
 			@Html.EditorFor(model => model.BlogPost.ShortContents, new { htmlAttributes = new { @class = "form-control col-md-12" } })
 			@Html.ValidationMessageFor(model => model.BlogPost.ShortContents, "", new { @class = "text-danger" })
@@ -55,15 +55,15 @@
 			@Html.ValidationMessageFor(model => model.BlogPost.Contents, "", new { @class = "text-danger" })
 		</div>
 	</div>
-
+	
 	<div class="form-group">
-		@Html.LabelFor(model => model.BlogPost.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.LabelFor(model => model.BlogPost.ImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
 		<div class="col-md-10">
 			@Html.TextBoxFor(m => m.BlogPost.ImageFile, new { type = "file", id = "imageBrowes", @class = "form-control" })
 			@Html.ValidationMessageFor(model => model.BlogPost.ImagePath, "*required", new { @class = "text-danger" })
 		</div>
 		<hr />
-
+		
 
 		<div id="imgPreview" class="col-md-10" style="display:none">
 			<img class="img-responsive col-md-12" id="targetImg" />
@@ -118,7 +118,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript">
-
+		
 		$(document).ready(function () {
 			$(".content-editor").summernote({
 				height: 300,

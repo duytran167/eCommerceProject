@@ -234,8 +234,10 @@
     <Compile Include="Areas\Admin\Controllers\AdminAccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
     <Compile Include="Areas\Admin\Services\SharedServices.cs" />
+    <Compile Include="Controllers\CatsController.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Migrations\202208020841560_updatecomment.cs" />
     <Compile Include="Migrations\202208020841560_updatecomment.Designer.cs">
@@ -253,6 +255,32 @@
     <Compile Include="Migrations\202208050748535_add2CategoriesForBlog2.Designer.cs">
       <DependentUpon>202208050748535_add2CategoriesForBlog2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208080247359_addProductTable.cs" />
+    <Compile Include="Migrations\202208080247359_addProductTable.Designer.cs">
+      <DependentUpon>202208080247359_addProductTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208080258393_addProductTable2.cs" />
+    <Compile Include="Migrations\202208080258393_addProductTable2.Designer.cs">
+      <DependentUpon>202208080258393_addProductTable2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208080300450_addProductTable3.cs" />
+    <Compile Include="Migrations\202208080300450_addProductTable3.Designer.cs">
+      <DependentUpon>202208080300450_addProductTable3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208090727592_removePriceDiscountUnit.cs" />
+    <Compile Include="Migrations\202208090727592_removePriceDiscountUnit.Designer.cs">
+      <DependentUpon>202208090727592_removePriceDiscountUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208090957558_removePriceDiscountUnit23.cs" />
+    <Compile Include="Migrations\202208090957558_removePriceDiscountUnit23.Designer.cs">
+      <DependentUpon>202208090957558_removePriceDiscountUnit23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208091246472_addcat.cs" />
+    <Compile Include="Migrations\202208091246472_addcat.Designer.cs">
+      <DependentUpon>202208091246472_addcat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cat.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="ViewModel\BlogVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminCustomersController.cs" />
@@ -370,6 +398,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\FilterStatus.cs" />
+    <Compile Include="ViewModel\ProductVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\app.min.css" />
@@ -1396,6 +1425,11 @@
     <Content Include="Areas\Admin\Views\AdminAccount\ResetPasswordConfirmation.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccount\SendCode.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccount\VerifyCode.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1669,6 +1703,11 @@
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
+    <Content Include="Views\Cats\Create.cshtml" />
+    <Content Include="Views\Cats\Delete.cshtml" />
+    <Content Include="Views\Cats\Details.cshtml" />
+    <Content Include="Views\Cats\Edit.cshtml" />
+    <Content Include="Views\Cats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1764,6 +1803,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208050748535_add2CategoriesForBlog2.resx">
       <DependentUpon>202208050748535_add2CategoriesForBlog2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208080247359_addProductTable.resx">
+      <DependentUpon>202208080247359_addProductTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208080258393_addProductTable2.resx">
+      <DependentUpon>202208080258393_addProductTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208080300450_addProductTable3.resx">
+      <DependentUpon>202208080300450_addProductTable3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208090727592_removePriceDiscountUnit.resx">
+      <DependentUpon>202208090727592_removePriceDiscountUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208090957558_removePriceDiscountUnit23.resx">
+      <DependentUpon>202208090957558_removePriceDiscountUnit23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208091246472_addcat.resx">
+      <DependentUpon>202208091246472_addcat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
