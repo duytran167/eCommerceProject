@@ -36,7 +36,7 @@
 	<div class="form-group">
 		@Html.Label("Category", new { @class = "col-md-2 control-label" })
 		<div class="col-md-10">
-			@Html.DropDownListFor(m => m.BlogPost.BlogCategoriesID, new SelectList(Model.BlogCategories, "Id", "CategoryName"),"Select Category", new { @class = "dropdown form-control col-md-12" })
+			@Html.DropDownListFor(m => m.BlogPost.BlogCategoriesID, new SelectList(Model.BlogCategories, "Id", "CategoryName"), "Select Category", new { @class = "dropdown form-control col-md-12" })
 		</div>
 	</div>
 
@@ -56,14 +56,23 @@
 		</div>
 	</div>
 	
+	
 	<div class="form-group">
-		@Html.LabelFor(model => model.BlogPost.ImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.BlogPost.ImageFile, new { type = "file", id = "imageBrowes", @class = "form-control" })
+		@Html.Label("Upload Image", htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10 form-control">
+			<img src="@Url.Content(Model.BlogPost.ImagePath)"
+					 class="rounded-square"
+					 height="50" width="75"
+					 style="border:1px"
+					 asp-append-version="true" accept="image/*" />
+			@Html.HiddenFor(t => t.BlogPost.ImagePath)
+			@Html.HiddenFor(t => t.BlogPost.ImageFile)
+			@Html.TextBox("fileImage", "", new { type = "file", id = "imageBrowes" })
+			@*@Html.TextBox("fileImage", "", new { type = "file", id = "imageBrowes", name = "fileImage", @class = "form-control" })*@
 			@Html.ValidationMessageFor(model => model.BlogPost.ImagePath, "*required", new { @class = "text-danger" })
 		</div>
 		<hr />
-		
+
 
 		<div id="imgPreview" class="col-md-10" style="display:none">
 			<img class="img-responsive col-md-12" id="targetImg" />
@@ -118,7 +127,23 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript">
-		
+		$(document).ready(function () {
+			//On Edit Page Load Hiding the upload option
+			$("#chooseFile").hide();
+
+			//When upload check box clicked showing the upload option
+			$('#CheckBoxId').mousedown(function () {
+				if (!$(this).is(':checked')) {
+					this.checked = true;
+					$("#chooseFile").show();
+				}
+				else {
+					$("#chooseFile").hide();
+				}
+			});
+
+		});
+
 		$(document).ready(function () {
 			$(".content-editor").summernote({
 				height: 300,

@@ -1,11 +1,11 @@
 ﻿using eCommerceProject.Models;
 using eCommerceProject.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
@@ -40,67 +40,84 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
-			var post = new ProductVM()
+			var product = new ProductVM()
 			{
 				Categories = db.Categories.ToList(),
 			};
-
-			return View(post);
+			//IEnumerable<SelectListItem> userTypeList = new SelectList(db.Categories.ToList(), "Id", "CategoryName");
+			//ViewData["userTypeList"] = userTypeList;
+			////ViewBag.EntidadList = new SelectList(db.Categories.Select(x =>
+			////							new
+			////							{
+			////								Id = x.Id.ToString(),
+			////								CategoryName = x.CategoryName
+			////							}),
+			////					"Id",
+			////					"CategoryName");
+			ViewBag.EntidadList = new SelectList(db.Categories, "Id", "CategoryName");
+			return View(product);
 		}
-
 		// POST: Admin/Products/Create
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[ValidateInput(false)]
-		public ActionResult Create(ProductVM model, List<HttpPostedFileBase> uploadFile)
+
+		public ActionResult Create(ViewModel.ProductVM support)
 		{
 			if (ModelState.IsValid)
 			{
-				string abc = "";
-				string def = "";
-				foreach (var item in uploadFile)
+				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+
+				List<ImageProduct> fileDetails = new List<ImageProduct>();
+				for (int i = 0; i < Request.Files.Count; i++)
 				{
+					var file = Request.Files[i];
 
-					string filePath = Path.Combine(HttpContext.Server.MapPath("~/Content/ImageProduct/ImageBlog/"),
-																				 Path.GetFileName(item.FileName));
-					item.SaveAs(filePath);
-
-					abc = string.Format("Upload {0} file thành công", uploadFile.Count);
-
-					def += item.FileName + "; ";
-
-
-
-					var newProduct = new Product()
+					if (file != null && file.ContentLength > 0)
 					{
-						ProductName = model.Product.ProductName,
-						CategoryID = model.Id,
-						ShortDesc = model.Product.ShortDesc,
-						Description = model.Product.Description,
-						ImagePath = filePath,
-						Active = model.Product.Active,
-						BestSellers = model.Product.BestSellers,
-						CreatedDate = model.Product.CreatedDate,
-						Discount = model.Product.Discount,
-						Price = model.Product.Price,
-						UnitsInStock = model.Product.UnitsInStock,
+						var fileName = Path.GetFileName(file.FileName);
+						ImageProduct fileDetail = new ImageProduct()
+						{
+							FileName = fileName,
+							Extension = Path.GetExtension(fileName),
+							Id = Guid.NewGuid()
+						};
+						fileDetails.Add(fileDetail);
 
-					};
-
-
-					db.Products.Add(newProduct);
-					db.SaveChanges();
-					TempData["success"] = "Create Success!";
-					return RedirectToAction("Index");
+						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileDetail.Id + fileDetail.Extension);
+						file.SaveAs(path);
+					}
 				}
 
+
+				var newProduct = new Product()
+				{
+					ProductName = support.Product.ProductName,
+					CategoryID = 1,
+					ShortDesc = support.Product.ShortDesc,
+					Description = support.Product.Description,
+					ImageProducts = fileDetails,
+					Active = support.Product.Active,
+					BestSellers = support.Product.BestSellers,
+					CreatedDate = support.Product.CreatedDate,
+					Discount = support.Product.Discount,
+					Price = support.Product.Price,
+					UnitsInStock = support.Product.UnitsInStock,
+
+				};
+
+
+
+
+				db.Products.Add(newProduct);
+				db.SaveChanges();
+				return RedirectToAction("Index");
 			}
 
-			return View(model);
+			return View(support);
 		}
-
 		// GET: Admin/Products/Edit/5
 		public ActionResult Edit(int? id)
 		{

@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
@@ -90,25 +91,39 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		}
 		[HttpPost]
 		public async Task<ActionResult> UpdateCategory(
-		[Bind(Include = "Id,CategoryName,ImageFile")] Category category)
+		[Bind(Include = "Id,CategoryName,ImageFile")] Category category, HttpPostedFileBase fileImage)
 		{
 			if (ModelState.IsValid)
 			{
-				string fileName = Path.GetFileNameWithoutExtension(category.ImageFile.FileName);
-				string exe = Path.GetExtension(category.ImageFile.FileName);
-				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				category.ImagePath = "~/Content/ImageProduct/Category/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/Category/"), fileName);
-				category.ImageFile.SaveAs(fileName);
+				if (fileImage != null && fileImage.ContentLength > 0)
+				{
+					string fileName = Path.GetFileNameWithoutExtension(category.ImageFile.FileName);
+					string exe = Path.GetExtension(category.ImageFile.FileName);
+					fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+					category.ImagePath = "~/Content/ImageProduct/Category/" + fileName;
+					fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/Category/"), fileName);
+					category.ImageFile.SaveAs(fileName);
 
-				var post = _context.Categories.FirstOrDefault(t => t.Id == category.Id);
-				post.CategoryName = category.CategoryName;
-				post.ImagePath = category.ImagePath;
+					var post = _context.Categories.FirstOrDefault(t => t.Id == category.Id);
+					post.CategoryName = category.CategoryName;
+					post.ImagePath = category.ImagePath;
 
 
-				_context.SaveChanges();
-				TempData["success"] = "Update Success!";
-				return RedirectToAction("Index", "Category");
+					_context.SaveChanges();
+					TempData["success"] = "Update Success!";
+					return RedirectToAction("Index", "Category");
+				}
+				else
+				{
+					var post = _context.Categories.FirstOrDefault(t => t.Id == category.Id);
+					post.CategoryName = category.CategoryName;
+
+
+
+					_context.SaveChanges();
+					TempData["success"] = "Update Success!";
+					return RedirectToAction("Index", "Category");
+				}
 			}
 			return View(category);
 		}

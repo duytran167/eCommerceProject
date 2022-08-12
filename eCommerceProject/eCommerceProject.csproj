@@ -279,7 +279,12 @@
     <Compile Include="Migrations\202208091246472_addcat.Designer.cs">
       <DependentUpon>202208091246472_addcat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208110433351_addImageTable.cs" />
+    <Compile Include="Migrations\202208110433351_addImageTable.Designer.cs">
+      <DependentUpon>202208110433351_addImageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Cat.cs" />
+    <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="ViewModel\BlogVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -1821,6 +1826,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208091246472_addcat.resx">
       <DependentUpon>202208091246472_addcat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208110433351_addImageTable.resx">
+      <DependentUpon>202208110433351_addImageTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

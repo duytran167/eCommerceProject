@@ -9,7 +9,6 @@ using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -179,7 +178,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Error", "Admin");
 			}
 			var course = db.BlogPosts.SingleOrDefault(t => t.Id == id);
 
@@ -193,7 +192,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 			if (blogPost == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Error", "Admin");
 			}
 			return View(blogPost);
 		}
@@ -203,40 +202,68 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(ViewModel.BlogVM model)
+		public ActionResult Edit(ViewModel.BlogVM model, HttpPostedFileBase fileImage)
+
 		{
+
+
 			if (ModelState.IsValid)
 			{
-
-				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
-
-				string fileName = Path.GetFileNameWithoutExtension(model.BlogPost.ImageFile.FileName);
-
-				string exe = Path.GetExtension(model.BlogPost.ImageFile.FileName);
-				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
-				model.BlogPost.ImageFile.SaveAs(fileName);
+				if (fileImage != null && fileImage.ContentLength > 0)
+				{
+					var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
 
 
-				//get user id
-				var userId = User.Identity.GetUserId();
-				var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);
+					var fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+					string exe = Path.GetExtension(fileImage.FileName);
+					fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+					model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
+					fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
+					fileImage.SaveAs(fileName);
 
-				post.Title = model.BlogPost.Title;
-				post.ShortContents = model.BlogPost.ShortContents;
-				post.ImagePath = model.BlogPost.ImagePath;
-				post.BlogCategoriesID = model.BlogPost.BlogCategoriesID;
-				post.Contents = model.BlogPost.Contents;
 
-				post.isHotNews = model.BlogPost.isHotNews;
-				post.isPublic = model.BlogPost.isPublic;
-				//post.View = viewModel.View;
+					//get user id
+					var userId = User.Identity.GetUserId();
+					var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);
 
-				db.SaveChanges();
-				TempData["success"] = "Edit Success!";
-				return RedirectToAction("Index");
+					post.Title = model.BlogPost.Title;
+					post.ShortContents = model.BlogPost.ShortContents;
+					post.ImagePath = model.BlogPost.ImagePath;
+					post.BlogCategoriesID = model.BlogPost.BlogCategoriesID;
+					post.Contents = model.BlogPost.Contents;
+
+					post.isHotNews = model.BlogPost.isHotNews;
+					post.isPublic = model.BlogPost.isPublic;
+					//post.View = viewModel.View;
+
+					db.SaveChanges();
+					TempData["success"] = "Edit Success!";
+					return RedirectToAction("Index");
+
+
+				}
+				else
+				{
+					var userId = User.Identity.GetUserId();
+					var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);
+
+					post.Title = model.BlogPost.Title;
+					post.ShortContents = model.BlogPost.ShortContents;
+					post.ImagePath = model.BlogPost.ImagePath;
+					post.BlogCategoriesID = model.BlogPost.BlogCategoriesID;
+					post.Contents = model.BlogPost.Contents;
+
+					post.isHotNews = model.BlogPost.isHotNews;
+					post.isPublic = model.BlogPost.isPublic;
+					//post.View = viewModel.View;
+
+					db.SaveChanges();
+					TempData["success"] = "Edit Success!";
+					return RedirectToAction("Index");
+
+				}
 			}
+
 			return View(model);
 		}
 		public ActionResult Delete(int id)

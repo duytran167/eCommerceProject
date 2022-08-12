@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Web;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Models
@@ -20,11 +18,8 @@ namespace eCommerceProject.Models
 
 		[DisplayName("Upload File")]
 
-		public string ImagePath { get; set; }
+		public virtual ICollection<ImageProduct> ImageProducts { get; set; }
 
-		[NotMapped]
-
-		public List<HttpPostedFileBase> ImageFile { get; set; }
 		public int CategoryID { get; set; }
 		public Category Category { get; set; }
 		public int Price { get; set; }

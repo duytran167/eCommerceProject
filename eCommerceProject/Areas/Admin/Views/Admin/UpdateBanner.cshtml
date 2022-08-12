@@ -4,7 +4,7 @@
 	Layout = "~/Areas/Admin/Views/Shared/_BlankLayout.cshtml";
 }
 
-<h2>Update Banner</h2>
+
 @using (Html.BeginForm("UpdateBanner", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 	<form id="updateBanner">
@@ -12,7 +12,7 @@
 		<div class="panel panel-body" style="min-height:256px">
 
 
-		
+
 			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 			<div class="col-md-12">
 
@@ -30,17 +30,31 @@
 						@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
 					</div>
 				</div>
-				<div class="col">
+				<div class="form-group">
+
+					<div class="col-md-12">
+						<img class="form-control" src="@Url.Content(Model.ImagePath)"
+								 accept="image/*" />
+					</div>
+				</div>
+				<div class="form-group">
 					<div class="btn btn-primary">
 						@Html.LabelFor(m => m.ImagePath, new { @class = "control-label col-md" })
-						@Html.TextBoxFor(m => m.ImageFile, new { type = "file", id = "imageBrowes" })
-						@Html.ValidationMessageFor(model => model.ImagePath, "*required", new { @class = "text-danger" })
+						<div class="col-md-12 form-control">
+
+							@Html.HiddenFor(t => t.ImagePath)
+							@Html.HiddenFor(t => t.ImageFile)
+							@Html.TextBox("fileImage", "", new { type = "file", id = "imageBrowes" })
+							@*@Html.TextBox("fileImage", "", new { type = "file", id = "imageBrowes", name = "fileImage", @class = "form-control" })*@
+							@Html.ValidationMessageFor(model => model.ImagePath, "*required", new { @class = "text-danger" })
+						</div>
+
 
 					</div>
 					<hr />
 
 
-					<div id="imgPreview" class="col-md-12" style="display:none">
+					<div id="imgPreview" class="col-md-10" style="display:none">
 						<img class="img-responsive col-md-12" id="targetImg" />
 						<div class="caption">
 							<a href="#" onclick="ClearPreview()"><i class="fas fa-trash"></i></a>
@@ -61,56 +75,59 @@
 	</form>
 }
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
 
-	
-<script>
-	$(document).ready(function () {
 
-		$("#imageBrowes").change(function () {
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
 
-			var File = this.files;
+	<script type="text/javascript">
+		$(document).ready(function () {
 
-			if (File && File[0]) {
-				ReadImage(File[0]);
-			}
+			$("#imageBrowes").change(function () {
+
+				var File = this.files;
+
+				if (File && File[0]) {
+					ReadImage(File[0]);
+				}
+
+			})
+
 
 		})
 
 
-	})
+		var ReadImage = function (file) {
 
+			var reader = new FileReader;
+			var image = new Image;
 
-	var ReadImage = function (file) {
+			reader.readAsDataURL(file);
+			reader.onload = function (_file) {
 
-		var reader = new FileReader;
-		var image = new Image;
+				image.src = _file.target.result;
+				image.onload = function () {
 
-		reader.readAsDataURL(file);
-		reader.onload = function (_file) {
+					var height = this.height;
+					var width = this.width;
+					var type = file.type;
+					var size = ~~(file.size / 1024) + "KB";
 
-			image.src = _file.target.result;
-			image.onload = function () {
+					$("#targetImg").attr('src', _file.target.result);
+					$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+					$("#imgPreview").show();
 
-				var height = this.height;
-				var width = this.width;
-				var type = file.type;
-				var size = ~~(file.size / 1024) + "KB";
-
-				$("#targetImg").attr('src', _file.target.result);
-				$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
-				$("#imgPreview").show();
+				}
 
 			}
 
 		}
 
-	}
+		var ClearPreview = function () {
+			$("#imageBrowes").val('');
+			$("#description").text('');
+			$("#imgPreview").hide();
 
-	var ClearPreview = function () {
-		$("#imageBrowes").val('');
-		$("#description").text('');
-		$("#imgPreview").hide();
-
+		}
+	</script>
 	}
-</script>

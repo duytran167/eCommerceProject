@@ -229,7 +229,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			{
 				if (model.RoleName == "Seller")
 				{
-					var user = new Seller() { UserName = model.Email, Email = model.Email, FullName = model.FullName, PhoneNumber = model.PhoneNumber, StatusID = (int)AccountStatus.Active };
+					var user = new Seller() { UserName = model.Email, Email = model.Email, FullName = model.FullName, ImagePath = "", PhoneNumber = model.PhoneNumber, StatusID = (int)AccountStatus.Active };
 					var result = await UserManager.CreateAsync(user, model.Password);
 					if (result.Succeeded)
 					{
@@ -240,7 +240,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						// Send an email with this link
 						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account!!");
 						TempData["success"] = "Create Account Success!";
 						return RedirectToAction("Index", "Seller");
 					}
@@ -254,6 +254,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						Email = model.Email,
 						FullName = model.FullName,
 						Address = model.Address,
+						ImagePath = "",
 						PhoneNumber = model.PhoneNumber,
 						StatusID = (int)AccountStatus.Active
 					};
@@ -267,7 +268,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						// Send an email with this link
 						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account!!");
 						TempData["success"] = "Create Account Success!";
 						return RedirectToAction("Index", "AdminCustomers");
 					}
@@ -283,6 +284,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					FullName = model.FullName,
 					Address = model.Customer.Address,
 					PhoneNumber = model.PhoneNumber,
+					ImagePath = "",
 					StatusID = (int)AccountStatus.Active
 				};
 				var result = await UserManager.CreateAsync(user, model.Password);
