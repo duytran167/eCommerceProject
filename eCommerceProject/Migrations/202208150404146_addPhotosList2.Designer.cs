@@ -7,13 +7,13 @@ namespace eCommerceProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddSellerField : IMigrationMetadata
+    public sealed partial class addPhotosList2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSellerField));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addPhotosList2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202207120635174_AddSellerField"; }
+            get { return "202208150404146_addPhotosList2"; }
         }
         
         string IMigrationMetadata.Source

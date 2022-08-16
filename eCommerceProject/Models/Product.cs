@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -16,15 +15,20 @@ namespace eCommerceProject.Models
 		[AllowHtml]
 		public string Description { get; set; }
 
-		[DisplayName("Upload File")]
-
 		public virtual ICollection<ImageProduct> ImageProducts { get; set; }
+		//[DisplayName("Upload File")]
+		//public string ImagePath { get; set; }
 
-		public int CategoryID { get; set; }
-		public Category Category { get; set; }
+		//[NotMapped]
+		//public HttpPostedFileBase ImageFile { get; set; }
+		public int SizeID { get; set; }
+		public Size Size { get; set; }
+
+		public int CategoriesID { get; set; }
+		public Category Categories { get; set; }
 		public int Price { get; set; }
 		public int Discount { get; set; }
-		public int UnitsInStock { get; set; }
+		public string ProductCode { get; set; }
 		public bool BestSellers { get; set; }
 		public bool Active { get; set; }
 		public DateTime CreatedDate { get; set; }

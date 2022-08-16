@@ -46,7 +46,7 @@ namespace eCommerceProject.Models
 		public DbSet<BlogCategory> BlogCategories { get; set; }
 		public DbSet<Comments> Comments { get; set; }
 		public DbSet<Product> Products { get; set; }
-
+		public DbSet<Size> Sizes { get; set; }
 		public DbSet<Cat> Cat { get; set; }
 		public static ApplicationDbContext Create()
 		{

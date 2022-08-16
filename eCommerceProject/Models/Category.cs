@@ -5,7 +5,7 @@ using System.Web;
 
 namespace eCommerceProject.Models
 {
-	public partial class Category
+	public class Category
 	{
 		public int Id { get; set; }
 		[Required]

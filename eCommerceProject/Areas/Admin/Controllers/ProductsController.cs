@@ -1,5 +1,6 @@
 ﻿using eCommerceProject.Models;
 using eCommerceProject.ViewModel;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,23 +16,145 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		private ApplicationDbContext db = new ApplicationDbContext();
 
 		// GET: Admin/Products
-		public ActionResult Index()
+		public ActionResult Index(int? page, string search, int? filter)
 		{
-			var products = db.Products.Include(p => p.Category);
+			var products = from s in db.Products.Include(p => p.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList()
+										 select s;
+			if (!String.IsNullOrWhiteSpace(search))
+			{
+				products = products.Where(s => s.ProductName.Contains(search)
+															 || s.ProductCode.Contains(search)).ToList();
+			}
+			if (!String.IsNullOrWhiteSpace(filter.ToString()))
+			{
+				//Filter results based on company selected.
+
+				products = products.Where(x => x.CategoriesID.Equals(filter)).ToList();
+
+			}
+
+
+
+			ViewBag.product = db.Products.ToList();
+			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
 			return View(products.ToList());
 		}
+
+		[HttpPost]
+		public JsonResult Index(int? page, string search, int? filter, string sortName, string sortDirection)
+		{
+			var products = from s in db.Products.Include(p => p.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList()
+										 select s;
+			if (!String.IsNullOrWhiteSpace(search))
+			{
+				products = products.Where(s => s.ProductName.Contains(search)
+															 || s.ProductCode.Contains(search)).ToList();
+			}
+			if (!String.IsNullOrWhiteSpace(filter.ToString()))
+			{
+				//Filter results based on company selected.
+
+				products = products.Where(x => x.CategoriesID.Equals(filter)).ToList();
+
+			}
+			//sort name
+			switch (sortName)
+			{
+				case "Id":
+				case "":
+					if (sortDirection == "ASC")
+					{
+						products = (from product in db.Products
+												select product)
+						.OrderBy(product => product.Id)
+						//.Skip(startIndex)
+						.ToPagedList(page ?? 1, 5);
+					}
+					else
+					{
+						products = (from product in db.Products
+												select product)
+						.OrderByDescending(product => product.Id)
+						//.Skip(startIndex)
+						.ToPagedList(page ?? 1, 5);
+					}
+					break;
+				case "ProductName":
+					if (sortDirection == "ASC")
+					{
+						products = (from product in db.Products
+												select product)
+						.OrderBy(product => product.ProductName)
+						//.Skip(startIndex)
+						.ToPagedList(page ?? 1, 5);
+					}
+					else
+					{
+						products = (from product in db.Products
+												select product)
+						.OrderByDescending(product => product.ProductName)
+						//.Skip(startIndex)
+						.ToPagedList(page ?? 1, 5);
+					}
+					break;
+					//case "City":
+					//	if (sortDirection == "ASC")
+					//	{
+					//		model.Customers = (from customer in entities.Customers
+					//											 select customer)
+					//		.OrderBy(customer => customer.City)
+					//		.Skip(startIndex)
+					//		.Take(model.PageSize).ToList();
+					//	}
+					//	else
+					//	{
+					//		model.Customers = (from customer in entities.Customers
+					//											 select customer)
+					//	.OrderByDescending(customer => customer.City)
+					//	.Skip(startIndex)
+					//	.Take(model.PageSize).ToList();
+					//	}
+					//	break;
+					//case "Country":
+					//	if (sortDirection == "ASC")
+					//	{
+					//		model.Customers = (from customer in entities.Customers
+					//											 select customer)
+					//		.OrderBy(customer => customer.Country)
+					//		.Skip(startIndex)
+					//		.Take(model.PageSize).ToList();
+					//	}
+					//	else
+					//	{
+					//		model.Customers = (from customer in entities.Customers
+					//											 select customer)
+					//		.OrderByDescending(customer => customer.Country)
+					//		.Skip(startIndex)
+					//		.Take(model.PageSize).ToList();
+					//	}
+					break;
+			}
+			ViewBag.product = db.Products.ToList();
+			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
+			return Json(products.ToList());
+		}
+
 
 		// GET: Admin/Products/Details/5
 		public ActionResult Details(int? id)
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Error", "Admin");
 			}
-			Product product = db.Products.Find(id);
+			var product = new ViewModel.ProductVM();
+			product.Product = db.Products.
+							Include(i => i.Categories).
+						SingleOrDefault(t => t.Id == id);
+
 			if (product == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Error", "Admin");
 			}
 			return View(product);
 		}
@@ -44,17 +167,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			{
 				Categories = db.Categories.ToList(),
 			};
-			//IEnumerable<SelectListItem> userTypeList = new SelectList(db.Categories.ToList(), "Id", "CategoryName");
-			//ViewData["userTypeList"] = userTypeList;
-			////ViewBag.EntidadList = new SelectList(db.Categories.Select(x =>
-			////							new
-			////							{
-			////								Id = x.Id.ToString(),
-			////								CategoryName = x.CategoryName
-			////							}),
-			////					"Id",
-			////					"CategoryName");
-			ViewBag.EntidadList = new SelectList(db.Categories, "Id", "CategoryName");
+
+			ViewBag.Categories = new SelectList(db.Categories, "Id", "CategoryName", product.Categories);
 			return View(product);
 		}
 		// POST: Admin/Products/Create
@@ -64,11 +178,21 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		[ValidateAntiForgeryToken]
 		[ValidateInput(false)]
 
-		public ActionResult Create(ViewModel.ProductVM support)
+		public ActionResult Create(ViewModel.ProductVM model)
 		{
+
+			model.Categories = db.Categories.ToList();
+
 			if (ModelState.IsValid)
 			{
-				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+
+				//string fileName = Path.GetFileNameWithoutExtension(model.Product.ImageFile.FileName);
+
+				//string exe = Path.GetExtension(model.Product.ImageFile.FileName);
+				//fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+				//model.Product.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
+				//fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
+				//model.Product.ImageFile.SaveAs(fileName);
 
 				List<ImageProduct> fileDetails = new List<ImageProduct>();
 				for (int i = 0; i < Request.Files.Count; i++)
@@ -80,43 +204,53 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						var fileName = Path.GetFileName(file.FileName);
 						ImageProduct fileDetail = new ImageProduct()
 						{
-							FileName = fileName,
+							FileName = "~/Content/ImageProduct/" + fileName,
 							Extension = Path.GetExtension(fileName),
 							Id = Guid.NewGuid()
 						};
 						fileDetails.Add(fileDetail);
 
-						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileDetail.Id + fileDetail.Extension);
+						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileDetail.Id + fileDetail.Extension);
+
 						file.SaveAs(path);
 					}
 				}
 
-
-				var newProduct = new Product()
+				try
 				{
-					ProductName = support.Product.ProductName,
-					CategoryID = 1,
-					ShortDesc = support.Product.ShortDesc,
-					Description = support.Product.Description,
-					ImageProducts = fileDetails,
-					Active = support.Product.Active,
-					BestSellers = support.Product.BestSellers,
-					CreatedDate = support.Product.CreatedDate,
-					Discount = support.Product.Discount,
-					Price = support.Product.Price,
-					UnitsInStock = support.Product.UnitsInStock,
-
-				};
-
+					var newProduct = new Product()
+					{
+						ProductName = model.Product.ProductName,
+						CategoriesID = model.Id,
+						ShortDesc = model.Product.ShortDesc,
+						Description = model.Product.Description,
+						ImageProducts = fileDetails,
+						Active = model.Product.Active,
+						BestSellers = model.Product.BestSellers,
+						CreatedDate = model.Product.CreatedDate,
+						Discount = model.Product.Discount,
+						Price = model.Product.Price,
 
 
+					};
 
-				db.Products.Add(newProduct);
-				db.SaveChanges();
-				return RedirectToAction("Index");
+
+
+
+					db.Products.Add(newProduct);
+					db.SaveChanges();
+					return RedirectToAction("Index");
+				}
+				catch (Exception ex)
+				{
+					ViewBag.Msg = ex.Message;
+				}
 			}
-
-			return View(support);
+			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+		.SelectMany(E => E.Errors)
+		.Select(E => E.ErrorMessage)
+		.ToList();
+			return View(model);
 		}
 		// GET: Admin/Products/Edit/5
 		public ActionResult Edit(int? id)
@@ -130,7 +264,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			{
 				return HttpNotFound();
 			}
-			ViewBag.CategoryID = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryID);
+			ViewBag.CategoryID = new SelectList(db.Categories, "Id", "CategoryName", product.Categories);
 			return View(product);
 		}
 
@@ -147,7 +281,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				db.SaveChanges();
 				return RedirectToAction("Index");
 			}
-			ViewBag.CategoryID = new SelectList(db.Categories, "Id", "CategoryName", product.CategoryID);
+			ViewBag.CategoryID = new SelectList(db.Categories, "Id", "CategoryName", product.Categories);
 			return View(product);
 		}
 

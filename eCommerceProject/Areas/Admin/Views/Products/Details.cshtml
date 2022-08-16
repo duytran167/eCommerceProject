@@ -1,99 +1,179 @@
-﻿@model eCommerceProject.Models.Product
+﻿@model eCommerceProject.ViewModel.ProductVM
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
+	<form>
+		<div class="page-header no-gutters has-tab">
+			<div class="d-md-flex m-b-15 align-items-center justify-content-between">
+				<div class="media align-items-center m-b-15">
+					<div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+						<img src="assets/images/others/thumb-16.jpg" alt="">
+					</div>
+					<div class="m-l-15">
+						<h4 class="m-b-0">@Model.Product.ProductName</h4>
+						<p class="text-muted m-b-0">Code: #5325</p>
+					</div>
+				</div>
+				<div class="m-b-15">
+					<button class="btn btn-primary">
+						<i class="anticon anticon-save"></i>
+						<span>Save</span>
+					</button>
+				</div>
+			</div>
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#product-edit-option">Option Info</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#product-image-basic">Image Info</a>
+				</li>
+				
+			</ul>
+		</div>
+		<div class="tab-content m-t-15">
+			<div class="tab-pane fade show active" id="product-edit-basic">
+				<div class="card">
+					<div class="card-body">
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productName">Product Name: </label>
+							@Model.Product.ProductName
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productPrice">Dicount: </label>
+							@Model.Product.Discount %
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productPrice">Price: </label>
+							@Html.Raw(@String.Format("{0:c}", @Model.Product.Price))
+							@Model.Product.Price.ToString("#,##0") VND
+						</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productCategory">Category: </label>
+							@Model.Product.Categories.CategoryName
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productBrand">Collection</label>
+							<input type="text" class="form-control" id="productBrand" placeholder="Brand" value="H&M">
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productBrand">Date Created:</label>
+							@Model.Product.CreatedDate.ToString("dd MMM yyyy")
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productStatus">Status: </label>
+							<div class="col">
+								@*@if (Model.Product.UnitsInStock > 10)
+								{
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortDesc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShortDesc)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Discount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Discount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitsInStock)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UnitsInStock)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BestSellers)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BestSellers)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-    </dl>
+									<div class="badge badge-success badge-dot m-r-10"></div>
+									<div class="m-r-10">In Stock</div>
+								}
+								@if (Model.Product.UnitsInStock < 0)
+								{
+									<div class="badge badge-danger badge-dot m-r-10"></div>
+									<div class="m-r-10">Out Of Stock</div>
+								}
+								@if (Model.Product.UnitsInStock < 10)
+								{
+									<div class="badge badge-warning badge-dot m-r-10"></div>
+									<div class="m-r-10">Stock Only < 10</div>
+								}*@
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="product-edit-option">
+				<div class="card">
+					<div class="card-body">
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productSize">Size</label>
+							<select class="select2" id="productSize" multiple="multiple">
+								<option value="40" selected>40</option>
+								<option value="42" selected>42</option>
+								<option value="44">44</option>
+								<option value="46">46</option>
+								<option value="48">48</option>
+								<option value="50">50</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productColors">Colors</label>
+							<select class="select2" id="productColors" multiple="multiple">
+								<option value="db" selected>Dark Blue</option>
+								<option value="g" selected>Gray</option>
+								<option value="gb" selected>Gray Blue</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productFit">Fit</label>
+							<select class="custom-select" id="productFit">
+								<option value="skinny" selected>Skinny</option>
+								<option value="slim">Slim</option>
+								<option value="regular">Regular</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productMaterial">Material</label>
+							<select class="select2" id="productMaterial" multiple="multiple">
+								<option value="polyester" selected>Polyester</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="font-weight-semibold" for="productShip">Ship From</label>
+							<select class="custom-select" id="productShip">
+								<option value="columbia" selected>Columbia</option>
+								<option value="brazil">Brazil</option>
+								<option value="chile">Chile</option>
+								<option value="argentina">Argentina</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="product-edit-description">
+				<div class="card">
+					<div class="card-body">
+						<div id="productDescription">
+							<p>@Html.Raw(Model.Product.Description)</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="product-image-basic">
+				<div class="card">
+					<div class="card-body">
+						
+							@foreach (var photo in Model.Product.ImageProducts)
+							{
+								<img src="@Url.Content(photo.FileName)" width="120" />
+							}
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<p>
+		@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+		@Html.ActionLink("Back to List", "Index")
+	</p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+   
+			
+		
+
+

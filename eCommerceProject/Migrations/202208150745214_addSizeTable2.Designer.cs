@@ -7,13 +7,13 @@ namespace eCommerceProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddressUser : IMigrationMetadata
+    public sealed partial class addSizeTable2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddressUser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addSizeTable2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202207190845363_AddressUser"; }
+            get { return "202208150745214_addSizeTable2"; }
         }
         
         string IMigrationMetadata.Source
