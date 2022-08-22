@@ -113,6 +113,9 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.8\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -232,7 +235,6 @@
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
     <Compile Include="Areas\Admin\Services\SharedServices.cs" />
-    <Compile Include="Controllers\CatsController.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Migrations\202208020841560_updatecomment.cs" />
     <Compile Include="Migrations\202208020841560_updatecomment.Designer.cs">
@@ -285,6 +287,14 @@
     <Compile Include="Migrations\202208150745214_addSizeTable2.cs" />
     <Compile Include="Migrations\202208150745214_addSizeTable2.Designer.cs">
       <DependentUpon>202208150745214_addSizeTable2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190259388_addImplementSizeforPorduct.cs" />
+    <Compile Include="Migrations\202208190259388_addImplementSizeforPorduct.Designer.cs">
+      <DependentUpon>202208190259388_addImplementSizeforPorduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208220856300_addImageandRemoveCat.cs" />
+    <Compile Include="Migrations\202208220856300_addImageandRemoveCat.Designer.cs">
+      <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Cat.cs" />
     <Compile Include="Models\ImageProduct.cs" />
@@ -399,6 +409,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\FilterStatus.cs" />
+    <Compile Include="ViewModel\JqueryDatatableParam.cs" />
     <Compile Include="ViewModel\ProductVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -950,6 +961,59 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.autoFill.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.autoFill.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colReorder.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colReorder.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colVis.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colvis.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colVis.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedColumns.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedColumns.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedHeader.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedHeader.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.keyTable.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.keyTable.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.scroller.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.scroller.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.tableTools.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.tableTools.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables_themeroller.min.css" />
+    <Content Include="Content\DataTables-1.10.0\images\background.png" />
+    <Content Include="Content\DataTables-1.10.0\images\back_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\back_enabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\collection.png" />
+    <Content Include="Content\DataTables-1.10.0\images\collection_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\copy.png" />
+    <Content Include="Content\DataTables-1.10.0\images\copy_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\csv.png" />
+    <Content Include="Content\DataTables-1.10.0\images\csv_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\filler.png" />
+    <Content Include="Content\DataTables-1.10.0\images\forward_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\forward_enabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\insert.png" />
+    <Content Include="Content\DataTables-1.10.0\images\loading-background.png" />
+    <Content Include="Content\DataTables-1.10.0\images\pdf.png" />
+    <Content Include="Content\DataTables-1.10.0\images\pdf_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\print.png" />
+    <Content Include="Content\DataTables-1.10.0\images\print_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_desc.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\xls.png" />
+    <Content Include="Content\DataTables-1.10.0\images\xls_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls.swf" />
+    <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -1388,6 +1452,27 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colReorder.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colReorder.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colVis.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colVis.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.keyTable.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.scroller.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.scroller.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.tableTools.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.tableTools.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables-1.10.0\jquery.dataTables.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -1431,6 +1516,7 @@
     <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1656,7 +1742,7 @@
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_sidebar.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_topbar.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\_topbar.cshtml" />
     <Content Include="Views\Home\_footer.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\BannerManage.cshtml" />
@@ -1704,11 +1790,6 @@
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
-    <Content Include="Views\Cats\Create.cshtml" />
-    <Content Include="Views\Cats\Delete.cshtml" />
-    <Content Include="Views\Cats\Details.cshtml" />
-    <Content Include="Views\Cats\Edit.cshtml" />
-    <Content Include="Views\Cats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1825,6 +1906,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208150745214_addSizeTable2.resx">
       <DependentUpon>202208150745214_addSizeTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190259388_addImplementSizeforPorduct.resx">
+      <DependentUpon>202208190259388_addImplementSizeforPorduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208220856300_addImageandRemoveCat.resx">
+      <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

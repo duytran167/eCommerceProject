@@ -277,16 +277,6 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			TempData["success"] = "Delete Success!";
 		}
 		// Filter and Search
-		public ActionResult Filter(int CatID = 0)
-		{
-
-			var url = $"/Admin/BlogPosts?CatID={CatID}";
-			if (CatID == 0)
-			{
-				url = $"/Admin/BlogPosts";
-			}
-			return Json(new { status = "success", redirectUrl = url });
-		}
 
 		// GET: BlogPosts/Delete/5
 		//public ActionResult Delete(int? id)

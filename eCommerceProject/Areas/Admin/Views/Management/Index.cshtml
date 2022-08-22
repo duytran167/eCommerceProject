@@ -5,6 +5,7 @@
 	ViewBag.Title = "Management";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+
 <style>
 	.active {
 		color: #02a499;
@@ -37,6 +38,10 @@
 					<div class="d-md-flex align-items-center">
 						<div class="text-center text-sm-left ">
 							<div class="avatar avatar-image" style="width: 150px; height:150px">
+								@if (Model.User.ImagePath == null)
+								{
+									<img style="object-fit:cover" src="" alt="">
+								}
 								<img style="object-fit:cover" src=@Url.Content(Model.User.ImagePath) alt="">
 							</div>
 						</div>

@@ -21,8 +21,7 @@ namespace eCommerceProject.Models
 
 		//[NotMapped]
 		//public HttpPostedFileBase ImageFile { get; set; }
-		public int SizeID { get; set; }
-		public Size Size { get; set; }
+		public virtual ICollection<Size> Sizes { get; set; }
 
 		public int CategoriesID { get; set; }
 		public Category Categories { get; set; }

@@ -94,7 +94,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				case SignInStatus.Success:
 					if (User.IsInRole("Admin"))
 					{
-						return RedirectToAction("Index", "Admin");
+						return RedirectToAction("Index", "Admin", new { area = "Admin" });
 					}
 					return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:

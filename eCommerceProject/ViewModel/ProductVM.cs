@@ -10,6 +10,8 @@ namespace eCommerceProject.ViewModel
 		public IEnumerable<Category> Categories { get; set; }
 		public ImageProduct ImageProduct { get; set; }
 
+		public Size Size { get; set; }
+
 		//public List<Comments> Comments { get; set; }
 		//public int EntityID { get; set; }
 		//public string UserName { get; set; }

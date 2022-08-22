@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Linq.Dynamic;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
@@ -16,127 +16,88 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		private ApplicationDbContext db = new ApplicationDbContext();
 
 		// GET: Admin/Products
-		public ActionResult Index(int? page, string search, int? filter)
+
+		//public ActionResult Index(int? page, string search, int? filter)
+		//{
+		//	var products = from s in db.Products.Include(p => p.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList()
+		//								 select s;
+		//	if (!String.IsNullOrWhiteSpace(search))
+		//	{
+		//		products = products.Where(s => s.ProductName.Contains(search)
+		//													 || s.ProductCode.Contains(search)).ToList();
+		//	}
+		//	if (!String.IsNullOrWhiteSpace(filter.ToString()))
+		//	{
+		//		//Filter results based on company selected.
+
+		//		products = products.Where(x => x.CategoriesID.Equals(filter)).ToList();
+
+		//	}
+
+
+
+		//	ViewBag.product = db.Products.ToList();
+		//	ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
+		//	return View(products.ToList());
+		//}
+
+		public ActionResult Index(string Sorting_Order, string search, int? filter, string Search_Data, string Filter_Value, int? Page_No)
 		{
-			var products = from s in db.Products.Include(p => p.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList()
-										 select s;
-			if (!String.IsNullOrWhiteSpace(search))
-			{
-				products = products.Where(s => s.ProductName.Contains(search)
-															 || s.ProductCode.Contains(search)).ToList();
-			}
-			if (!String.IsNullOrWhiteSpace(filter.ToString()))
-			{
-				//Filter results based on company selected.
-
-				products = products.Where(x => x.CategoriesID.Equals(filter)).ToList();
-
-			}
-
-
-
-			ViewBag.product = db.Products.ToList();
+			ViewBag.CurrentSortOrder = Sorting_Order;
+			ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "ProductName" : "";
+			ViewBag.SortingPrice = String.IsNullOrEmpty(Sorting_Order) ? "Price" : "";
+			ViewBag.SortingId = String.IsNullOrEmpty(Sorting_Order) ? "Id" : "";
+			ViewBag.SortingDate = Sorting_Order == "CreatedDate" ? "ProductName" : "Date";
 			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
-			return View(products.ToList());
-		}
 
-		[HttpPost]
-		public JsonResult Index(int? page, string search, int? filter, string sortName, string sortDirection)
-		{
-			var products = from s in db.Products.Include(p => p.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList()
-										 select s;
+			if (Search_Data != null)
+			{
+				Page_No = 1;
+			}
+			else
+			{
+				Search_Data = Filter_Value;
+			}
+
+			ViewBag.FilterValue = Search_Data;
+
+			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList() select stu;
 			if (!String.IsNullOrWhiteSpace(search))
 			{
-				products = products.Where(s => s.ProductName.Contains(search)
-															 || s.ProductCode.Contains(search)).ToList();
+				products = products.Where(stu => stu.ProductName.Contains(search)
+															 || stu.ProductCode.Contains(search)).ToList();
 			}
 			if (!String.IsNullOrWhiteSpace(filter.ToString()))
 			{
 				//Filter results based on company selected.
 
-				products = products.Where(x => x.CategoriesID.Equals(filter)).ToList();
+				products = products.Where(stu => stu.CategoriesID.Equals(filter)).ToList();
 
 			}
-			//sort name
-			switch (sortName)
+			if (!String.IsNullOrEmpty(Search_Data))
 			{
-				case "Id":
-				case "":
-					if (sortDirection == "ASC")
-					{
-						products = (from product in db.Products
-												select product)
-						.OrderBy(product => product.Id)
-						//.Skip(startIndex)
-						.ToPagedList(page ?? 1, 5);
-					}
-					else
-					{
-						products = (from product in db.Products
-												select product)
-						.OrderByDescending(product => product.Id)
-						//.Skip(startIndex)
-						.ToPagedList(page ?? 1, 5);
-					}
-					break;
+				products = products.Where(stu => stu.ProductName.ToUpper().Contains(Search_Data.ToUpper())
+				|| stu.ProductCode.ToUpper().Contains(Search_Data.ToUpper()));
+			}
+			switch (Sorting_Order)
+			{
 				case "ProductName":
-					if (sortDirection == "ASC")
-					{
-						products = (from product in db.Products
-												select product)
-						.OrderBy(product => product.ProductName)
-						//.Skip(startIndex)
-						.ToPagedList(page ?? 1, 5);
-					}
-					else
-					{
-						products = (from product in db.Products
-												select product)
-						.OrderByDescending(product => product.ProductName)
-						//.Skip(startIndex)
-						.ToPagedList(page ?? 1, 5);
-					}
+					products = products.OrderByDescending(stu => stu.ProductName);
 					break;
-					//case "City":
-					//	if (sortDirection == "ASC")
-					//	{
-					//		model.Customers = (from customer in entities.Customers
-					//											 select customer)
-					//		.OrderBy(customer => customer.City)
-					//		.Skip(startIndex)
-					//		.Take(model.PageSize).ToList();
-					//	}
-					//	else
-					//	{
-					//		model.Customers = (from customer in entities.Customers
-					//											 select customer)
-					//	.OrderByDescending(customer => customer.City)
-					//	.Skip(startIndex)
-					//	.Take(model.PageSize).ToList();
-					//	}
-					//	break;
-					//case "Country":
-					//	if (sortDirection == "ASC")
-					//	{
-					//		model.Customers = (from customer in entities.Customers
-					//											 select customer)
-					//		.OrderBy(customer => customer.Country)
-					//		.Skip(startIndex)
-					//		.Take(model.PageSize).ToList();
-					//	}
-					//	else
-					//	{
-					//		model.Customers = (from customer in entities.Customers
-					//											 select customer)
-					//		.OrderByDescending(customer => customer.Country)
-					//		.Skip(startIndex)
-					//		.Take(model.PageSize).ToList();
-					//	}
+				case "Id":
+					products = products.OrderByDescending(stu => stu.Id);
+					break;
+				case "Price":
+					products = products.OrderByDescending(stu => stu.Price);
+					break;
+				default:
+					products = products.OrderBy(stu => stu.CreatedDate);
 					break;
 			}
-			ViewBag.product = db.Products.ToList();
-			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
-			return Json(products.ToList());
+
+			int Size_Of_Page = 4;
+			int No_Of_Page = (Page_No ?? 1);
+			return View(products.ToPagedList(No_Of_Page, Size_Of_Page));
 		}
 
 
@@ -198,7 +159,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				for (int i = 0; i < Request.Files.Count; i++)
 				{
 					var file = Request.Files[i];
-
+					// get asnd create image
 					if (file != null && file.ContentLength > 0)
 					{
 						var fileName = Path.GetFileName(file.FileName);
@@ -215,6 +176,19 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						file.SaveAs(path);
 					}
 				}
+				//get size
+				List<Size> sizes = new List<Size>();
+				for (int i = 0; i < Request.Files.Count; i++)
+				{
+					var size = new Size()
+					{
+						SizeName = model.Size.SizeName,
+						Stock = model.Size.Stock,
+
+					};
+					sizes.Add(size);
+				}
+
 
 				try
 				{
@@ -230,6 +204,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						CreatedDate = model.Product.CreatedDate,
 						Discount = model.Product.Discount,
 						Price = model.Product.Price,
+						Sizes = sizes
 
 
 					};
@@ -239,6 +214,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 					db.Products.Add(newProduct);
 					db.SaveChanges();
+					TempData["success"] = "Create Success!";
 					return RedirectToAction("Index");
 				}
 				catch (Exception ex)
@@ -253,19 +229,29 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			return View(model);
 		}
 		// GET: Admin/Products/Edit/5
-		public ActionResult Edit(int? id)
+		public ActionResult Edit(int id)
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Error", "Admin");
 			}
-			Product product = db.Products.Find(id);
+			var product = db.Products.SingleOrDefault(t => t.Id == id);
+
+
+			var pro = new ViewModel.ProductVM()
+			{
+				Id = id,
+				Product = product,
+				Categories = db.Categories.ToList(),
+
+			};
+
 			if (product == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Error", "Admin");
 			}
 			ViewBag.CategoryID = new SelectList(db.Categories, "Id", "CategoryName", product.Categories);
-			return View(product);
+			return View(pro);
 		}
 
 		// POST: Admin/Products/Edit/5
@@ -273,42 +259,132 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "Id,ProductName,ShortDesc,Description,ImagePath,CategoryID,Price,Discount,UnitsInStock,BestSellers,Active,CreatedDate")] Product product)
+		public ActionResult Edit(ViewModel.ProductVM model)
 		{
 			if (ModelState.IsValid)
 			{
-				db.Entry(product).State = EntityState.Modified;
-				db.SaveChanges();
-				return RedirectToAction("Index");
+
+				List<ImageProduct> fileDetails = new List<ImageProduct>();
+				for (int i = 0; i < Request.Files.Count; i++)
+				{
+					var file = Request.Files[i];
+					// get asnd create image
+					if (file != null && file.ContentLength > 0)
+					{
+						var fileName = Path.GetFileName(file.FileName);
+						ImageProduct fileDetail = new ImageProduct()
+						{
+							FileName = "~/Content/ImageProduct/" + fileName,
+							Extension = Path.GetExtension(fileName),
+							Id = Guid.NewGuid()
+						};
+						fileDetails.Add(fileDetail);
+
+						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileDetail.Id + fileDetail.Extension);
+
+						file.SaveAs(path);
+
+						List<Size> sizeName = new List<Size>();
+						for (int j = 0; j < Request.Files.Count; j++)
+						{
+							var size = new Size()
+							{
+								SizeName = model.Size.SizeName,
+								Stock = model.Size.Stock,
+
+							};
+							sizeName.Add(size);
+						}
+
+
+						try
+						{
+							var product = db.Products.SingleOrDefault(t => t.Id == model.Id);
+							product.ProductName = model.Product.ProductName;
+							product.CategoriesID = model.Id;
+							product.ShortDesc = model.Product.ShortDesc;
+							product.Description = model.Product.Description;
+							product.ImageProducts = fileDetails;
+							product.Active = model.Product.Active;
+							product.BestSellers = model.Product.BestSellers;
+							product.CreatedDate = model.Product.CreatedDate;
+							product.Discount = model.Product.Discount;
+							product.Price = model.Product.Price;
+							product.Sizes = sizeName;
+
+
+							db.Products.Add(product);
+							db.SaveChanges();
+							TempData["success"] = "Edit Success!";
+							return RedirectToAction("Index");
+						}
+						catch (Exception ex)
+						{
+							ViewBag.Msg = ex.Message;
+						}
+					}
+					else
+					{//get size
+						List<Size> sizes = new List<Size>();
+						for (int y = 0; y < Request.Files.Count; y++)
+						{
+							var size = new Size()
+							{
+								SizeName = model.Size.SizeName,
+								Stock = model.Size.Stock,
+
+							};
+							sizes.Add(size);
+						}
+
+
+						try
+						{
+							var product = db.Products.SingleOrDefault(t => t.Id == model.Id);
+							product.ProductName = model.Product.ProductName;
+							product.CategoriesID = model.Id;
+							product.ShortDesc = model.Product.ShortDesc;
+							product.Description = model.Product.Description;
+							//product.ImageProducts = fileDetails;
+							product.Active = model.Product.Active;
+							product.BestSellers = model.Product.BestSellers;
+							product.CreatedDate = model.Product.CreatedDate;
+							product.Discount = model.Product.Discount;
+							product.Price = model.Product.Price;
+							product.Sizes = sizes;
+
+							db.Products.Add(product);
+							db.SaveChanges();
+							TempData["success"] = "Edit Success!";
+							return RedirectToAction("Index");
+						}
+						catch (Exception ex)
+						{
+							ViewBag.Msg = ex.Message;
+						}
+					}
+				}
+
+
+
 			}
-			ViewBag.CategoryID = new SelectList(db.Categories, "Id", "CategoryName", product.Categories);
-			return View(product);
+			//get error when model state í false
+			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+		.SelectMany(E => E.Errors)
+		.Select(E => E.ErrorMessage)
+		.ToList();
+			return View(model);
 		}
 
 		// GET: Admin/Products/Delete/5
-		public ActionResult Delete(int? id)
+		public ActionResult Delete(int id)
 		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-			Product product = db.Products.Find(id);
-			if (product == null)
-			{
-				return HttpNotFound();
-			}
-			return View(product);
-		}
-
-		// POST: Admin/Products/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public ActionResult DeleteConfirmed(int id)
-		{
-			Product product = db.Products.Find(id);
-			db.Products.Remove(product);
+			var removePro = db.Products.SingleOrDefault(t => t.Id == id);
+			db.Products.Remove(removePro);
 			db.SaveChanges();
+
 			return RedirectToAction("Index");
+			TempData["success"] = "Delete Success!";
 		}
 
 		protected override void Dispose(bool disposing)
