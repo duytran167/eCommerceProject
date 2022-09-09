@@ -91,7 +91,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			{
 				User = db.Users.SingleOrDefault(t => t.Id == userId),
 			};
-			return View(model);
+			return PartialView(model);
 		}
 		// edit profile
 		public ActionResult EditProfile(string id)

@@ -160,7 +160,7 @@
 		</div>
 		
 
-				@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<< First", LinkToPreviousPageFormat = "< Previous", LinkToNextPageFormat = "Next >", LinkToLastPageFormat = "Last >>" })
+				@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
 			
 	</div>
 </div>

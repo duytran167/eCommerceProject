@@ -3,12 +3,14 @@ using eCommerceProject.Enums;
 using eCommerceProject.Models;
 using eCommerceProject.ViewModel;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using PagedList;
 using System;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,6 +23,19 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		private ApplicationDbContext _context;
 		private ApplicationDbContext db = new ApplicationDbContext();
 		SharedServices service = new SharedServices();
+		private UserManager<ApplicationUser> _usermanager;
+		private ApplicationUserManager _userManager;
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
 		// GET: BlogPosts
 		//public ActionResult Index(int? page, string search, int? filter, int CatID = 0)
 		//{
@@ -135,7 +150,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[ValidateInput(false)]
-		public ActionResult Create(ViewModel.BlogVM model)
+		public async Task<ActionResult> Create(ViewModel.BlogVM model)
 		{
 
 			if (ModelState.IsValid)
@@ -151,6 +166,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 
 				var userId = User.Identity.GetUserId();
+				var allUserCustomer = db.Customers.ToList();
+				var emails = String.Join(";", allUserCustomer);
 
 				var newBlog = new BlogPost()
 				{
@@ -167,6 +184,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 				db.BlogPosts.Add(newBlog);
 				db.SaveChanges();
+				//send mail
+				await UserManager.SendEmailAsync(allUserCustomer., "New From COCO Store", "Some thing news.... <br> out now \"" + newBlog.Title + "\"  was submited. Thanks for your submited Ideas, pls wait for QA respond!");
 				TempData["success"] = "Create Success!";
 				return RedirectToAction("Index");
 			}

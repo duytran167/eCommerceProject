@@ -296,7 +296,6 @@
     <Compile Include="Migrations\202208220856300_addImageandRemoveCat.Designer.cs">
       <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cat.cs" />
     <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Size.cs" />
@@ -453,6 +452,7 @@
     <Content Include="assets\images\avatars\thumb-7.jpg" />
     <Content Include="assets\images\avatars\thumb-8.jpg" />
     <Content Include="assets\images\avatars\thumb-9.jpg" />
+    <Content Include="assets\images\logo\bg-02.jpg" />
     <Content Include="assets\images\logo\favicon.png" />
     <Content Include="assets\images\logo\logo-fold-white.png" />
     <Content Include="assets\images\logo\logo-fold.png" />
@@ -1512,7 +1512,6 @@
     <Content Include="Areas\Admin\Views\AdminAccount\SendCode.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccount\VerifyCode.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
@@ -1790,6 +1789,16 @@
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
+    <Content Include="Views\Home\BestSeller.cshtml" />
+    <Content Include="Views\Home\NewestProduct.cshtml" />
+    <Content Include="Views\Home\DetailsProduct.cshtml" />
+    <Content Include="Views\Home\ListBlog.cshtml" />
+    <Content Include="Views\Home\DetailsBlog.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\ProductFeature.cshtml" />
+    <Content Include="Views\Home\CategoriesFeature.cshtml" />
+    <Content Include="Views\Home\DetailsBlogCategories.cshtml" />
+    <Content Include="Views\Home\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -177,24 +177,28 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					}
 				}
 				//get size
+				var sizeVip = model.Size;
 				List<Size> sizes = new List<Size>();
-				for (int i = 0; i < Request.Files.Count; i++)
+				if (sizeVip != null)
 				{
-					var size = new Size()
+					for (int i = 0; i < Request.Files.Count; i++)
 					{
-						SizeName = model.Size.SizeName,
-						Stock = model.Size.Stock,
+						var sizeV = Request.Files[i];
+						Size size = new Size()
+						{
+							SizeName = model.Size.SizeName,
+							Stock = model.Size.Stock,
 
-					};
-					sizes.Add(size);
+						};
+						sizes.Add(size);
+					}
 				}
-
-
 				try
 				{
 					var newProduct = new Product()
 					{
 						ProductName = model.Product.ProductName,
+						ProductCode = model.Product.ProductCode,
 						CategoriesID = model.Id,
 						ShortDesc = model.Product.ShortDesc,
 						Description = model.Product.Description,
@@ -205,7 +209,6 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						Discount = model.Product.Discount,
 						Price = model.Product.Price,
 						Sizes = sizes
-
 
 					};
 
@@ -243,7 +246,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				Id = id,
 				Product = product,
 				Categories = db.Categories.ToList(),
-
+				Sizes = db.Sizes.ToList(),
+				ImageProducts = db.ImageProducts.ToList(),
 			};
 
 			if (product == null)
@@ -307,7 +311,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 							product.ImageProducts = fileDetails;
 							product.Active = model.Product.Active;
 							product.BestSellers = model.Product.BestSellers;
-							product.CreatedDate = model.Product.CreatedDate;
+
 							product.Discount = model.Product.Discount;
 							product.Price = model.Product.Price;
 							product.Sizes = sizeName;

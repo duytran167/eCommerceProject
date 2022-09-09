@@ -3,6 +3,7 @@
 @{
 	ViewBag.Title = "Create";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	
 }
 <style>
 	.imagePreview {
@@ -41,7 +42,19 @@
 		background-color: rgba(255,255,255,0.6);
 		cursor: pointer;
 	}
-
+	.btnAddNew {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background-color: #4bd7ef;
+		color: #fff;
+		box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+		text-align: center;
+		line-height: 30px;
+		margin-top: 0px;
+		cursor: pointer;
+		font-size: 15px;
+	}
 	.imgAdd {
 		width: 30px;
 		height: 30px;
@@ -72,27 +85,26 @@
 	@Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-	
+
 	<hr />
 	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<div class="row">
+	<div class="row">
 
-
-	<div class="form-group col-md-8">
-		@Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-4" })
-		<div class="col-md-12">
-			@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
+		<div class="form-group col-md-8">
+			@Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-4" })
+			<div class="col-md-12">
+				@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group col-md-4">
+			@Html.Label("Product Code SKU:", htmlAttributes: new { @class = "control-label col-md-8" })
+			<div class="col-md-12">
+				@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
+			</div>
 		</div>
 	</div>
-	<div class="form-group col-md-4">
-		@Html.Label("Product Code SKU:", htmlAttributes: new { @class = "control-label col-md-8" })
-		<div class="col-md-12">
-			@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
-			@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
-		</div>
-	</div>
-</div>
 	<div class="row">
 		<div class="form-group col">
 			@Html.Label("Category", new { @class = "col-md-4 control-label" })
@@ -110,108 +122,118 @@
 			</div>
 		</div>
 	</div>
-		<div class="form-group">
-			@Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-12">
-				@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
-				@Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
-			</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-12">
+			@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
+			@Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
 		</div>
+	</div>
 
-		<div class="form-group">
-			@Html.Label("Product Image", htmlAttributes: new { @class = "control-label col-md-2" })
+	<div class="form-group">
+		@Html.Label("Product Image", htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="row">
+
+			<div class="col-sm-2 imgUp">
+				<div class="imagePreview"></div>
+				<label class="btn btn-primary">
+					Upload<input type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
+				</label>
+			</div><!-- col-2 -->
+			<i class="fa fa-plus imgAdd"></i>
+		</div><!-- row -->
+	</div>
+	@Html.Label("Size Chart", htmlAttributes: new { @class = "control-label col-md-12" })
+	<div class="container">
+
+		<br />
+
+		<div id="myinput" class="myinput">
+
 			<div class="row">
 
-				<div class="col-sm-2 imgUp">
-					<div class="imagePreview"></div>
-					<label class="btn btn-primary">
-						Upload<input type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
-					</label>
-				</div><!-- col-2 -->
-				<i class="fa fa-plus imgAdd"></i>
-			</div><!-- row -->
-		</div>
-		<div class="form-group">
-			<label>Choose Size: </label><br />
-			<a class="btnAddNew" href="#">Add More</a>
-			<br />
-			<div id="myinput" class="myinput">
-				<div class="row">
+				<div class="col-md-2" name="sizeV" value="sizeV" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; margin-left: 20px; border: 2px dashed green">
+
 					<div class="form-group ">
 						@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
-						<div class="col-md-6">
-							@Html.EditorFor(model => model.Size.SizeName, new { @class = "form-control" })
+						<div class="col-md-12">
+							@Html.EditorFor(model => Model.Size.SizeName, new { htmlAttributes = new { @class = "form-control", @name = "sizeV" } })
+
 							@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
 						</div>
 					</div>
 					<div class="form-group ">
 						@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
-						<div class="col-md-6">
-							@Html.EditorFor(model => model.Size.Stock, new { @class = "form-control" })
+						<div class="col-md-12">
+							@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control" , @name = "sizeV" } })
 							@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })
 						</div>
 					</div>
+					<a href="#" class="btnRemove">Xóa</a>
 				</div>
-				
+				<i class="fa fa-plus btnAddNew"></i>
+
 			</div>
-			<br />
 		</div>
+		<br />
+
+	</div>
 
 
 
-		<div class="row">
-			<div class="form-group col-sm-6">
-				@Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-12">
-					@Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group col-sm-6">
-				@Html.LabelFor(model => model.Product.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-12">
-					@Html.EditorFor(model => model.Product.Discount, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Product.Discount, "", new { @class = "text-danger" })
-				</div>
+	<div class="row">
+		<div class="form-group col-sm-6">
+			@Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-12">
+				@Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
 			</div>
 		</div>
 
-
-		@*<div class="form-group">
-				@Html.Label(" Total Stock", htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.Product.UnitsInStock, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Product.UnitsInStock, "", new { @class = "text-danger" })
-				</div>
-			</div>*@
-
-		<div class="form-group">
-			@Html.Label("Active", htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.CheckBoxFor(model => model.Product.BestSellers, new { data_toggle = "toggle", data_onstyle = "success" })
-
-				@Html.ValidationMessageFor(m => m.Product.BestSellers, "", new { @class = "text-danger" })
-			</div>
-		</div>
-
-		<div class="form-group">
-			@Html.Label("Best Sellers", htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.CheckBoxFor(model => model.Product.Active, new { data_toggle = "toggle", data_onstyle = "success" })
-
-				@Html.ValidationMessageFor(m => m.Product.Active, "", new { @class = "text-danger" })
-			</div>
-		</div>
-
-
-
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-12">
-				<input type="submit" value="Create" class="btn btn-success btn-tone col-md-12" />
+		<div class="form-group col-sm-6">
+			@Html.LabelFor(model => model.Product.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-12">
+				@Html.EditorFor(model => model.Product.Discount, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Product.Discount, "", new { @class = "text-danger" })
 			</div>
 		</div>
 	</div>
+
+
+	@*<div class="form-group">
+			@Html.Label(" Total Stock", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Product.UnitsInStock, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Product.UnitsInStock, "", new { @class = "text-danger" })
+			</div>
+		</div>*@
+
+	<div class="form-group">
+		@Html.Label("Active", htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.CheckBoxFor(model => model.Product.BestSellers, new { data_toggle = "toggle", data_onstyle = "success" })
+
+			@Html.ValidationMessageFor(m => m.Product.BestSellers, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.Label("Best Sellers", htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.CheckBoxFor(model => model.Product.Active, new { data_toggle = "toggle", data_onstyle = "success" })
+
+			@Html.ValidationMessageFor(m => m.Product.Active, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+
+
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-12">
+			<input type="submit" value="Create" class="btn btn-success btn-tone col-md-12" />
+		</div>
+	</div>
+</div>
 	}
 
 	<div>
@@ -235,12 +257,15 @@
 					e.preventDefault();
 					if (x < max_fields) { //max input box allowed
 						x++; //text box increment
-						$(wrapper).append('<div>  <div class="form-group "> @Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-6">@Html.EditorFor(model => model.Size.SizeName, new { @class = "form-control" })@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })</div></div><div class="form-group ">@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-6">@Html.EditorFor(model => model.Size.Stock, new { @class = "form-control" })@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })</div></div><a href="#" class="btnRemove">Xóa</a></div>'); //add input box
+						$(this).closest(".row").find('.btnAddNew').before('<div class="col-md-2" name="sizeNum" value="sizeNum" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; margin-left: 20px;"><div class="form-group ">@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-12">@Html.EditorFor(model => Model.Size.SizeName, new { htmlAttributes = new { @class = "form-control" } })@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })</div></div><div class="form-group ">@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-12">@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control" } })@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })</div></div><a href="#" class="btnRemove">Xóa</a></div>'); //add input box
 					}
 				});
 				$(wrapper).on("click", ".btnRemove", function (e) { //user click on remove text
 					e.preventDefault(); $(this).parent('div').remove(); x--;
 				})
+			});
+			$(".imgAdd").click(function () {
+				$(this).closest(".row").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input name="file" type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
 			});
 			$(document).ready(function () {
 				$(".content-editor").summernote({

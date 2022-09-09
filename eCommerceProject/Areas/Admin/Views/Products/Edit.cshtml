@@ -74,81 +74,84 @@
 	@Html.AntiForgeryToken()
 	@Html.HiddenFor(model => model.Id)
 
-<div class="form-horizontal">
+	<div class="form-horizontal">
 
-	<hr />
-	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-	<div class="row">
-
-
-		<div class="form-group col-md-8">
-			@Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-4" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		<div class="form-group col-md-4">
-			@Html.Label("Product Code SKU:", htmlAttributes: new { @class = "control-label col-md-8" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="form-group col">
-			@Html.Label("Category", new { @class = "col-md-4 control-label" })
-			<div class="col-md-12">
-
-				@Html.DropDownListFor(m => m.Id, new SelectList(Model.Categories, "Id", "CategoryName", "ImagePath"), "--Select Category--", new { @class = "dropdown form-control" })
-			</div>
-		</div>
-
-		<div class="form-group col">
-			@Html.Label("Tag", htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Product.ShortDesc, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Product.ShortDesc, "", new { @class = "text-danger" })
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-12">
-			@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
-			@Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
-		</div>
-	</div>
-
-	<div class="form-group">
-		@Html.Label("Product Image", htmlAttributes: new { @class = "control-label col-md-2" })
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 		<div class="row">
 
-			<div class="col-sm-2 imgUp">
-				<div class="imagePreview"></div>
-				<label class="btn btn-primary">
-					Upload<input type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
-				</label>
-			</div><!-- col-2 -->
-			<i class="fa fa-plus imgAdd"></i>
-		</div><!-- row -->
-	</div>
-	<div class="row">
-		<div class="form-group">
-			@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Size.SizeName, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
+
+			<div class="form-group col-md-8">
+				@Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-4" })
+				<div class="col-md-12">
+					@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
+				</div>
+			</div>
+			<div class="form-group col-md-4">
+				@Html.Label("Product Code SKU:", htmlAttributes: new { @class = "control-label col-md-8" })
+				<div class="col-md-12">
+					@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col">
+				@Html.Label("Category", new { @class = "col-md-4 control-label" })
+				<div class="col-md-12">
+
+					@Html.DropDownListFor(m => m.Id, new SelectList(Model.Categories, "Id", "CategoryName", "ImagePath"), "--Select Category--", new { @class = "dropdown form-control" })
+				</div>
+			</div>
+
+			<div class="form-group col">
+				@Html.Label("Tag", htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-12">
+					@Html.EditorFor(model => model.Product.ShortDesc, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.ShortDesc, "", new { @class = "text-danger" })
+				</div>
 			</div>
 		</div>
 		<div class="form-group">
-			@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+			@Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-12">
-				@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })
+				@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
+				@Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
 			</div>
 		</div>
+
+		<div class="form-group">
+			@Html.Label("Product Image", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="row">
+
+				<div class="col-sm-2 imgUp">
+					<div class="imagePreview"></div>
+					<label class="btn btn-primary">
+						Upload<input type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
+					</label>
+				</div><!-- col-2 -->
+				<i class="fa fa-plus imgAdd"></i>
+			</div><!-- row -->
+		</div>
+		<div class="row">
+			@foreach (var item in Model.Sizes)
+			{
+				<div class="form-group">
+					@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						<input name="@item.SizeName" class="form-control" />
+						@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
+					</div>
+				</div>
+				<div class="form-group">
+					@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })
+					</div>
+				</div>
+			}
 		</div>
 		<div class="form-group">
 			<label>Choose Size: </label><br />
@@ -176,25 +179,46 @@
 			<br />
 		</div>
 
+		<div class="editor-field">
+			<input type="file" name="file" multiple="multiple" />
 
+			<ul class="attachment">
+				@foreach (var item in Model.ImageProducts)
+				{
 
-		<div class="row">
-			<div class="form-group col-sm-6">
-				@Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-12">
-					@Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
-				</div>
-			</div>
+				<li>
+					<div class="col-sm-2 imgUp"><div class="imagePreview">
+						<label class="btn btn-primary">
+						Upload<input src="@Url.Content(item.FileName)" type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
+						</label>
+						</div><i class="fa fa-times del"></i></div>
+					<a class="title" href="/Support/Download/?p=@(item.Id + item.Extension)&d=@item.FileName">@item.FileName</a>
+					<a href="javascript:void(0);" data-id="@item.Id" class="deleteItem">X</a>
+				</li>
 
-			<div class="form-group col-sm-6">
-				@Html.LabelFor(model => model.Product.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-12">
-					@Html.EditorFor(model => model.Product.Discount, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Product.Discount, "", new { @class = "text-danger" })
-				</div>
-			</div>
+				}
+			</ul>
 		</div>
+
+
+
+		@*<div class="row">
+				<div class="form-group col-sm-6">
+					@Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						@Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
+					</div>
+				</div>
+
+				<div class="form-group col-sm-6">
+					@Html.LabelFor(model => model.Product.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						@Html.EditorFor(model => model.Product.Discount, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.Discount, "", new { @class = "text-danger" })
+					</div>
+				</div>
+			</div>*@
 
 
 		@*<div class="form-group">
@@ -231,24 +255,25 @@
 			</div>
 		</div>
 	</div>
-	}
+}
 
 
 
 
 
-	<div>
-		@Html.ActionLink("Back to List", "Index")
-	</div>
-	@section Scripts {
-		@Scripts.Render("~/bundles/jqueryval")
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-		<script type="text/javascript">
+	<script type="text/javascript">
 			$(document).ready(function () {
 				var max_fields = 10; //maximum input boxes allowed
 				var wrapper = $(".myinput"); //Fields wrapper
@@ -407,5 +432,5 @@
 
 				});
 			});
-		</script>
-	}
+	</script>
+}

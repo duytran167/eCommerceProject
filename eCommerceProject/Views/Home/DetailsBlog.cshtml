@@ -1,0 +1,527 @@
+﻿@model eCommerceProject.ViewModel.BlogVM
+@using Microsoft.AspNet.Identity
+@{
+	ViewBag.Title =  Model.BlogPost.Title;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+	be-comment-block {
+		margin-bottom: 50px !important;
+		border: 1px solid #edeff2;
+		border-radius: 2px;
+		padding: 50px 70px;
+		border: 1px solid #ffffff;
+	}
+
+	.comments-title {
+		font-size: 16px;
+		color: #262626;
+		margin-bottom: 15px;
+		font-family: 'Conv_helveticaneuecyr-bold';
+	}
+
+	.be-img-comment {
+		width: 60px;
+		height: 60px;
+		float: left;
+		margin-bottom: 15px;
+	}
+
+	.be-ava-comment {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+	}
+
+	.be-comment-content {
+		margin-left: 80px;
+	}
+
+		.be-comment-content span {
+			display: inline-block;
+			width: 49%;
+			margin-bottom: 15px;
+		}
+
+	.be-comment-name {
+		font-size: 13px;
+		font-family: 'Conv_helveticaneuecyr-bold';
+	}
+
+	.be-comment-content a {
+		color: #383b43;
+	}
+
+	.be-comment-content span {
+		display: inline-block;
+		width: 49%;
+		margin-bottom: 15px;
+	}
+
+	.be-comment-time {
+		text-align: right;
+	}
+
+	.be-comment-time {
+		font-size: 11px;
+		color: #b4b7c1;
+	}
+
+	.be-comment-text {
+		font-size: 13px;
+		line-height: 18px;
+		color: #7a8192;
+		display: block;
+		background: #f6f6f7;
+		border: 1px solid #edeff2;
+		padding: 15px 20px 20px 20px;
+	}
+
+	.form-group.fl_icon .icon {
+		position: absolute;
+		top: 1px;
+		left: 16px;
+		width: 48px;
+		height: 48px;
+		background: #f6f6f7;
+		color: #b5b8c2;
+		text-align: center;
+		line-height: 50px;
+		-webkit-border-top-left-radius: 2px;
+		-webkit-border-bottom-left-radius: 2px;
+		-moz-border-radius-topleft: 2px;
+		-moz-border-radius-bottomleft: 2px;
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+
+	.form-group .form-input {
+		font-size: 13px;
+		line-height: 50px;
+		font-weight: 400;
+		color: #b4b7c1;
+		width: 100%;
+		height: 50px;
+		padding-left: 20px;
+		padding-right: 20px;
+		border: 1px solid #edeff2;
+		border-radius: 3px;
+	}
+
+	.form-group.fl_icon .form-input {
+		padding-left: 70px;
+	}
+
+	.form-group textarea.form-input {
+		height: 150px;
+	}
+</style>
+<!-- breadcrumb -->
+<div class="container">
+	<div class="bread-crumb flex-w p-l-25  p-t-30 p-lr-0-lg">
+		<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+			Home
+			<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+		</a>
+
+		<a href="blog.html" class="stext-109 cl8 hov-cl1 trans-04">
+			Blog
+			<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+		</a>
+
+		<span class="stext-109 cl4">
+			@Model.BlogPost.Title
+		</span>
+	</div>
+</div>
+
+
+<!-- Content page -->
+<section class="bg0 p-t-52 p-b-20">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-lg-9 p-b-80">
+				<div class="p-r-45 p-r-0-lg">
+					<!--  -->
+					<div class="wrap-pic-w how-pos5-parent">
+						<img src="@Url.Content(Model.BlogPost.ImagePath)" alt="IMG-BLOG">
+
+						<div class="flex-col-c-m size-123 bg9 how-pos5">
+							<span class="ltext-107 cl2 txt-center">
+								@Model.BlogPost.CreateDate.ToString("dd")
+							</span>
+
+							<span class="stext-109 cl3 txt-center">
+								@Model.BlogPost.CreateDate.ToString("mm-yyyy ")
+							</span>
+						</div>
+					</div>
+
+					<div class="p-t-32">
+						<span class="flex-w flex-m stext-111 cl2 p-b-19">
+							<span>
+								<span class="cl4">By</span> @Model.BlogPost.User.FullName
+								<span class="cl12 m-l-4 m-r-6">|</span>
+							</span>
+
+							<span>
+								@Model.BlogPost.CreateDate.ToString("dd MMM yyyy")
+								<span class="cl12 m-l-4 m-r-6">|</span>
+							</span>
+
+							<span>
+								@Model.BlogPost.BlogPostView <i class="fas fa-eye"></i>
+								<span class="cl12 m-l-4 m-r-6">|</span>
+							</span>
+
+							<span>
+								@ViewBag.CmtCount Comments
+							</span>
+						</span>
+
+						<h4 class="ltext-109 cl2 p-b-28">
+							@Model.BlogPost.Title
+						</h4>
+
+						<p class="stext-117 cl6 p-b-26">
+							@Html.Raw(Model.BlogPost.Contents)
+						</p>
+
+
+					</div>
+
+					<div class="flex-w flex-t p-t-16">
+						<span class="size-216 stext-116 cl8 p-t-4">
+							Tags
+						</span>
+
+						<div class="flex-w size-217">
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Streetstyle
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Crafts
+							</a>
+						</div>
+					</div>
+
+					<!-- comment -->
+					
+					<div class="p-t-40">
+						<div class="be-comment-block">
+							<h5 class="mtext-113 cl2 p-b-12">Comments (@ViewBag.CmtCount)</h5>
+							<div class="be-comment">
+								@if (Model.Comments != null && Model.Comments.Count > 0)
+								{
+									foreach (var comment in Model.Comments)
+									{
+										<div class="be-img-comment">
+											<a href="blog-detail-2.html">
+												<img src="@Url.Content(comment.User.ImagePath)" alt="" class="be-ava-comment">
+											</a>
+										</div>
+										<div class="be-comment-content">
+
+											<span class="be-comment-name">
+												<a href="blog-detail-2.html" class="stext-102">@comment.User.UserName</a>
+												@if (@comment.UserID == User.Identity.GetUserId())
+												{
+
+													<a style=" cursor:pointer" onclick="removeCmt(@comment.Id)">
+														<i href="" class="fas fa-trash text-danger" aria-hidden="true"></i>
+													</a>
+												}
+											</span>
+											<span class="be-comment-time">
+												<i class="fa fa-clock-o"></i>
+												@comment.TimeStamp
+											</span>
+
+											<p class="be-comment-text">
+												@comment.Text
+											</p>
+
+										</div>
+
+										<hr />
+									}
+								}
+								else
+								{
+									<i>No comment</i>
+									<hr />
+								}
+							</div>
+						</div>
+						<h5 class="mtext-113 cl2 p-b-12">
+							Leave a Comment
+						</h5>
+
+						<p class="stext-107 cl6 p-b-40">
+							Your email address will not be published. Required fields are marked *
+						</p>
+						<input type="hidden" value="@Model.BlogPost.Id" name="EntityID" />
+						<form id="commentForm">
+							<input type="hidden" value="@Model.EntityID" name="EntityID" />
+							<input type="hidden" value="@Model.BlogPost.Id" name="RecordID" />
+							<div class="bor19 m-b-20">
+								<textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15" name="Text" placeholder="Comment..."></textarea>
+							</div>
+							@if (Request.IsAuthenticated)
+							{
+
+								<button id="btnComment" class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
+									Post Comment
+								</button>
+							}
+							else
+							{
+								<button type="button" id="chkcondition" onclick="javascript: return RequestLogin();" class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">Login and Comment</button>
+							}
+
+
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4 col-lg-3 p-b-80">
+				<div class="side-menu">
+					
+
+					<!-- blog features -->
+					@{
+						Html.RenderAction("CategoriesFeature", "Home");
+
+					}
+
+					<!-- blog features -->
+					@{
+						Html.RenderAction("ProductFeature", "Home");
+
+					}
+
+					<div class="p-t-55">
+						<h4 class="mtext-112 cl2 p-b-20">
+							Archive
+						</h4>
+
+						<ul>
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										July 2018
+									</span>
+
+									<span>
+										(9)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										June 2018
+									</span>
+
+									<span>
+										(39)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										May 2018
+									</span>
+
+									<span>
+										(29)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										April  2018
+									</span>
+
+									<span>
+										(35)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										March 2018
+									</span>
+
+									<span>
+										(22)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										February 2018
+									</span>
+
+									<span>
+										(32)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										January 2018
+									</span>
+
+									<span>
+										(21)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										December 2017
+									</span>
+
+									<span>
+										(26)
+									</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="p-t-50">
+						<h4 class="mtext-112 cl2 p-b-27">
+							Tags
+						</h4>
+
+						<div class="flex-w m-r--5">
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Fashion
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Lifestyle
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Denim
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Streetstyle
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Crafts
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+@section scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+
+		function RequestLogin() {
+		if ($("#chkcondition").is(':checked')) {
+			return true;
+		}
+		else {
+			swal("Please login!!!", "Login to Comment");
+			return false;
+		}
+			}
+	$("#btnComment").click(function () {
+		$.ajax({
+			url: "@Url.Action("LeaveComment", "Home")",
+			type: "post",
+			data:
+				$("#commentForm").serialize()
+		}).done(function (response) {
+			if (response.Success) {
+				window.location.reload();
+			}
+			else {
+				alert("Error!", response.Message, "error");
+			}
+		}).fail(function () {
+			alert("Error!", "Error Occured. please try again later.", "error");
+		});
+	});
+
+		function removeCmt(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover your image!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Home/DeleteComment/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+		
+	</script>
+}
