@@ -111,7 +111,7 @@
 									</div>
 									<div class="media-body m-l-20">
 										<h6 class="m-b-0">
-											<a href="" class="text-dark">@comment.User.UserName</a>
+											<a href="" class="text-dark">@comment.User.FullName</a>
 										</h6>
 										<span class="font-size-13 text-gray">@comment.TimeStamp</span>
 									</div>
@@ -120,7 +120,7 @@
 								@if (@comment.UserID == User.Identity.GetUserId())
 								{
 									
-									<a onclick="removeCmt(@comment.Id)">
+									<a style=" cursor:pointer" onclick="removeCmt(@comment.Id)">
 										<i href="" class="anticon anticon-delete text-danger"  aria-hidden="true"></i>
 									</a>
 								}

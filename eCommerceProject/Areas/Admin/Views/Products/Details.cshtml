@@ -1,0 +1,283 @@
+﻿@model eCommerceProject.ViewModel.ProductVM
+
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	var result = Model.Product.ImageProducts.GroupBy(x => x.FileName);
+}
+
+
+<div class="page-header">
+	<h2 class="header-title">Blog Post</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Blog List</a>
+			<span class="breadcrumb-item active">@Model.Product.ProductName</span>
+		</nav>
+	</div>
+</div>
+<form>
+	<div class="page-header no-gutters has-tab">
+		<div class="d-md-flex m-b-15 align-items-center justify-content-between">
+			<div class="media align-items-center m-b-15">
+				<div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+					@foreach (var item in result)
+					{
+						<img src="@Url.Content(item.Key)" alt="">
+					}
+
+				</div>
+				<div class="m-l-15">
+					<h4 class="m-b-0">
+						@Model.Product.ProductName
+						@Html.ActionLink(" ", "Edit", new { id = Model.Product.Id }, new
+										 {
+											 @class = "anticon anticon-edit text-success",
+											 //onclick = "return confirm('Are you sure you want to remove " + Model.BlogPost.Title + " to list ?');"
+											 })
+						<span onclick="remove(@Model.Product.Id)"><i class="anticon anticon-delete text-danger" style=" cursor:pointer"></i></span>
+					</h4>
+					<p class="text-muted m-b-0">Code: #5325</p>
+				</div>
+			</div>
+			<div class="m-b-15">
+				<button class="btn btn-primary">
+					<i class="anticon anticon-save"></i>
+					<span>Save</span>
+				</button>
+			</div>
+		</div>
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#product-edit-option">Option Info</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#product-image-basic">Image Info</a>
+			</li>
+
+		</ul>
+	</div>
+	<div class="tab-content m-t-15">
+		<div class="tab-pane fade show active" id="product-edit-basic">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productName">Product Name: </label>
+						@Model.Product.ProductName
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Dicount: </label>
+						@Model.Product.Discount %
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Price: </label>
+
+						@Model.Product.Price.ToString("#,##0") VND
+					</div>
+
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productCategory">Category: </label>
+						@Model.Product.Categories.CategoryName
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productBrand">Collection</label>
+						<input type="text" class="form-control" id="productBrand" placeholder="Brand" value="H&M">
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productBrand">Date Created:</label>
+						@Model.Product.CreatedDate.ToString("dd MMM yyyy")
+					</div>
+
+					<div class="form-group">
+
+						@if (Model.Product.Active == true)
+						{
+							<div class="form-group d-flex align-items-center">
+								<div class="switch m-r-10">
+									<input type="checkbox" id="switch-1" disabled="">
+									<label for="switch-3"></label>
+								</div>
+								<label>Public</label>
+							</div>
+						}
+						@if (Model.Product.Active == false)
+						{
+							<div class="form-group d-flex align-items-center">
+								<div class="switch m-r-10">
+									<input type="checkbox" id="switch-2" disabled="">
+									<label for="switch-3"></label>
+								</div>
+								<label>Public</label>
+							</div>
+						}
+
+					</div>
+
+					<div class="form-group">
+
+						@if (Model.Product.BestSellers == true)
+						{
+							<div class="form-group d-flex align-items-center">
+								<div class="switch m-r-10">
+									<input type="checkbox" id="switch-1" disabled="">
+									<label for="switch-3"></label>
+								</div>
+								<label>Best Seller</label>
+							</div>
+						}
+						@if (Model.Product.BestSellers == false)
+						{
+							<div class="form-group d-flex align-items-center">
+								<div class="switch m-r-10">
+									<input type="checkbox" id="switch-2" disabled="">
+									<label for="switch-3"></label>
+								</div>
+								<label>Best Seller</label>
+							</div>
+						}
+
+					</div>
+					<!--<div class="form-group">
+					<label class="font-weight-semibold" for="productStatus">Status: </label>
+					<div class="col">-->
+					@*@if (Model.Product.UnitsInStock > 10)
+						{
+
+							<div class="badge badge-success badge-dot m-r-10"></div>
+							<div class="m-r-10">In Stock</div>
+						}
+						@if (Model.Product.UnitsInStock < 0)
+						{
+							<div class="badge badge-danger badge-dot m-r-10"></div>
+							<div class="m-r-10">Out Of Stock</div>
+						}
+						@if (Model.Product.UnitsInStock < 10)
+						{
+							<div class="badge badge-warning badge-dot m-r-10"></div>
+							<div class="m-r-10">Stock Only < 10</div>
+						}*@
+					<!--</div>
+					</div>-->
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="product-edit-option">
+			<div class="card">
+				<div class="card-body row">
+
+					@foreach (var size in Model.Product.Sizes)
+					{
+						<div class="file">
+							<div class="media align-items-center">
+								<div class="m-r-15 font-size-30">
+									<i class="anticon anticon-info-circle text-success"></i>
+								</div>
+								<div>
+									<h6 class="mb-0">Size Name: <span class="font-size-13 text-muted">@size.SizeName</span></h6>
+									<h6 class="mb-0">Total Stock: <span class="font-size-13 text-muted">@size.Stock</span></h6>
+								</div>
+							</div>
+						</div>
+						
+
+					}
+
+
+
+				</div>
+					</div>
+		</div>
+		<div class="tab-pane fade" id="product-edit-description">
+			<div class="card">
+				<div class="card-body">
+					<div id="productDescription">
+						<p>@Html.Raw(Model.Product.Description)</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="product-image-basic">
+			<div class="card">
+				<div class="card-body">
+
+					@foreach (var photo in Model.Product.ImageProducts)
+					{
+						<img src="@Url.Content(photo.FileName)" width="120" />
+					}
+
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>
+</div>
+@section scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+
+		function remove(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover your image!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Admin/Products/Delete/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/Products/");
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/Products/");
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/Products/");
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+	</script>
+
+}
+
+

@@ -1,0 +1,436 @@
+﻿@model eCommerceProject.ViewModel.ProductVM
+
+@{
+	ViewBag.Title = "Edit";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	var result = Model.Product.ImageProducts.GroupBy(x => x.FileName);
+}
+<style>
+	.imagePreview {
+		width: 100%;
+		height: 180px;
+		background-position: center center;
+		background: url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+		background-color: #fff;
+		background-size: cover;
+		background-repeat: no-repeat;
+		display: inline-block;
+		box-shadow: 0px -3px 6px 2px rgba(0,0,0,0.2);
+	}
+
+	.btn-primary {
+		display: block;
+		border-radius: 0px;
+		box-shadow: 0px 4px 6px 2px rgba(0,0,0,0.2);
+		margin-top: -5px;
+	}
+
+	.imgUp {
+		margin-bottom: 15px;
+		padding-left: 30px;
+	}
+
+	.del {
+		position: absolute;
+		top: 0px;
+		right: 15px;
+		width: 30px;
+		height: 30px;
+		text-align: center;
+		line-height: 30px;
+		background-color: rgba(255,255,255,0.6);
+		cursor: pointer;
+	}
+
+	.imgAdd {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background-color: #4bd7ef;
+		color: #fff;
+		box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+		text-align: center;
+		line-height: 30px;
+		margin-top: 0px;
+		cursor: pointer;
+		font-size: 15px;
+	}
+</style>
+<div class="page-header">
+	<h2 class="header-title">Edit Product</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Product</a>
+			<span class="breadcrumb-item active">Edit @Model.Product.ProductName</span>
+		</nav>
+	</div>
+</div>
+
+
+
+@using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.HiddenFor(model => model.Id)
+
+	<div class="form-horizontal">
+
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="row">
+
+
+			<div class="form-group col-md-8">
+				@Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-4" })
+				<div class="col-md-12">
+					@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
+				</div>
+			</div>
+			<div class="form-group col-md-4">
+				@Html.Label("Product Code SKU:", htmlAttributes: new { @class = "control-label col-md-8" })
+				<div class="col-md-12">
+					@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col">
+				@Html.Label("Category", new { @class = "col-md-4 control-label" })
+				<div class="col-md-12">
+
+					@Html.DropDownListFor(m => m.Id, new SelectList(Model.Categories, "Id", "CategoryName", "ImagePath"), "--Select Category--", new { @class = "dropdown form-control" })
+				</div>
+			</div>
+
+			<div class="form-group col">
+				@Html.Label("Tag", htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-12">
+					@Html.EditorFor(model => model.Product.ShortDesc, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.ShortDesc, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-12">
+				@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
+				@Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.Label("Product Image", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="row">
+
+				<div class="col-sm-2 imgUp">
+					<div class="imagePreview"></div>
+					<label class="btn btn-primary">
+						Upload<input type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
+					</label>
+				</div><!-- col-2 -->
+				<i class="fa fa-plus imgAdd"></i>
+			</div><!-- row -->
+		</div>
+		<div class="row">
+			@foreach (var item in Model.Sizes)
+			{
+				<div class="form-group">
+					@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						<input name="@item.SizeName" class="form-control" />
+						@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
+					</div>
+				</div>
+				<div class="form-group">
+					@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })
+					</div>
+				</div>
+			}
+		</div>
+		<div class="form-group">
+			<label>Choose Size: </label><br />
+			<a class="btnAddNew" href="#">Add More</a>
+			<br />
+			<div id="myinput" class="myinput">
+				<div class="row">
+					<div class="form-group ">
+						@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-6">
+							@Html.EditorFor(model => model.Size.SizeName, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group ">
+						@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-6">
+							@Html.EditorFor(model => model.Size.Stock, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<br />
+		</div>
+
+		<div class="editor-field">
+			<input type="file" name="file" multiple="multiple" />
+
+			<ul class="attachment">
+				@foreach (var item in Model.ImageProducts)
+				{
+
+				<li>
+					<div class="col-sm-2 imgUp"><div class="imagePreview">
+						<label class="btn btn-primary">
+						Upload<input src="@Url.Content(item.FileName)" type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
+						</label>
+						</div><i class="fa fa-times del"></i></div>
+					<a class="title" href="/Support/Download/?p=@(item.Id + item.Extension)&d=@item.FileName">@item.FileName</a>
+					<a href="javascript:void(0);" data-id="@item.Id" class="deleteItem">X</a>
+				</li>
+
+				}
+			</ul>
+		</div>
+
+
+
+		@*<div class="row">
+				<div class="form-group col-sm-6">
+					@Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						@Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
+					</div>
+				</div>
+
+				<div class="form-group col-sm-6">
+					@Html.LabelFor(model => model.Product.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col-md-12">
+						@Html.EditorFor(model => model.Product.Discount, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.Discount, "", new { @class = "text-danger" })
+					</div>
+				</div>
+			</div>*@
+
+
+		@*<div class="form-group">
+				@Html.Label(" Total Stock", htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.Product.UnitsInStock, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Product.UnitsInStock, "", new { @class = "text-danger" })
+				</div>
+			</div>*@
+
+		<div class="form-group">
+			@Html.Label("Active", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.CheckBoxFor(model => model.Product.BestSellers, new { data_toggle = "toggle", data_onstyle = "success" })
+
+				@Html.ValidationMessageFor(m => m.Product.BestSellers, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.Label("Best Sellers", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.CheckBoxFor(model => model.Product.Active, new { data_toggle = "toggle", data_onstyle = "success" })
+
+				@Html.ValidationMessageFor(m => m.Product.Active, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-12">
+				<input type="submit" value="Create" class="btn btn-success btn-tone col-md-12" />
+			</div>
+		</div>
+	</div>
+}
+
+
+
+
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script type="text/javascript">
+			$(document).ready(function () {
+				var max_fields = 10; //maximum input boxes allowed
+				var wrapper = $(".myinput"); //Fields wrapper
+				var add_button = $(".btnAddNew"); //Add button ID
+				var x = 0; //initlal text box count
+				$(add_button).click(function (e) { //on add input button click
+					e.preventDefault();
+					if (x < max_fields) { //max input box allowed
+						x++; //text box increment
+						$(wrapper).append('<div>  <div class="form-group "> @Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-6">@Html.EditorFor(model => model.Size.SizeName, new { @class = "form-control" })@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })</div></div><div class="form-group ">@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-6">@Html.EditorFor(model => model.Size.Stock, new { @class = "form-control" })@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })</div></div><a href="#" class="btnRemove">Xóa</a></div>'); //add input box
+					}
+				});
+				$(wrapper).on("click", ".btnRemove", function (e) { //user click on remove text
+					e.preventDefault(); $(this).parent('div').remove(); x--;
+				})
+			});
+			$(document).ready(function () {
+				$(".content-editor").summernote({
+					height: 300,
+					minHeight: null,
+					maxHeight: null,
+					codemirror: {
+						theme: "monokai"
+					},
+					callbacks: {
+						onImageUpload: function (files) {
+							for (var i = 0; i < files.length; i++) {
+								uploadImage(files[i]);
+							}
+						}
+					},
+					fontSizes: ['12', '14', '16', '18', '24', '36', '48'],
+					toolbar: [
+						['style', ['style']],
+						['font', ['bold', 'underline', 'clear']],
+						['fontname', ['fontname']],
+						['fontsize', ['fontsize']],
+						['color', ['color']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['table', ['table']],
+						['insert', ['link', 'picture', 'video']],
+						['view', ['fullscreen', 'codeview', 'help']],
+					],
+				});
+			});
+			function uploadImage(file) {
+				var formData = new FormData();
+				formData.append("uploadedFiles", file);
+				$.ajax({
+					data: formData,
+					type: "POST",
+					url: '/BlogPosts/UploadFile',
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function (FileUrl) {
+						alert(FileUrl);
+						var imgNode = document.createElement('img');
+						imgNode.src = FileUrl;
+						$('.content-editor').summernote('insertNode', imgNode);
+					},
+					error: function (data) {
+						alert(data.responseText);
+					}
+				});
+			}
+			//view image thumb////////////////////////////////////////////////////////////////////////
+			$(document).ready(function () {
+				$("#imageBrowes").change(function () {
+					var File = this.files;
+					if (File && File[0]) {
+						ReadImage(File[0]);
+					}
+				})
+			})
+			var ReadImage = function (file) {
+				var reader = new FileReader;
+				var image = new Image;
+				reader.readAsDataURL(file);
+				reader.onload = function (_file) {
+					image.src = _file.target.result;
+					image.onload = function () {
+						var height = this.height;
+						var width = this.width;
+						var type = file.type;
+						var size = ~~(file.size / 1024) + "KB";
+						$("#targetImg").attr('src', _file.target.result);
+						$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+						$("#imgPreview").show();
+					}
+				}
+			}
+			var ClearPreview = function () {
+				$("#imageBrowes").val('');
+				$("#description").text('');
+				$("#imgPreview").hide();
+			}
+			$(function () {
+				function togglePackage() {
+					var isPackage = $("#package-checkbox").is(":checked");
+					if (isPackage) {
+						$("#datapoint-checkbox").prop("checked", true).prop("disabled", true);
+						$("input[type='hidden'][name='isPublic']").val("true");
+					}
+					else {
+						$("#datapoint-checkbox").prop("disabled", false);
+						$("input[type='hidden'][name='isHotNews']").val("false");
+					}
+				};
+				$(document).on('change', '#package-checkbox', togglePackage);
+				togglePackage();
+			});
+			//upload muiltple
+			//$(document).ready(function () {
+			//	var max_fields = 10; //maximum input boxes allowed
+			//	var wrapper = $(".myinput"); //Fields wrapper
+			//	var add_button = $(".btnAddNew"); //Add button ID
+
+			//	var x = 0; //initlal text box count
+			//	$(add_button).click(function (e) { //on add input button click
+			//		e.preventDefault();
+			//		if (x < max_fields) { //max input box allowed
+			//			x++; //text box increment
+			//			$(wrapper).append('<div>   <input type="file" name="uploadFile[' + x + ']" /><a href="#" class="btnRemove">Xóa</a></div>'); //add input box
+			//		}
+			//	});
+
+			//	$(wrapper).on("click", ".btnRemove", function (e) { //user click on remove text
+			//		e.preventDefault(); $(this).parent('div').remove(); x--;
+			//	})
+			//});
+			$(".imgAdd").click(function () {
+				$(this).closest(".row").find('.imgAdd').before('<div class="col-sm-2 imgUp"><div class="imagePreview"></div><label class="btn btn-primary">Upload<input name="file" type="file" class="uploadFile img" value="Upload Photo" style="width:0px;height:0px;overflow:hidden;"></label><i class="fa fa-times del"></i></div>');
+			});
+			$(document).on("click", "i.del", function () {
+				// 	to remove card
+				$(this).parent().remove();
+				// to clear image
+				// $(this).parent().find('.imagePreview').css("background-image","url('')");
+			});
+			$(function () {
+				$(document).on("change", ".uploadFile", function () {
+					var uploadFile = $(this);
+					var files = !!this.files ? this.files : [];
+					if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+					if (/^image/.test(files[0].type)) { // only image file
+						var reader = new FileReader(); // instance of the FileReader
+						reader.readAsDataURL(files[0]); // read the local file
+
+						reader.onloadend = function () { // set image data as background of div
+							//alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+							uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
+						}
+					}
+
+				});
+			});
+	</script>
+}

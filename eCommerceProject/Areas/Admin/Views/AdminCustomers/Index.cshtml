@@ -1,6 +1,7 @@
 ﻿@model PagedList.IPagedList<eCommerceProject.Models.Customer>
 @using PagedList.Mvc;
 
+
 @{
 	//int CurrentPage = ViewBag.CurrentPage;
 	ViewBag.Title = "Index";
@@ -18,6 +19,49 @@
 	.disabled {
 		color: #f8b425;
 	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+		}
 </style>
 
 
@@ -156,16 +200,14 @@
 			</table>
 			<div class="container">
 				<div class="row">
-					<div class="dataTables_info col-sm-6" id="data-table_info" role="status" aria-live="polite">
+					<div class="col">
 						Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
 						to @Model.PageCount of @ViewBag.totalItem items
 					</div>
-					<div aria-label="Page navigation example" class="dataTables_paginate paging_simple_numbers col-sm-6 text-right">
-						<ul class="pagination">
+					
 
 							@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<< First", LinkToPreviousPageFormat = "< Previous", LinkToNextPageFormat = "Next >", LinkToLastPageFormat = "Last >>" })
-						</ul>
-					</div>
+						
 				</div>
 			</div>
 

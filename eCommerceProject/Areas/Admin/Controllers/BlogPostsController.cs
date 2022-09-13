@@ -3,15 +3,17 @@ using eCommerceProject.Enums;
 using eCommerceProject.Models;
 using eCommerceProject.ViewModel;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using PagedList;
 using System;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
@@ -21,6 +23,19 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		private ApplicationDbContext _context;
 		private ApplicationDbContext db = new ApplicationDbContext();
 		SharedServices service = new SharedServices();
+		private UserManager<ApplicationUser> _usermanager;
+		private ApplicationUserManager _userManager;
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
 		// GET: BlogPosts
 		//public ActionResult Index(int? page, string search, int? filter, int CatID = 0)
 		//{
@@ -135,19 +150,24 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[ValidateInput(false)]
-		public ActionResult Create(ViewModel.BlogVM model)
+		public async Task<ActionResult> Create(ViewModel.BlogVM model)
 		{
+
 			if (ModelState.IsValid)
 			{
 				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
 				string fileName = Path.GetFileNameWithoutExtension(model.BlogPost.ImageFile.FileName);
+
 				string exe = Path.GetExtension(model.BlogPost.ImageFile.FileName);
 				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
 				model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
 				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
 				model.BlogPost.ImageFile.SaveAs(fileName);
 
+
 				var userId = User.Identity.GetUserId();
+				var allUserCustomer = db.Customers.ToList();
+				var emails = String.Join(";", allUserCustomer);
 
 				var newBlog = new BlogPost()
 				{
@@ -164,6 +184,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 				db.BlogPosts.Add(newBlog);
 				db.SaveChanges();
+				//send mail
+				await UserManager.SendEmailAsync(allUserCustomer., "New From COCO Store", "Some thing news.... <br> out now \"" + newBlog.Title + "\"  was submited. Thanks for your submited Ideas, pls wait for QA respond!");
 				TempData["success"] = "Create Success!";
 				return RedirectToAction("Index");
 			}
@@ -176,9 +198,11 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Error", "Admin");
 			}
 			var course = db.BlogPosts.SingleOrDefault(t => t.Id == id);
+
+
 			var blogPost = new ViewModel.BlogVM()
 			{
 				Id = id,
@@ -188,7 +212,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 			if (blogPost == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Error", "Admin");
 			}
 			return View(blogPost);
 		}
@@ -198,35 +222,68 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(ViewModel.BlogVM model)
+		public ActionResult Edit(ViewModel.BlogVM model, HttpPostedFileBase fileImage)
+
 		{
+
+
 			if (ModelState.IsValid)
 			{
-				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
-				string fileName = Path.GetFileNameWithoutExtension(model.BlogPost.ImageFile.FileName);
-				string exe = Path.GetExtension(model.BlogPost.ImageFile.FileName);
-				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
-				model.BlogPost.ImageFile.SaveAs(fileName);
-				//get user id
-				var userId = User.Identity.GetUserId();
-				var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);
+				if (fileImage != null && fileImage.ContentLength > 0)
+				{
+					var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
 
-				post.Title = model.BlogPost.Title;
-				post.ShortContents = model.BlogPost.ShortContents;
-				post.ImagePath = model.BlogPost.ImagePath;
-				post.BlogCategoriesID = model.BlogPost.BlogCategoriesID;
-				post.Contents = model.BlogPost.Contents;
 
-				post.isHotNews = model.BlogPost.isHotNews;
-				post.isPublic = model.BlogPost.isPublic;
-				//post.View = viewModel.View;
+					var fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+					string exe = Path.GetExtension(fileImage.FileName);
+					fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+					model.BlogPost.ImagePath = "~/Content/ImageProduct/ImageBlog/" + fileName;
+					fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/ImageBlog/"), fileName);
+					fileImage.SaveAs(fileName);
 
-				db.SaveChanges();
-				TempData["success"] = "Edit Success!";
-				return RedirectToAction("Index");
+
+					//get user id
+					var userId = User.Identity.GetUserId();
+					var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);
+
+					post.Title = model.BlogPost.Title;
+					post.ShortContents = model.BlogPost.ShortContents;
+					post.ImagePath = model.BlogPost.ImagePath;
+					post.BlogCategoriesID = model.BlogPost.BlogCategoriesID;
+					post.Contents = model.BlogPost.Contents;
+
+					post.isHotNews = model.BlogPost.isHotNews;
+					post.isPublic = model.BlogPost.isPublic;
+					//post.View = viewModel.View;
+
+					db.SaveChanges();
+					TempData["success"] = "Edit Success!";
+					return RedirectToAction("Index");
+
+
+				}
+				else
+				{
+					var userId = User.Identity.GetUserId();
+					var post = db.BlogPosts.SingleOrDefault(t => t.Id == model.Id);
+
+					post.Title = model.BlogPost.Title;
+					post.ShortContents = model.BlogPost.ShortContents;
+					post.ImagePath = model.BlogPost.ImagePath;
+					post.BlogCategoriesID = model.BlogPost.BlogCategoriesID;
+					post.Contents = model.BlogPost.Contents;
+
+					post.isHotNews = model.BlogPost.isHotNews;
+					post.isPublic = model.BlogPost.isPublic;
+					//post.View = viewModel.View;
+
+					db.SaveChanges();
+					TempData["success"] = "Edit Success!";
+					return RedirectToAction("Index");
+
+				}
 			}
+
 			return View(model);
 		}
 		public ActionResult Delete(int id)
@@ -239,16 +296,6 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			TempData["success"] = "Delete Success!";
 		}
 		// Filter and Search
-		public ActionResult Filter(int CatID = 0)
-		{
-
-			var url = $"/Admin/BlogPosts?CatID={CatID}";
-			if (CatID == 0)
-			{
-				url = $"/Admin/BlogPosts";
-			}
-			return Json(new { status = "success", redirectUrl = url });
-		}
 
 		// GET: BlogPosts/Delete/5
 		//public ActionResult Delete(int? id)

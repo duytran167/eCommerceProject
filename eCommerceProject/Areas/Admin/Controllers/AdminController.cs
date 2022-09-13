@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
@@ -110,26 +111,42 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		}
 		[HttpPost]
 		public async Task<ActionResult> UpdateBanner(
-		[Bind(Include = "Id,Title,Description,ImageFile")] BannerSlider banner)
+		[Bind(Include = "Id,Title,Description,ImageFile")] BannerSlider banner, HttpPostedFileBase fileImage)
 		{
 			if (ModelState.IsValid)
 			{
-				string fileName = Path.GetFileNameWithoutExtension(banner.ImageFile.FileName);
-				string exe = Path.GetExtension(banner.ImageFile.FileName);
-				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				banner.ImagePath = "~/Content/ImageProduct/Banner/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/Banner/"), fileName);
-				banner.ImageFile.SaveAs(fileName);
+				if (fileImage != null && fileImage.ContentLength > 0)
+				{
+					var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+					var fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+					string exe = Path.GetExtension(fileImage.FileName);
+					fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+					banner.ImagePath = "~/Content/ImageProduct/Banner/" + fileName;
+					fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/Banner/"), fileName);
+					fileImage.SaveAs(fileName);
 
-				var post = _context.BannerSliders.FirstOrDefault(t => t.Id == banner.Id);
-				post.Title = banner.Title;
-				post.Description = banner.Description;
-				post.ImagePath = banner.ImagePath;
+					var post = _context.BannerSliders.FirstOrDefault(t => t.Id == banner.Id);
+					post.Title = banner.Title;
+					post.Description = banner.Description;
+					post.ImagePath = banner.ImagePath;
 
 
-				_context.SaveChanges();
-				TempData["success"] = "Update Image Successfully";
-				return RedirectToAction("BannerManage", "Admin");
+					_context.SaveChanges();
+					TempData["success"] = "Update Image Successfully";
+					return RedirectToAction("BannerManage", "Admin");
+				}
+				else
+				{
+					var post = _context.BannerSliders.FirstOrDefault(t => t.Id == banner.Id);
+					post.Title = banner.Title;
+					post.Description = banner.Description;
+
+
+
+					_context.SaveChanges();
+					TempData["success"] = "Update Image Successfully";
+					return RedirectToAction("BannerManage", "Admin");
+				}
 			}
 			return View(banner);
 		}

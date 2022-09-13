@@ -44,13 +44,16 @@ namespace eCommerceProject.Models
 		public DbSet<Seller> Sellers { get; set; }
 		public DbSet<BlogPost> BlogPosts { get; set; }
 		public DbSet<BlogCategory> BlogCategories { get; set; }
+		public DbSet<ImageProduct> ImageProducts { get; set; }
 		public DbSet<Comments> Comments { get; set; }
+		public DbSet<Product> Products { get; set; }
+		public DbSet<Size> Sizes { get; set; }
 
 		public static ApplicationDbContext Create()
 		{
 			return new ApplicationDbContext();
 		}
 
-		public System.Data.Entity.DbSet<eCommerceProject.ViewModel.BlogVM> BlogVMs { get; set; }
+
 	}
 }

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -62,24 +61,27 @@
     <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyModel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyModel.2.1.0\lib\net451\Microsoft.Extensions.DependencyModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.2.2.0\lib\netstandard2.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
     </Reference>
     <Reference Include="NaCl, Version=0.1.13.0, Culture=neutral, PublicKeyToken=827c20e50a9775fa, processorArchitecture=MSIL">
       <HintPath>..\packages\NaCl.Net.0.1.13\lib\net472\NaCl.dll</HintPath>
@@ -87,14 +89,14 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="PusherServer, Version=4.6.1.0, Culture=neutral, PublicKeyToken=892cb56c732dfd7e, processorArchitecture=MSIL">
-      <HintPath>..\packages\PusherServer.4.6.1\lib\net472\PusherServer.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid, Version=9.28.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\SendGrid.9.28.0\lib\net452\SendGrid.dll</HintPath>
@@ -103,26 +105,31 @@
       <HintPath>..\packages\starkbank-ecdsa.1.3.3\lib\net452\StarkbankEcdsa.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.8\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -184,12 +191,6 @@
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -220,9 +221,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -234,6 +232,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminAccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
     <Compile Include="Areas\Admin\Services\SharedServices.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
@@ -253,6 +252,53 @@
     <Compile Include="Migrations\202208050748535_add2CategoriesForBlog2.Designer.cs">
       <DependentUpon>202208050748535_add2CategoriesForBlog2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208080247359_addProductTable.cs" />
+    <Compile Include="Migrations\202208080247359_addProductTable.Designer.cs">
+      <DependentUpon>202208080247359_addProductTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208080258393_addProductTable2.cs" />
+    <Compile Include="Migrations\202208080258393_addProductTable2.Designer.cs">
+      <DependentUpon>202208080258393_addProductTable2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208080300450_addProductTable3.cs" />
+    <Compile Include="Migrations\202208080300450_addProductTable3.Designer.cs">
+      <DependentUpon>202208080300450_addProductTable3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208090727592_removePriceDiscountUnit.cs" />
+    <Compile Include="Migrations\202208090727592_removePriceDiscountUnit.Designer.cs">
+      <DependentUpon>202208090727592_removePriceDiscountUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208090957558_removePriceDiscountUnit23.cs" />
+    <Compile Include="Migrations\202208090957558_removePriceDiscountUnit23.Designer.cs">
+      <DependentUpon>202208090957558_removePriceDiscountUnit23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208091246472_addcat.cs" />
+    <Compile Include="Migrations\202208091246472_addcat.Designer.cs">
+      <DependentUpon>202208091246472_addcat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208110433351_addImageTable.cs" />
+    <Compile Include="Migrations\202208110433351_addImageTable.Designer.cs">
+      <DependentUpon>202208110433351_addImageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208150404146_addPhotosList2.cs" />
+    <Compile Include="Migrations\202208150404146_addPhotosList2.Designer.cs">
+      <DependentUpon>202208150404146_addPhotosList2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208150745214_addSizeTable2.cs" />
+    <Compile Include="Migrations\202208150745214_addSizeTable2.Designer.cs">
+      <DependentUpon>202208150745214_addSizeTable2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190259388_addImplementSizeforPorduct.cs" />
+    <Compile Include="Migrations\202208190259388_addImplementSizeforPorduct.Designer.cs">
+      <DependentUpon>202208190259388_addImplementSizeforPorduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208220856300_addImageandRemoveCat.cs" />
+    <Compile Include="Migrations\202208220856300_addImageandRemoveCat.Designer.cs">
+      <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageProduct.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Size.cs" />
     <Compile Include="ViewModel\BlogVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminCustomersController.cs" />
@@ -293,17 +339,9 @@
     <Compile Include="Migrations\202207060903277_addCategoryTable.Designer.cs">
       <DependentUpon>202207060903277_addCategoryTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202207120635174_AddSellerField.cs" />
-    <Compile Include="Migrations\202207120635174_AddSellerField.Designer.cs">
-      <DependentUpon>202207120635174_AddSellerField.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202207130208270_AddStatusForAccount.cs" />
     <Compile Include="Migrations\202207130208270_AddStatusForAccount.Designer.cs">
       <DependentUpon>202207130208270_AddStatusForAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202207190845363_AddressUser.cs" />
-    <Compile Include="Migrations\202207190845363_AddressUser.Designer.cs">
-      <DependentUpon>202207190845363_AddressUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202207230322072_addBlogPost.cs" />
     <Compile Include="Migrations\202207230322072_addBlogPost.Designer.cs">
@@ -370,6 +408,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\FilterStatus.cs" />
+    <Compile Include="ViewModel\JqueryDatatableParam.cs" />
+    <Compile Include="ViewModel\ProductVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\app.min.css" />
@@ -412,6 +452,7 @@
     <Content Include="assets\images\avatars\thumb-7.jpg" />
     <Content Include="assets\images\avatars\thumb-8.jpg" />
     <Content Include="assets\images\avatars\thumb-9.jpg" />
+    <Content Include="assets\images\logo\bg-02.jpg" />
     <Content Include="assets\images\logo\favicon.png" />
     <Content Include="assets\images\logo\logo-fold-white.png" />
     <Content Include="assets\images\logo\logo-fold.png" />
@@ -920,6 +961,59 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.autoFill.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.autoFill.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colReorder.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colReorder.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colVis.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colvis.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.colVis.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedColumns.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedColumns.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedHeader.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedHeader.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.keyTable.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.keyTable.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.scroller.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.scroller.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.tableTools.css" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.tableTools.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables_themeroller.min.css" />
+    <Content Include="Content\DataTables-1.10.0\images\background.png" />
+    <Content Include="Content\DataTables-1.10.0\images\back_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\back_enabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\collection.png" />
+    <Content Include="Content\DataTables-1.10.0\images\collection_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\copy.png" />
+    <Content Include="Content\DataTables-1.10.0\images\copy_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\csv.png" />
+    <Content Include="Content\DataTables-1.10.0\images\csv_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\filler.png" />
+    <Content Include="Content\DataTables-1.10.0\images\forward_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\forward_enabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\insert.png" />
+    <Content Include="Content\DataTables-1.10.0\images\loading-background.png" />
+    <Content Include="Content\DataTables-1.10.0\images\pdf.png" />
+    <Content Include="Content\DataTables-1.10.0\images\pdf_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\print.png" />
+    <Content Include="Content\DataTables-1.10.0\images\print_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_desc.png" />
+    <Content Include="Content\DataTables-1.10.0\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.0\images\xls.png" />
+    <Content Include="Content\DataTables-1.10.0\images\xls_hover.png" />
+    <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls.swf" />
+    <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -1358,6 +1452,27 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colReorder.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colReorder.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colVis.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.colVis.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.keyTable.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.scroller.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.scroller.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.tableTools.js" />
+    <Content Include="Scripts\DataTables-1.10.0\dataTables.tableTools.min.js" />
+    <Content Include="Scripts\DataTables-1.10.0\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables-1.10.0\jquery.dataTables.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -1396,6 +1511,11 @@
     <Content Include="Areas\Admin\Views\AdminAccount\ResetPasswordConfirmation.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccount\SendCode.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccount\VerifyCode.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1621,7 +1741,7 @@
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_sidebar.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_topbar.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\_topbar.cshtml" />
     <Content Include="Views\Home\_footer.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\BannerManage.cshtml" />
@@ -1669,6 +1789,16 @@
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Shared\_right_sidebar.cshtml" />
     <Content Include="Views\Manage\EditProfile.cshtml" />
+    <Content Include="Views\Home\BestSeller.cshtml" />
+    <Content Include="Views\Home\NewestProduct.cshtml" />
+    <Content Include="Views\Home\DetailsProduct.cshtml" />
+    <Content Include="Views\Home\ListBlog.cshtml" />
+    <Content Include="Views\Home\DetailsBlog.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\ProductFeature.cshtml" />
+    <Content Include="Views\Home\CategoriesFeature.cshtml" />
+    <Content Include="Views\Home\DetailsBlogCategories.cshtml" />
+    <Content Include="Views\Home\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1705,14 +1835,8 @@
     <EmbeddedResource Include="Migrations\202207060903277_addCategoryTable.resx">
       <DependentUpon>202207060903277_addCategoryTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202207120635174_AddSellerField.resx">
-      <DependentUpon>202207120635174_AddSellerField.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207130208270_AddStatusForAccount.resx">
       <DependentUpon>202207130208270_AddStatusForAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202207190845363_AddressUser.resx">
-      <DependentUpon>202207190845363_AddressUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207230322072_addBlogPost.resx">
       <DependentUpon>202207230322072_addBlogPost.cs</DependentUpon>
@@ -1765,6 +1889,39 @@
     <EmbeddedResource Include="Migrations\202208050748535_add2CategoriesForBlog2.resx">
       <DependentUpon>202208050748535_add2CategoriesForBlog2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208080247359_addProductTable.resx">
+      <DependentUpon>202208080247359_addProductTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208080258393_addProductTable2.resx">
+      <DependentUpon>202208080258393_addProductTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208080300450_addProductTable3.resx">
+      <DependentUpon>202208080300450_addProductTable3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208090727592_removePriceDiscountUnit.resx">
+      <DependentUpon>202208090727592_removePriceDiscountUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208090957558_removePriceDiscountUnit23.resx">
+      <DependentUpon>202208090957558_removePriceDiscountUnit23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208091246472_addcat.resx">
+      <DependentUpon>202208091246472_addcat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208110433351_addImageTable.resx">
+      <DependentUpon>202208110433351_addImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208150404146_addPhotosList2.resx">
+      <DependentUpon>202208150404146_addPhotosList2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208150745214_addSizeTable2.resx">
+      <DependentUpon>202208150745214_addSizeTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190259388_addImplementSizeforPorduct.resx">
+      <DependentUpon>202208190259388_addImplementSizeforPorduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208220856300_addImageandRemoveCat.resx">
+      <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="assets\vendors\popper.js\index.d.ts" />
@@ -1802,11 +1959,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

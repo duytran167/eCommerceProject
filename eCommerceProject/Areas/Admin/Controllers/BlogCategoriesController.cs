@@ -1,6 +1,5 @@
 ﻿using eCommerceProject.Models;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
@@ -21,12 +20,12 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Error", "Admin");
 			}
 			BlogCategory blogCategory = db.BlogCategories.Find(id);
 			if (blogCategory == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Error", "Admin");
 			}
 			return View(blogCategory);
 		}
@@ -62,12 +61,12 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Error", "Admin");
 			}
 			BlogCategory blogCategory = db.BlogCategories.Find(id);
 			if (blogCategory == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Error", "Admin");
 			}
 			return View(blogCategory);
 		}

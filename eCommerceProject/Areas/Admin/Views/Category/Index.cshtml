@@ -4,7 +4,61 @@
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <link href="~/Content/toastr.css" rel="stylesheet" />
+<style>
+	.active {
+		color: #02a499;
+	}
 
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #02a499;
+			border-radius: 50% !important;
+		}
+</style>
 <div class="page-header">
 	<h2 class="header-title">@ViewBag.Title</h2>
 	<div class="header-sub-title">
