@@ -1,4 +1,5 @@
 ﻿using eCommerceProject.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -63,6 +64,7 @@ namespace eCommerceProject.Models
 		public bool RememberMe { get; set; }
 		public int StatusID { get; set; }
 		public AccountStatus Status { get; set; }
+
 	}
 
 	public class RegisterViewModel
@@ -92,7 +94,7 @@ namespace eCommerceProject.Models
 		public List<string> Roles { get; internal set; }
 		public Seller Seller { get; set; }
 
-
+		public DateTime CreatedDate { get; set; }
 	}
 
 	public class ResetPasswordViewModel

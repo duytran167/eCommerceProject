@@ -79,11 +79,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			};
 			return View(model);
 		}
-
-
-
-		//topbar
-		public ActionResult _topbar()
+		public ActionResult adminTopbar()
 		{
 
 			var userId = User.Identity.GetUserId();
@@ -92,6 +88,16 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				User = db.Users.SingleOrDefault(t => t.Id == userId),
 			};
 			return PartialView(model);
+		}
+
+
+		//topbar
+		public ActionResult _topbar()
+		{
+
+
+
+			return View();
 		}
 		// edit profile
 		public ActionResult EditProfile(string id)

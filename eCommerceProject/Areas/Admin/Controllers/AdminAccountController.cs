@@ -3,6 +3,7 @@ using eCommerceProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -176,6 +177,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					FullName = model.FullName,
 					Address = model.Address,
 					PhoneNumber = model.PhoneNumber,
+					CreatedDate = model.CreatedDate,
 					StatusID = (int)AccountStatus.Active
 				};
 				var result = await UserManager.CreateAsync(user, model.Password);
@@ -229,7 +231,17 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			{
 				if (model.RoleName == "Seller")
 				{
-					var user = new Seller() { UserName = model.Email, Email = model.Email, FullName = model.FullName, ImagePath = "", PhoneNumber = model.PhoneNumber, StatusID = (int)AccountStatus.Active };
+					var user = new Seller()
+					{
+						UserName = model.Email,
+						Email = model.Email,
+						FullName = model.FullName,
+						ImagePath = "",
+						PhoneNumber = model.PhoneNumber,
+						CreatedDate = DateTime.Now,
+						EmailConfirmed = true,
+						StatusID = (int)AccountStatus.Active
+					};
 					var result = await UserManager.CreateAsync(user, model.Password);
 					if (result.Succeeded)
 					{
@@ -238,8 +250,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
 						// Send an email with this link
-						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						//string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						//var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account!!");
 						TempData["success"] = "Create Account Success!";
 						return RedirectToAction("Index", "Seller");
@@ -255,7 +267,9 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						FullName = model.FullName,
 						Address = model.Address,
 						ImagePath = "",
+						EmailConfirmed = true,
 						PhoneNumber = model.PhoneNumber,
+						CreatedDate = DateTime.Now,
 						StatusID = (int)AccountStatus.Active
 					};
 					var result = await UserManager.CreateAsync(user, model.Password);
@@ -282,8 +296,10 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					UserName = model.Email,
 					Email = model.Email,
 					FullName = model.FullName,
+					EmailConfirmed = true,
 					Address = model.Customer.Address,
 					PhoneNumber = model.PhoneNumber,
+					CreatedDate = DateTime.Now,
 					ImagePath = "",
 					StatusID = (int)AccountStatus.Active
 				};
@@ -295,8 +311,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
 					// Send an email with this link
-					string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					//string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					//var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 					await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
 					TempData["success"] = "Create Account Success!";
 					return RedirectToAction("Customers", "Seller");
@@ -528,7 +544,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		public ActionResult LogOff()
 		{
 			AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-			return RedirectToAction("Index", "Home");
+			return RedirectToAction("Index", "Home", new { area = "" });
 		}
 
 		//

@@ -24,7 +24,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			var totalItem = db.Customers.ToList().Count();
 			ViewBag.totalItem = totalItem;
 			// get seller db
-			var customers = from s in db.Customers.AsNoTracking().ToList()
+			var customers = from s in db.Customers.AsNoTracking().OrderBy(t => t.CreatedDate).ToList()
 											select s;
 
 			if (!String.IsNullOrWhiteSpace(search))

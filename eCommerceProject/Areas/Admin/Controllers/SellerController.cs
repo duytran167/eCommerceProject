@@ -24,7 +24,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		public ActionResult Index(int? page, string search, int? filter)
 		{
 
-			var sellers = from s in db.Sellers.AsNoTracking().ToList()
+			var sellers = from s in db.Sellers.AsNoTracking().OrderBy(t => t.CreatedDate).ToList()
 										select s;
 
 			if (!String.IsNullOrWhiteSpace(search))
