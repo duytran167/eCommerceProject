@@ -234,6 +234,7 @@
     <Compile Include="Areas\Admin\Controllers\ManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SendEmailsController.cs" />
     <Compile Include="Areas\Admin\Services\SharedServices.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Migrations\202208020841560_updatecomment.cs" />
@@ -296,8 +297,25 @@
     <Compile Include="Migrations\202208220856300_addImageandRemoveCat.Designer.cs">
       <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209100221421_addMAil.cs" />
+    <Compile Include="Migrations\202209100221421_addMAil.Designer.cs">
+      <DependentUpon>202209100221421_addMAil.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209100522343_addMAil2.cs" />
+    <Compile Include="Migrations\202209100522343_addMAil2.Designer.cs">
+      <DependentUpon>202209100522343_addMAil2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209100530493_addMAil3.cs" />
+    <Compile Include="Migrations\202209100530493_addMAil3.Designer.cs">
+      <DependentUpon>202209100530493_addMAil3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209130249364_addDateTimecreated.cs" />
+    <Compile Include="Migrations\202209130249364_addDateTimecreated.Designer.cs">
+      <DependentUpon>202209130249364_addDateTimecreated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\SendMail.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="ViewModel\BlogVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -1118,6 +1136,7 @@
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
+    <Content Include="Content\Template.html" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\util.css" />
@@ -1516,6 +1535,12 @@
     <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
     <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.scss" />
+    <Content Include="Areas\Admin\Views\SendEmails\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SendEmails\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\SendEmails\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\SendEmails\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SendEmails\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Management\adminTopbar.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1803,6 +1828,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Content\ImageEmail\" />
     <Folder Include="Content\ImageProduct\Banner\" />
     <Folder Include="Content\ImageProduct\Category\" />
     <Folder Include="Content\ImageProduct\ImageBlog\" />
@@ -1921,6 +1947,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208220856300_addImageandRemoveCat.resx">
       <DependentUpon>202208220856300_addImageandRemoveCat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209100221421_addMAil.resx">
+      <DependentUpon>202209100221421_addMAil.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209100522343_addMAil2.resx">
+      <DependentUpon>202209100522343_addMAil2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209100530493_addMAil3.resx">
+      <DependentUpon>202209100530493_addMAil3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209130249364_addDateTimecreated.resx">
+      <DependentUpon>202209130249364_addDateTimecreated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

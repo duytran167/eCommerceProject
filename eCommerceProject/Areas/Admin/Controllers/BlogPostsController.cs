@@ -185,7 +185,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				db.BlogPosts.Add(newBlog);
 				db.SaveChanges();
 				//send mail
-				await UserManager.SendEmailAsync(allUserCustomer., "New From COCO Store", "Some thing news.... <br> out now \"" + newBlog.Title + "\"  was submited. Thanks for your submited Ideas, pls wait for QA respond!");
+				//await UserManager.SendEmailAsync(allUserCustomer., "New From COCO Store", "Some thing news.... <br> out now \"" + newBlog.Title + "\"  was submited. Thanks for your submited Ideas, pls wait for QA respond!");
 				TempData["success"] = "Create Success!";
 				return RedirectToAction("Index");
 			}

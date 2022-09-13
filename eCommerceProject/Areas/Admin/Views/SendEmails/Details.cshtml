@@ -1,0 +1,53 @@
+﻿@model eCommerceProject.Models.SendEmail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+	<h2 class="header-title">@ViewBag.Title</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Send Mail</a>
+			<span class="breadcrumb-item active">@ViewBag.Title</span>
+		</nav>
+	</div>
+
+</div>
+
+<div>
+    <h4>SendEmail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.body)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.body)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

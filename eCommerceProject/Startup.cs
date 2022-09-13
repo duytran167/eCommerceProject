@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
+using System;
 
 [assembly: OwinStartupAttribute(typeof(eCommerceProject.Startup))]
 namespace eCommerceProject
@@ -42,6 +43,7 @@ namespace eCommerceProject
 				user.Address = "Admin";
 				user.EmailConfirmed = true;
 				user.ImagePath = "";
+				user.CreatedDate = DateTime.Parse("11/23/2020");
 				user.StatusID = (int)AccountStatus.Active;
 				string userPWD = "admin123";
 

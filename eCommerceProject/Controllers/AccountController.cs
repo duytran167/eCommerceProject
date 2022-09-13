@@ -3,6 +3,7 @@ using eCommerceProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -176,6 +177,7 @@ namespace eCommerceProject.Controllers
 					FullName = model.FullName,
 					Address = model.Address,
 					PhoneNumber = model.PhoneNumber,
+					CreatedDate = DateTime.Now,
 					StatusID = (int)AccountStatus.Active
 				};
 				var result = await UserManager.CreateAsync(user, model.Password);
@@ -189,8 +191,10 @@ namespace eCommerceProject.Controllers
 					var callbackUrl = Url.Action("ConfirmEmail", "Account",
 						 new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 					await UserManager.SendEmailAsync(user.Id,
-						 "Confirm your account", "Please confirm your account by clicking <a href=\""
-						 + callbackUrl + "\">here</a>");
+						 "Confirm your account",
+
+						 "<tr><td valign = \"middle\" class=\"hero bg_white\" style=\"padding: 3em 0 2em 0;\"><img src = \"https://assets.stickpng.com/images/584856bce0bb315b0f7675ad.png\"  style=\"width: 300px; max-width: 600px; height: auto; margin: auto; display: block;\"></td></tr><!-- end tr --><tr><td valign =\"middle\" class=\"hero bg_white\" style=\"padding: 2em 0 4em 0;\"><table><tr><td><div class=\"text\" style=\"padding: 0 2.5em; text-align: center;\"><h2>Please verify your email</h2><h3> Please confirm your account by clicking </h3><p><a <a href=\""
+						 + callbackUrl + "\" class=\"btn btn-primary\">Verify Account</a></p></div></td></tr></table></td></tr>");
 					// Uncomment to debug locally 
 					// TempData["ViewBagLink"] = callbackUrl;
 
@@ -229,7 +233,16 @@ namespace eCommerceProject.Controllers
 			{
 				if (model.RoleName == "Seller")
 				{
-					var user = new Seller() { UserName = model.Email, Email = model.Email, FullName = model.FullName, PhoneNumber = model.PhoneNumber, StatusID = (int)AccountStatus.Active };
+					var user = new Seller()
+					{
+						UserName = model.Email,
+						Email = model.Email,
+						FullName = model.FullName,
+						PhoneNumber = model.PhoneNumber,
+						StatusID = (int)AccountStatus.Active,
+						CreatedDate = DateTime.Now,
+						EmailConfirmed = true
+					};
 					var result = await UserManager.CreateAsync(user, model.Password);
 					if (result.Succeeded)
 					{
@@ -239,8 +252,8 @@ namespace eCommerceProject.Controllers
 						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
 						// Send an email with this link
 						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+
+						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover COZA Store !!");
 						TempData["success"] = "Create Account Success!";
 						return RedirectToAction("Index", "Seller");
 					}
@@ -255,6 +268,8 @@ namespace eCommerceProject.Controllers
 						FullName = model.FullName,
 						Address = model.Address,
 						PhoneNumber = model.PhoneNumber,
+						CreatedDate = DateTime.Now,
+						EmailConfirmed = true,
 						StatusID = (int)AccountStatus.Active
 					};
 					var result = await UserManager.CreateAsync(user, model.Password);
@@ -265,9 +280,9 @@ namespace eCommerceProject.Controllers
 
 						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
 						// Send an email with this link
-						string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-						var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+						//string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						//var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover COZA Store!!");
 						TempData["success"] = "Create Account Success!";
 						return RedirectToAction("Index", "AdminCustomers");
 					}
@@ -283,6 +298,8 @@ namespace eCommerceProject.Controllers
 					FullName = model.FullName,
 					Address = model.Customer.Address,
 					PhoneNumber = model.PhoneNumber,
+					CreatedDate = DateTime.Now,
+					EmailConfirmed = true,
 					StatusID = (int)AccountStatus.Active
 				};
 				var result = await UserManager.CreateAsync(user, model.Password);
@@ -293,9 +310,9 @@ namespace eCommerceProject.Controllers
 
 					// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
 					// Send an email with this link
-					string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover ideas and contribute more ideas!!");
+					//string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					//var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					await UserManager.SendEmailAsync(user.Id, "News Account", "Dear \"" + user.UserName + "\". Thanks for your register account, let's discover COZA Store!!");
 					TempData["success"] = "Create Account Success!";
 					return RedirectToAction("Customers", "Seller");
 				}

@@ -1,6 +1,7 @@
 ﻿using eCommerceProject.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -22,6 +23,11 @@ namespace eCommerceProject.Models
 		[NotMapped]
 		public HttpPostedFileBase ImageFile { get; set; }
 		public AccountStatus Status { get; set; }
+		public DateTime CreatedDate { get; set; }
+		public ApplicationUser()
+		{
+			CreatedDate = DateTime.Now;
+		}
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
 		{
@@ -48,6 +54,7 @@ namespace eCommerceProject.Models
 		public DbSet<Comments> Comments { get; set; }
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Size> Sizes { get; set; }
+		public DbSet<SendEmail> SendEmails { get; set; }
 
 		public static ApplicationDbContext Create()
 		{
