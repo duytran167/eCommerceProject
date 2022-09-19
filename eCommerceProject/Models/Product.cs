@@ -38,5 +38,7 @@ namespace eCommerceProject.Models
 		{
 			CreatedDate = DateTime.Now;
 		}
+
 	}
+
 }

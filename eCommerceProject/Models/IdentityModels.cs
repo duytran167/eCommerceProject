@@ -55,6 +55,7 @@ namespace eCommerceProject.Models
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Size> Sizes { get; set; }
 		public DbSet<SendEmail> SendEmails { get; set; }
+		public DbSet<StarRatingAndComment> StarRatingAndComments { get; set; }
 
 		public static ApplicationDbContext Create()
 		{

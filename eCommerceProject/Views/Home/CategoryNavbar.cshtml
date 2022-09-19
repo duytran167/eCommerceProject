@@ -1,0 +1,13 @@
+﻿@model IEnumerable<eCommerceProject.Models.Category>
+@{
+	ViewBag.Title = "CategoryNavbar";
+	Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+
+@foreach (var item in Model)
+{
+	
+	<li><a href=@Url.Action("ProductCategories","Home", new { id = item.Id })> @item.CategoryName</a></li>
+
+}
+

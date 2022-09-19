@@ -313,10 +313,23 @@
     <Compile Include="Migrations\202209130249364_addDateTimecreated.Designer.cs">
       <DependentUpon>202209130249364_addDateTimecreated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209170835174_addStarRatingAndComments.cs" />
+    <Compile Include="Migrations\202209170835174_addStarRatingAndComments.Designer.cs">
+      <DependentUpon>202209170835174_addStarRatingAndComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209170849289_addStarRatingAndComments2.cs" />
+    <Compile Include="Migrations\202209170849289_addStarRatingAndComments2.Designer.cs">
+      <DependentUpon>202209170849289_addStarRatingAndComments2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209190254156_addfieldvalueforcomment.cs" />
+    <Compile Include="Migrations\202209190254156_addfieldvalueforcomment.Designer.cs">
+      <DependentUpon>202209190254156_addfieldvalueforcomment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\SendMail.cs" />
     <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\StarRatingAndComment.cs" />
     <Compile Include="ViewModel\BlogVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminCustomersController.cs" />
@@ -1136,6 +1149,8 @@
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\slick-theme.css" />
     <Content Include="Content\slick.css" />
+    <Content Include="Content\StarFade.gif" />
+    <Content Include="Content\StarGlow.gif" />
     <Content Include="Content\Template.html" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -1824,6 +1839,11 @@
     <Content Include="Views\Home\CategoriesFeature.cshtml" />
     <Content Include="Views\Home\DetailsBlogCategories.cshtml" />
     <Content Include="Views\Home\Blog.cshtml" />
+    <Content Include="Views\Home\RelatedProduct.cshtml" />
+    <Content Include="Views\Home\AllProduct.cshtml" />
+    <Content Include="Views\Home\ProductCategories.cshtml" />
+    <Content Include="Views\Home\CategoryNavbar.cshtml" />
+    <Content Include="Views\Shared\_CommentBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1959,6 +1979,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209130249364_addDateTimecreated.resx">
       <DependentUpon>202209130249364_addDateTimecreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209170835174_addStarRatingAndComments.resx">
+      <DependentUpon>202209170835174_addStarRatingAndComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209170849289_addStarRatingAndComments2.resx">
+      <DependentUpon>202209170849289_addStarRatingAndComments2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209190254156_addfieldvalueforcomment.resx">
+      <DependentUpon>202209190254156_addfieldvalueforcomment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
