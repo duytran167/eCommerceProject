@@ -107,7 +107,10 @@
 							<li class="list-group-item p-h-0">
 								<div class="media m-b-15">
 									<div class="avatar avatar-image">
-										<img src="@Url.Content(comment.User.ImagePath)" alt="">
+										@if (comment.User.ImagePath != null)
+										{<img src="@Url.Content(comment.User.ImagePath)" alt="">}
+										@if (comment.User.ImagePath == null)
+										{<img src="" alt="">}
 									</div>
 									<div class="media-body m-l-20">
 										<h6 class="m-b-0">
@@ -117,13 +120,12 @@
 									</div>
 								</div>
 								<span>@comment.Text</span>
-								@if (@comment.UserID == User.Identity.GetUserId())
-								{
+								
 									
 									<a style=" cursor:pointer" onclick="removeCmt(@comment.Id)">
 										<i href="" class="anticon anticon-delete text-danger"  aria-hidden="true"></i>
 									</a>
-								}
+								
 								<hr />
 								@*<div class="m-t-15">
 							<ul class="list-inline text-right">

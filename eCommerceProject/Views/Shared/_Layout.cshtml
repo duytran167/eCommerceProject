@@ -33,7 +33,9 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="~/Content/util.css">
 	<link rel="stylesheet" type="text/css" href="~/Content/main.css">
+	<link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+	<link href="~/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
 </head>
 <body class="animsition">
@@ -69,10 +71,12 @@
 							<li>
 								<a href="product.html">Shop</a>
 								<ul class="sub-menu">
-									<li><a href="index.html">Shop ALL</a></li>
-									<li><a href="home-02.html">TOP</a></li>
-									<li><a href="home-03.html">BOTTOM</a></li>
-									<li><a href="home-03.html">Accessories</a></li>
+									<li><a href="@Url.Action("AllProduct","Home")">Shop ALL</a></li>
+									@{
+										Html.RenderAction("CategoryNavbar", "Home");
+
+									}
+
 								</ul>
 							</li>
 

@@ -15,7 +15,41 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+.commentBox {
+  background-color: #efefef;
+  padding: 10px;
+  border-radius: 10px;
+}
 
+.starFade {
+  background-image: url('/Images/StarFade.gif');
+  min-width: 30px;
+  min-height: 30px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.starFadeN {
+  background-image: url('/Images/StarFade.gif');
+  min-width: 30px;
+  min-height: 30px;
+  display: inline-block;
+}
+
+.starGlow {
+  background-image: url('/Images/starglow.gif');
+  min-width: 30px;
+  min-height: 30px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.starGlowN {
+  background-image: url('/Images/starglow.gif');
+  min-width: 30px;
+  min-height: 30px;
+  display: inline-block;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

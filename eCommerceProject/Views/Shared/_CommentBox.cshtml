@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+	ViewBag.Title = "_CommentBox";
+	Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+
+<dl class="dl-horizontal">
+
+
+	<dd>
+
+		<div class="commentBox w-full">
+
+			@using (Html.BeginForm("AddCommentRating", "Home", FormMethod.Post, new { onsubmit = "return SubmitComment()" }))
+			{
+				@Html.AntiForgeryToken()
+				<div class="form-horizontal">
+					<div class="form-group">
+						<div class="flex-w flex-m p-t-50 p-b-23">
+							<h5 class="mtext-108 cl2 p-b-7">
+								Add a review
+							</h5>
+							<p class="stext-102 cl6">
+								Your email address will not be published. Required fields are marked *
+							</p>
+							<span class="stext-102 cl3 m-r-16">
+								Your Rating <span style="font-weight:normal;">(1 start is bad, 5 star is good)</span>
+							</span>
+							<div onmouseout="CRateSelected()" class="wrap-rating fs-18 cl11 pointer p-r-20 mtext-105" >
+								<span class=" item-rating pointer zmdi zmdi-star-outline" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></span><span class="item-rating pointer zmdi zmdi-star-outline" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></span><span class="item-rating pointer zmdi zmdi-star-outline" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></span><span class="item-rating pointer zmdi zmdi-star-outline" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></span><span class="item-rating pointer zmdi zmdi-star-outline" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+							</div>
+
+						</div>
+						<div class="row p-b-25">
+							<div class="col-12 p-b-5">
+								<label class="stext-102 cl3" for="review">Your review</label>
+								<textarea name="Comment" id="Comment" class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"></textarea>
+							</div>
+
+							@*<div class="col-sm-6 p-b-5">
+								<label class="stext-102 cl3" for="name">Name</label>
+								<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
+							</div>
+
+							<div class="col-sm-6 p-b-5">
+								<label class="stext-102 cl3" for="email">Email</label>
+								<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
+							</div>*@
+						</div>
+
+
+					</div>
+
+
+
+					<input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
+					<input type="hidden" name="Rating" id="Rating" value="0" />
+					@if (Request.IsAuthenticated)
+					{
+
+						<button type="submit" onclick="javascript: return RequestLogin();" id="btnRegister" name="btnRegister" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Submit
+						</button>
+					}
+					else
+					{
+						<button type="submit" onclick="javascript: return RequestLogin();" id="chkcondition" name="btnRegister" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Login and Comment
+						</button>
+
+					}
+
+
+				</div>
+			}
+		</div>
+	</dd>
+
+</dl>
+<script>
+	
+		function SubmitComment() {
+			if ($("#Rating").val() == "0") {
+				swal("Please rate this star!");
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+
+		function CRate(r) {
+			$("#Rating").val(r);
+			for (var i = 1; i <= r; i++) {
+				$("#Rate" + i).attr('class', 'zmdi zmdi-star');
+			}
+			// unselect remaining
+			for (var i = r + 1; i <= 5; i++) {
+				$("#Rate" + i).attr('class', 'zmdi zmdi-star-outline');
+			}
+		}
+
+		function CRateOver(r) {
+			for (var i = 1; i <= r; i++) {
+				$("#Rate" + i).attr('class', 'zmdi zmdi-star');
+			}
+		}
+
+		function CRateOut(r) {
+			for (var i = 1; i <= r; i++) {
+				$("#Rate" + i).attr('class', 'zmdi zmdi-star-outline');
+			}
+		}
+
+		function CRateSelected() {
+			var setRating = $("#Rating").val();
+			for (var i = 1; i <= setRating; i++) {
+				$("#Rate" + i).attr('class', 'zmdi zmdi-star');
+			}
+		}
+</script>
+
+<script>
+	function RequestLogin() {
+		if ($("#chkcondition").is(':checked')) {
+			return true;
+		}
+		else {
+			swal("Please login!!!", "Login to Comment");
+			return false;
+		}
+</script>

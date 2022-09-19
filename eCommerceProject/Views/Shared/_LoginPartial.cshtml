@@ -19,9 +19,20 @@
 				{
 
 					@Html.AntiForgeryToken()
-					
-						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "flex-c-m trans-04 p-lr-25" })
-					
+					if (User.IsInRole("Admin"))
+					{
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Admin/Management", routeValues: null, htmlAttributes: new { title = "Management", @class = "flex-c-m trans-04 p-lr-25", @area = "Admin" })
+					}
+					if (User.IsInRole("Seller"))
+					{
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Admin/Management", routeValues: null, htmlAttributes: new { title = "Management", @class = "flex-c-m trans-04 p-lr-25", area = "Admin" })
+					}
+					if (User.IsInRole("Customer"))
+					{
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "flex-c-m trans-04 p-lr-25", area = "" })
+					}
+
+
 					<a class="flex-c-m trans-04 p-lr-25" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
 
 				}

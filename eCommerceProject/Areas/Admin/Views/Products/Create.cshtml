@@ -144,40 +144,18 @@
 		</div><!-- row -->
 	</div>
 	@Html.Label("Size Chart", htmlAttributes: new { @class = "control-label col-md-12" })
-	<div class="container">
-
-		<br />
-
-		<div id="myinput" class="myinput">
-
-			<div class="row">
-
-				<div class="col-md-2" name="sizeV" value="sizeV" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; margin-left: 20px; border: 2px dashed green">
-
-					<div class="form-group ">
-						@Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })
-						<div class="col-md-12">
-							@Html.EditorFor(model => Model.Size.SizeName, new { htmlAttributes = new { @class = "form-control", @name = "sizeV" } })
-
-							@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })
-						</div>
-					</div>
-					<div class="form-group ">
-						@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
-						<div class="col-md-12">
-							@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control" , @name = "sizeV" } })
-							@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })
-						</div>
-					</div>
-					<a href="#" class="btnRemove">Xóa</a>
-				</div>
-				<i class="fa fa-plus btnAddNew"></i>
-
-			</div>
+<div class="form-group p-l-20" >
+	<div id="inputFormRow" style="width: 35%">
+		<div class="input-group mb-3">
+			<br />
+			<div class="input-group-append"></div>
 		</div>
-		<br />
-
 	</div>
+	<div id="newRow">
+		<input type="hidden" id="totalLans" value="0" />
+	</div>
+	<button id="addRow" type="button" class="btn btn-info">Add Size</button>
+</div>
 
 
 
@@ -406,6 +384,53 @@
 							uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
 						}
 					}
+
+				});
+			});
+
+
+
+
+			$("#addRow").click(function () {
+
+				var rowCount = parseInt($("#totalLans").val());
+				rowCount++;
+				$("#totalLans").val(rowCount);
+				var html = '';
+				html += '<div id="inputFormRow" style="width: 35%">';
+				html += '<div class="input-group mb-3">';
+
+				//change id attribute to name attribute and modify the name
+				html += '<input type="text" name="sizes[' + (rowCount - 1) + '].SizeName" class="form-control m-input" placeholder="Size Name" autocomplete="off" style="width: 30%" required>';
+				html += '<input type="text" name="sizes[' + (rowCount - 1) + '].Stock" class="form-control m-input" placeholder="Size Stock" autocomplete="off" style="width: 30%" required>';
+				html += '<div class="input-group-append">';
+				html += '<button id="removeRow" type="button" class="btn btn-danger" style="margin-right: 5px">Remove</button>';
+				html += '</div>';
+				html += '</div>';
+
+				$('#newRow').append(html);
+
+			});
+
+			$(document).on('click', '#removeRow', function () {
+				var rowCount = parseInt($("#totalLans").val());
+				rowCount--;
+				$("#totalLans").val(rowCount);
+				$(this).closest('#inputFormRow').remove();
+			});
+
+			$(document).ready(function () {
+				$("#createButton").click(function () {
+					var inputData = $('form').serializeArray();
+					$.ajax(
+						{
+							type: "POST", //HTTP POST Method
+							url: "Home/Create", // Controller/View
+							data: inputData,
+							success: function (response) {
+								console.log(response)
+							}
+						});
 
 				});
 			});

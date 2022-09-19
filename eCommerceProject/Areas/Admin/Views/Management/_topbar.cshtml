@@ -105,7 +105,7 @@
 			<li class="dropdown dropdown-animated scale-left">
 				
 					@{
-						Html.RenderAction("adminTopbar", "Management");
+						Html.RenderAction("adminTopbar", "Management", new { area = "Admin" });
 
 					}
 					<a href="@Url.Action("Index", "Management")" class="dropdown-item d-block p-h-15 p-v-10">

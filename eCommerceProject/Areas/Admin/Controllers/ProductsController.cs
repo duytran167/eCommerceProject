@@ -111,8 +111,26 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			var product = new ViewModel.ProductVM();
 			product.Product = db.Products.
 							Include(i => i.Categories).
-						SingleOrDefault(t => t.Id == id);
 
+						SingleOrDefault(t => t.Id == id);
+			//comment product
+			ViewBag.ProductId = id;
+			var comments = db.StarRatingAndComments.Where(d => d.ProductId.Equals(id.Value)).Include(t => t.User).ToList();
+			ViewBag.Comments = comments;
+
+			var ratings = db.StarRatingAndComments.Where(d => d.ProductId.Equals(id.Value)).Include(t => t.User).ToList();
+			if (ratings.Count() > 0)
+			{
+				var ratingSum = ratings.Sum(d => d.Rating);
+				ViewBag.RatingSum = ratingSum;
+				var ratingCount = ratings.Count();
+				ViewBag.RatingCount = ratingCount;
+			}
+			else
+			{
+				ViewBag.RatingSum = 0;
+				ViewBag.RatingCount = 0;
+			}
 			if (product == null)
 			{
 				return RedirectToAction("Error", "Admin");
@@ -179,20 +197,19 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				//get size
 				var sizeVip = model.Size;
 				List<Size> sizes = new List<Size>();
-				if (sizeVip != null)
-				{
-					for (int i = 0; i < Request.Files.Count; i++)
-					{
-						var sizeV = Request.Files[i];
-						Size size = new Size()
-						{
-							SizeName = model.Size.SizeName,
-							Stock = model.Size.Stock,
 
-						};
-						sizes.Add(size);
-					}
+				foreach (var item in model.Sizes)
+				{
+					var sizeV = new Size()
+
+					{
+						SizeName = item.SizeName,
+						Stock = item.Stock,
+
+					};
+					sizes.Add(sizeV);
 				}
+
 				try
 				{
 					var newProduct = new Product()
@@ -211,9 +228,6 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						Sizes = sizes
 
 					};
-
-
-
 
 					db.Products.Add(newProduct);
 					db.SaveChanges();
@@ -248,6 +262,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				Categories = db.Categories.ToList(),
 				Sizes = db.Sizes.ToList(),
 				ImageProducts = db.ImageProducts.ToList(),
+
 			};
 
 			if (product == null)
@@ -288,16 +303,18 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 						file.SaveAs(path);
 
-						List<Size> sizeName = new List<Size>();
-						for (int j = 0; j < Request.Files.Count; j++)
+						List<Size> sizes = new List<Size>();
+
+						foreach (var item in model.Sizes)
 						{
-							var size = new Size()
+							var sizeV = new Size()
+
 							{
-								SizeName = model.Size.SizeName,
-								Stock = model.Size.Stock,
+								SizeName = item.SizeName,
+								Stock = item.Stock,
 
 							};
-							sizeName.Add(size);
+							sizes.Add(sizeV);
 						}
 
 
@@ -314,7 +331,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 							product.Discount = model.Product.Discount;
 							product.Price = model.Product.Price;
-							product.Sizes = sizeName;
+							product.Sizes = sizes;
 
 
 							db.Products.Add(product);
@@ -389,6 +406,21 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 			return RedirectToAction("Index");
 			TempData["success"] = "Delete Success!";
+		}
+		public ActionResult DeleteComment(int? id)
+		{
+
+			if (ModelState.IsValid)
+			{
+				//string currentUserId = User.Identity.GetUserId();
+				var removeCmt = db.StarRatingAndComments
+					//.Where(x => x.UserID == currentUserId)
+					.SingleOrDefault(t => t.Id == id);
+				db.StarRatingAndComments.Remove(removeCmt);
+				db.SaveChanges();
+				return RedirectToAction("DetailsProduct", "", new { id = removeCmt.ProductId });
+			}
+			return View(id);
 		}
 
 		protected override void Dispose(bool disposing)
