@@ -2116,6 +2116,8 @@ input.num-product::-webkit-inner-spin-button {
 [ Block2 ]*/
 .block2-pic {
   position: relative;
+  height:100%;
+  
 }
 
 .block2-btn {
@@ -2209,6 +2211,9 @@ input.num-product::-webkit-inner-spin-button {
 .cl10 {color: #1d1d1d;}
 .cl11 {color: #f9ba48;}
 .cl12 {color: #ccc;}
+.cl13 {
+  color: #e1534b
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ S-Text 0 - 15 ]*/
@@ -3180,18 +3185,21 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .hov-img0 {
+  height: 100%;
   display: block;
   overflow: hidden;
-  
+  object-fit: cover;
 }
 
-.hov-img0 img{
-  width: 100%;
-  -webkit-transition: transform 0.9s ease;
-  -o-transition: transform 0.9s ease;
-  -moz-transition: transform 0.9s ease;
-  transition: transform 0.9s ease;
-}
+  .hov-img0 img {
+    height:100%;
+    width: 100%;
+    object-fit: cover;
+    -webkit-transition: transform 0.9s ease;
+    -o-transition: transform 0.9s ease;
+    -moz-transition: transform 0.9s ease;
+    transition: transform 0.9s ease;
+  }
 
 .hov-img0:hover img {
   -webkit-transform: scale(1.1);

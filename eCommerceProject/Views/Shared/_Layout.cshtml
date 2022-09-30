@@ -56,7 +56,7 @@
 				<nav class="limiter-menu-desktop container">
 					@*@Html.Partial("PopUpNoti", "Home")*@
 					<!-- Logo desktop -->
-					<a href="#" class="logo">
+					<a href="@Url.Action("Index","Home")" class="logo">
 						<img src="~/Content/ImageProduct/icons/logo-01.png" alt="IMG-LOGO">
 					</a>
 
@@ -64,12 +64,12 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li class="active-menu">
-								@*<a> @Html.ActionLink("Home", "Index", "Home")</a>*@
+								<a href="@Url.Action("Index","Home")">Home</a>
 
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="@Url.Action("Index","Home")">Shop</a>
 								<ul class="sub-menu">
 									<li><a href="@Url.Action("AllProduct","Home")">Shop ALL</a></li>
 									@{

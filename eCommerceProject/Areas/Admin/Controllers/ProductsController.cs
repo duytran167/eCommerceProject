@@ -50,6 +50,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			ViewBag.SortingDate = Sorting_Order == "CreatedDate" ? "ProductName" : "Date";
 			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
 
+
+
 			if (Search_Data != null)
 			{
 				Page_No = 1;
@@ -61,7 +63,13 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 			ViewBag.FilterValue = Search_Data;
 
-			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList() select stu;
+			ViewBag.category = db.Categories.ToList();
+
+			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking()
+										 .OrderByDescending(t => t.CreatedDate)
+										 .Include(t => t.ImageProducts)
+										 .Include(t => t.Categories).ToList()
+										 select stu;
 			if (!String.IsNullOrWhiteSpace(search))
 			{
 				products = products.Where(stu => stu.ProductName.Contains(search)
@@ -95,7 +103,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					break;
 			}
 
-			int Size_Of_Page = 4;
+			int Size_Of_Page = 10;
 			int No_Of_Page = (Page_No ?? 1);
 			return View(products.ToPagedList(No_Of_Page, Size_Of_Page));
 		}
@@ -225,6 +233,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						CreatedDate = model.Product.CreatedDate,
 						Discount = model.Product.Discount,
 						Price = model.Product.Price,
+						PriceSale = model.Product.PriceSale,
 						Sizes = sizes
 
 					};
