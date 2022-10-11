@@ -20,6 +20,7 @@ namespace eCommerceProject.ViewModel
 		{
 
 		}
+		public Cart Cart { get; set; }
 
 	}
 }

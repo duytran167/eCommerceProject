@@ -71,10 +71,10 @@
 						}
 
 					</span>
-					<span class="mtext-102"  >
+					<span class="mtext-102">
 						(@totalRating)
 					</span>
-					<p class="text-muted m-b-0">Code: #5325</p>
+					<p class="text-muted m-b-0">Code: #@Model.Product.ProductCode</p>
 				</div>
 			</div>
 			<div class="m-b-15">
@@ -112,23 +112,34 @@
 						@Model.Product.ProductName
 					</div>
 					<div class="form-group">
-						<label class="font-weight-semibold" for="productPrice">Dicount: </label>
-						@Model.Product.Discount %
+						<label class="font-weight-semibold" for="productName">Product Code: </label>
+						@Model.Product.ProductCode
 					</div>
 					<div class="form-group">
 						<label class="font-weight-semibold" for="productPrice">Price: </label>
 
 						@Model.Product.Price.ToString("#,##0") VND
 					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Dicount: </label>
+						@Model.Product.Discount %
+					</div>
+
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Price: </label>
+
+						@Model.Product.PriceSale.ToString("#,##0") VND
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productName">Short Description: </label>
+						@Model.Product.ShortDesc
+					</div>
 
 					<div class="form-group">
 						<label class="font-weight-semibold" for="productCategory">Category: </label>
 						@Model.Product.Categories.CategoryName
 					</div>
-					<div class="form-group">
-						<label class="font-weight-semibold" for="productBrand">Collection</label>
-						<input type="text" class="form-control" id="productBrand" placeholder="Brand" value="H&M">
-					</div>
+
 					<div class="form-group">
 						<label class="font-weight-semibold" for="productBrand">Date Created:</label>
 						@Model.Product.CreatedDate.ToString("dd MMM yyyy")
@@ -184,26 +195,26 @@
 
 					</div>
 					<!--<div class="form-group">
-				<label class="font-weight-semibold" for="productStatus">Status: </label>
-				<div class="col">-->
+					<label class="font-weight-semibold" for="productStatus">Status: </label>
+					<div class="col">-->
 					@*@if (Model.Product.UnitsInStock > 10)
-					{
+						{
 
-						<div class="badge badge-success badge-dot m-r-10"></div>
-						<div class="m-r-10">In Stock</div>
-					}
-					@if (Model.Product.UnitsInStock < 0)
-					{
-						<div class="badge badge-danger badge-dot m-r-10"></div>
-						<div class="m-r-10">Out Of Stock</div>
-					}
-					@if (Model.Product.UnitsInStock < 10)
-					{
-						<div class="badge badge-warning badge-dot m-r-10"></div>
-						<div class="m-r-10">Stock Only < 10</div>
-					}*@
+							<div class="badge badge-success badge-dot m-r-10"></div>
+							<div class="m-r-10">In Stock</div>
+						}
+						@if (Model.Product.UnitsInStock < 0)
+						{
+							<div class="badge badge-danger badge-dot m-r-10"></div>
+							<div class="m-r-10">Out Of Stock</div>
+						}
+						@if (Model.Product.UnitsInStock < 10)
+						{
+							<div class="badge badge-warning badge-dot m-r-10"></div>
+							<div class="m-r-10">Stock Only < 10</div>
+						}*@
 					<!--</div>
-				</div>-->
+					</div>-->
 				</div>
 			</div>
 		</div>
@@ -298,7 +309,7 @@
 												<i class="fa fa-clock-o"></i>
 												@c.ThisDateTime
 											</span>
-											
+
 
 
 										</div>
@@ -311,9 +322,9 @@
 											</a>
 										}
 										<hr />
-										
+
 									</li>
-									
+
 
 								}
 								else
@@ -328,7 +339,7 @@
 						</ul>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -337,7 +348,7 @@
 	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
 	@Html.ActionLink("Back to List", "Index")
 </p>
-</div>
+
 @section scripts{
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -442,5 +453,3 @@
 	</script>
 
 }
-
-

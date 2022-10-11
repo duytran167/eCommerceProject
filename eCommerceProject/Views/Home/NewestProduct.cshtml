@@ -27,32 +27,56 @@
 							{
 								<img src="@Url.Content(photo.FileName)" alt="IMG-PRODUCT">
 							}
-							@*<div class="flex-col-c-m size-105 bg3 how-pos5">
+							@if (item.BestSellers == true)
+							{<div class="flex-col-c-m size-105 bg1 how-pos5 ">
 
+									<span class="stext-109 cl0 txt-center">
+										Best Seller
+									</span>
+								</div>
+								}
+							@if (item.Discount != null)
+							{<div class="flex-col-c-m size-105  bg7 how-pos5">
 
-			<span class="stext-109 cl0 txt-center">
-					SOLD OUT
-				</span>
-		</div>*@
+									<span class="stext-109 cl0 txt-center">
+										-@item.Discount%	
+									</span>
+								</div>}
+
 							@Html.ActionLink(" ", "DetailsProduct", new { id = item.Id }, new
 										 {
 											 @class = "anticon anticon-zoom-in block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04",
 											 //onclick = "return confirm('Are you sure you want to remove " + Model.BlogPost.Title + " to list ?');"
 											 })
 
-							
+
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								<a href="@Url.Action("DetailsProduct","Home",  new { id = item.Id })" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 									@item.ProductName
 								</a>
+								@if (item.Discount != null)
+								{
+									<span class="stext-105 cl3">
+										<del>@item.Price.ToString("#,##0") VND </del>
+									</span>
+									<span class="stext-105 cl3">
 
-								<span class="stext-105 cl3">
-									@item.Price.ToString("#,##0") VND
-								</span>
-							</div>
+										@item.PriceSale.ToString("#,##0") VND
+									</span>
+									}
+									else
+									{
+									<span class="stext-105 cl3">
+
+										@item.PriceSale.ToString("#,##0") VND
+									</span>
+
+									}
+
+								</div>
 
 							<div class="block2-txt-child2 flex-r p-t-3">
 								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">

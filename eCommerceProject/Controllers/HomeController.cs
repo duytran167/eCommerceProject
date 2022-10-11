@@ -23,8 +23,12 @@ namespace eCommerceProject.Controllers
 
 		//	_usermanager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 		//}
-		public ActionResult Index(Customer user)
+		public ActionResult Index()
 		{
+
+			// Tạo ra 1 CartItem mới
+
+
 
 			return View();
 		}
@@ -109,6 +113,7 @@ namespace eCommerceProject.Controllers
 			product.Product = db.Products.
 							Include(i => i.Categories).
 							Include(i => i.Sizes).
+
 						SingleOrDefault(t => t.Id == id);
 			//comment product
 			ViewBag.ProductId = id.Value;
@@ -179,37 +184,162 @@ namespace eCommerceProject.Controllers
 
 		//-------------------------------------------------------------
 		//product categories
-		public ActionResult ProductCategories(int? id)
+		public ActionResult ProductCategories(int? id, string Sorting_Order, string search, int? filter, string Search_Data, string Filter_Value, int? Page_No)
 		{
 			if (id == null)
 			{
 				return RedirectToAction("Error", "Home");
 			}
-			var product = db.Products.
-							Include(i => i.Categories).
-							Where(i => i.CategoriesID == id).
-						ToList();
 
-			if (product == null)
+			//viewbag
+			ViewBag.CurrentSortOrder = Sorting_Order;
+			ViewBag.SortingNameAZ = String.IsNullOrEmpty(Sorting_Order) ? "ProductNameAZ" : "";
+			ViewBag.SortingNameZA = String.IsNullOrEmpty(Sorting_Order) ? "ProductNameZA" : "";
+			ViewBag.SortingPriceLowtoHigh = String.IsNullOrEmpty(Sorting_Order) ? "PriceLowtoHigh" : "";
+			ViewBag.SortingPriceHightoLow = String.IsNullOrEmpty(Sorting_Order) ? "PriceHightoLow" : "";
+			ViewBag.SortingNewsestProduct = String.IsNullOrEmpty(Sorting_Order) ? "NewsestProduct" : "";
+			ViewBag.SortingBestSellerProduct = String.IsNullOrEmpty(Sorting_Order) ? "BestSellerProduct" : "";
+			ViewBag.SortingDate = Sorting_Order == "CreatedDate" ? "ProductName" : "Date";
+			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
+			//
+			if (Search_Data != null)
+			{
+				Page_No = 1;
+			}
+			else
+			{
+				Search_Data = Filter_Value;
+			}
+
+			ViewBag.FilterValue = Search_Data;
+			ViewBag.category = db.Categories.ToList();
+
+			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).Where(i => i.CategoriesID == id).ToList() select stu;
+
+
+			if (!String.IsNullOrWhiteSpace(search))
+			{
+				products = products.Where(stu => stu.ProductName.Contains(search)
+															 || stu.ProductCode.Contains(search)).ToList();
+			}
+			if (!String.IsNullOrWhiteSpace(filter.ToString()))
+			{
+				//Filter results based on company selected.
+
+				products = products.Where(stu => stu.CategoriesID.Equals(filter)).ToList();
+
+			}
+			if (!String.IsNullOrEmpty(Search_Data))
+			{
+				products = products.Where(stu => stu.ProductName.ToUpper().Contains(Search_Data.ToUpper())
+				|| stu.ProductCode.ToUpper().Contains(Search_Data.ToUpper()));
+			}
+			switch (Sorting_Order)
+			{
+				case "ProductNameZA":
+					products = products.OrderBy(stu => stu.ProductName);
+					break;
+				case "ProductNameAZ":
+					products = products.OrderByDescending(stu => stu.ProductName);
+					break;
+				case "NewsestProduct":
+					products = products.OrderByDescending(stu => stu.CreatedDate);
+					break;
+				case "BestSellerProduct":
+					products = products.Where(stu => stu.BestSellers == true).OrderBy(stu => stu.CreatedDate);
+					break;
+				case "PriceLowtoHigh":
+					products = products.OrderBy(stu => stu.Price);
+					break;
+				case "PriceHightoLow":
+					products = products.OrderByDescending(stu => stu.Price);
+					break;
+				default:
+					products = products.OrderBy(stu => stu.CreatedDate);
+					break;
+			}
+
+			int Size_Of_Page = 16;
+			int No_Of_Page = (Page_No ?? 1);
+			if (products == null)
 			{
 				return RedirectToAction("Error", "Home");
 			}
-			return View(product);
+			return View(products.ToPagedList(No_Of_Page, Size_Of_Page));
 		}
 		//-------------------------------------------------------------
-		public ActionResult AllProduct()
+
+		//-------------------------------------------------------------
+		public ActionResult AllProduct(string Sorting_Order, string search, int? filter, string Search_Data, string Filter_Value, int? Page_No)
 		{
+			ViewBag.CurrentSortOrder = Sorting_Order;
+			ViewBag.SortingNameAZ = String.IsNullOrEmpty(Sorting_Order) ? "ProductNameAZ" : "";
+			ViewBag.SortingNameZA = String.IsNullOrEmpty(Sorting_Order) ? "ProductNameZA" : "";
+			ViewBag.SortingPriceLowtoHigh = String.IsNullOrEmpty(Sorting_Order) ? "PriceLowtoHigh" : "";
+			ViewBag.SortingPriceHightoLow = String.IsNullOrEmpty(Sorting_Order) ? "PriceHightoLow" : "";
+			ViewBag.SortingNewsestProduct = String.IsNullOrEmpty(Sorting_Order) ? "NewsestProduct" : "";
+			ViewBag.SortingBestSellerProduct = String.IsNullOrEmpty(Sorting_Order) ? "BestSellerProduct" : "";
+			ViewBag.SortingDate = Sorting_Order == "CreatedDate" ? "ProductName" : "Date";
+			ViewData["DanhMuc"] = new SelectList(db.Categories, "Id", "CategoryName", "ImagePath");
 
+			if (Search_Data != null)
+			{
+				Page_No = 1;
+			}
+			else
+			{
+				Search_Data = Filter_Value;
+			}
+
+			ViewBag.FilterValue = Search_Data;
 			ViewBag.category = db.Categories.ToList();
-			var allProducts = db.Products.OrderByDescending(x => x.CreatedDate)
-				.Include(t => t.ImageProducts)
-				.Include(t => t.Categories)
-				.ToList();
+			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking().OrderByDescending(t => t.CreatedDate).ToList() select stu;
+			if (!String.IsNullOrWhiteSpace(search))
+			{
+				products = products.Where(stu => stu.ProductName.Contains(search)
+															 || stu.ProductCode.Contains(search)).ToList();
+			}
+			if (!String.IsNullOrWhiteSpace(filter.ToString()))
+			{
+				//Filter results based on company selected.
 
-			return View(allProducts);
+				products = products.Where(stu => stu.CategoriesID.Equals(filter)).ToList();
+
+			}
+			if (!String.IsNullOrEmpty(Search_Data))
+			{
+				products = products.Where(stu => stu.ProductName.ToUpper().Contains(Search_Data.ToUpper())
+				|| stu.ProductCode.ToUpper().Contains(Search_Data.ToUpper()));
+			}
+			switch (Sorting_Order)
+			{
+				case "ProductNameZA":
+					products = products.OrderBy(stu => stu.ProductName);
+					break;
+				case "ProductNameAZ":
+					products = products.OrderByDescending(stu => stu.ProductName);
+					break;
+				case "NewsestProduct":
+					products = products.OrderByDescending(stu => stu.CreatedDate);
+					break;
+				case "BestSellerProduct":
+					products = products.Where(stu => stu.BestSellers == true).OrderBy(stu => stu.CreatedDate);
+					break;
+				case "PriceLowtoHigh":
+					products = products.OrderBy(stu => stu.Price);
+					break;
+				case "PriceHightoLow":
+					products = products.OrderByDescending(stu => stu.Price);
+					break;
+				default:
+					products = products.OrderBy(stu => stu.CreatedDate);
+					break;
+			}
+
+			int Size_Of_Page = 16;
+			int No_Of_Page = (Page_No ?? 1);
+			return View(products.ToPagedList(No_Of_Page, Size_Of_Page));
 		}
-		//-------------------------------------------------------------
-
 
 		//-------------------------------------------------------------
 		public ActionResult ListBlog()

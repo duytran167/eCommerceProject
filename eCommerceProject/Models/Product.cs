@@ -28,12 +28,14 @@ namespace eCommerceProject.Models
 
 		public int CategoriesID { get; set; }
 		public Category Categories { get; set; }
+		public int PriceSale { get; set; }
 		public int Price { get; set; }
 		public int Discount { get; set; }
 		public string ProductCode { get; set; }
 		public bool BestSellers { get; set; }
 		public bool Active { get; set; }
 		public DateTime CreatedDate { get; set; }
+
 		public Product()
 		{
 			CreatedDate = DateTime.Now;

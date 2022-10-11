@@ -49,10 +49,11 @@ namespace eCommerceProject
 			msg.IsBodyHtml = true;
 
 
-			SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+			SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(25));
 			System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["Email"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
 			smtpClient.Credentials = credentials;
 			smtpClient.EnableSsl = true;
+			smtpClient.Timeout = 100000;
 			smtpClient.Send(msg);
 		}
 	}

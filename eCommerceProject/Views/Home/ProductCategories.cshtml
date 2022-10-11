@@ -1,10 +1,67 @@
-﻿@model IEnumerable<eCommerceProject.Models.Product>
+﻿@model PagedList.IPagedList<eCommerceProject.Models.Product>
+@using PagedList;
+@using PagedList.Mvc;
 @{
-	ViewBag.Title =  " Categories";
+	ViewBag.Title = "Categories";
 
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+	.active {
+		color: #999999;
+	}
 
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #999999;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #999999;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #999999;
+			border-radius: 50% !important;
+			color: white;
+		}
+</style>
 <!-- Product -->
 <div class="bg0 m-t-23 p-b-140">
 	<div class="container">
@@ -17,7 +74,7 @@
 					}
 				</button>
 
-				
+
 			</div>
 
 			<div class="flex-w flex-c-m m-tb-10">
@@ -40,8 +97,17 @@
 					<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>
+					@using (Html.BeginForm("ProductCategories", "Home", "POST"))
+					{
 
-					<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+
+						@Html.TextBox("Search_Data", ViewBag.FilterValue as string, new { @type = "text", @class = "mtext-107 cl2 size-114 plh2 p-r-15", @placeholder = "Search..." })
+
+
+
+
+					}
+
 				</div>
 			</div>
 
@@ -55,220 +121,128 @@
 
 						<ul>
 							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									Default
-								</a>
+								@Html.ActionLink("Default", "ProductCategories", new { Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
+							</li>
+							<li class="p-b-6">
+								@Html.ActionLink("Product Name A - Z", "ProductCategories", new { Sorting_Order = ViewBag.SortingNameAZ, Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
+
 							</li>
 
 							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									Popularity
-								</a>
+								@Html.ActionLink("Product Name Z - A", "ProductCategories", new { Sorting_Order = ViewBag.SortingNameZA, Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
+
+
+							</li>
+							<li class="p-b-6">
+								@Html.ActionLink("Best Seller", "ProductCategories", new { Sorting_Order = ViewBag.SortingBestSellerProduct, Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
+
+
+							</li>
+
+
+
+							<li class="p-b-6">
+								@Html.ActionLink("Newest Product", "ProductCategories", new { Sorting_Order = ViewBag.SortingNewsestProduct, Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
+
+
 							</li>
 
 							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									Average rating
-								</a>
+								@Html.ActionLink("Price: Low to High", "ProductCategories", new { Sorting_Order = ViewBag.SortingPriceLowtoHigh, Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
+
+
 							</li>
 
 							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-									Newness
-								</a>
-							</li>
+								@Html.ActionLink("Price: High to Low", "ProductCategories", new { Sorting_Order = ViewBag.SortingPriceHightoLow, Filter_Value = ViewBag.FilterValue }, new { @class = "filter-link stext-106 trans-04" })
 
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									Price: Low to High
-								</a>
-							</li>
 
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									Price: High to Low
-								</a>
 							</li>
 						</ul>
 					</div>
 
-					<div class="filter-col2 p-r-15 p-b-27">
-						<div class="mtext-102 cl2 p-b-15">
-							Price
-						</div>
 
-						<ul>
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-									All
-								</a>
-							</li>
 
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									$0.00 - $50.00
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									$50.00 - $100.00
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									$100.00 - $150.00
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									$150.00 - $200.00
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<a href="#" class="filter-link stext-106 trans-04">
-									$200.00+
-								</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="filter-col3 p-r-15 p-b-27">
-						<div class="mtext-102 cl2 p-b-15">
-							Color
-						</div>
-
-						<ul>
-							<li class="p-b-6">
-								<span class="fs-15 lh-12 m-r-6" style="color: #222;">
-									<i class="zmdi zmdi-circle"></i>
-								</span>
-
-								<a href="#" class="filter-link stext-106 trans-04">
-									Black
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
-									<i class="zmdi zmdi-circle"></i>
-								</span>
-
-								<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-									Blue
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
-									<i class="zmdi zmdi-circle"></i>
-								</span>
-
-								<a href="#" class="filter-link stext-106 trans-04">
-									Grey
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
-									<i class="zmdi zmdi-circle"></i>
-								</span>
-
-								<a href="#" class="filter-link stext-106 trans-04">
-									Green
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
-									<i class="zmdi zmdi-circle"></i>
-								</span>
-
-								<a href="#" class="filter-link stext-106 trans-04">
-									Red
-								</a>
-							</li>
-
-							<li class="p-b-6">
-								<span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
-									<i class="zmdi zmdi-circle-o"></i>
-								</span>
-
-								<a href="#" class="filter-link stext-106 trans-04">
-									White
-								</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="filter-col4 p-b-27">
-						<div class="mtext-102 cl2 p-b-15">
-							Tags
-						</div>
-
-						<div class="flex-w p-t-4 m-r--5">
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Fashion
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Lifestyle
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Denim
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Streetstyle
-							</a>
-
-							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-								Crafts
-							</a>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="row isotope-grid">
-			@foreach (var item in Model)
+			@if (Model != null && Model.Count > 0)
 			{
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-							@foreach (var photo in item.ImageProducts.GroupBy(x => x.FileName).First())
-							{
-								<img src="@Url.Content(photo.FileName)" alt="IMG-PRODUCT">
-							}
+				foreach (var item in Model)
+				{
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
 
-							@Html.ActionLink(" ", "DetailsProduct", new { id = item.Id }, new { @class = "anticon anticon-zoom-in block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04" })
-						</div>
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								@foreach (var photo in item.ImageProducts.GroupBy(x => x.FileName).First())
+								{
+									<img src="@Url.Content(photo.FileName)" alt="IMG-PRODUCT">
+								}
+								@if (item.BestSellers == true)
+								{
+									<div class="flex-col-c-m size-105 bg1 how-pos5 ">
 
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									@item.ProductName
-								</a>
+										<span class="stext-109 cl0 txt-center">
+											Best Seller
+										</span>
+									</div>
+								}
+								@if (item.Discount != null)
+								{<div class="flex-col-c-m size-105  bg7 how-pos5 ">
 
-								<span class="stext-105 cl3">
-									@item.Price.ToString("#,##0") VND
-								</span>
+										<span class="stext-109 cl0 txt-center">
+											-@item.Discount%
+										</span>
+									</div>}
+
+								@Html.ActionLink(" ", "DetailsProduct", new { id = item.Id }, new { @class = "anticon anticon-zoom-in block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04" })
 							</div>
 
-							<div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="~/Content/ImageProduct/icons/icon-heart-01.png" alt="ICON">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Content/ImageProduct/icons/icon-heart-02.png" alt="ICON">
-								</a>
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										@item.ProductName
+									</a>
+
+									@if (item.Discount != null)
+									{
+										<span class="stext-105 cl3">
+											<del>@item.Price.ToString("#,##0") VND </del>
+										</span>
+										<span class="stext-105 cl3">
+
+											@item.PriceSale.ToString("#,##0") VND
+										</span>
+									}
+									else
+									{
+										<span class="stext-105 cl3">
+
+											@item.PriceSale.ToString("#,##0") VND
+										</span>
+
+									}
+
+								</div>
+
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04" src="~/Content/ImageProduct/icons/icon-heart-01.png" alt="ICON">
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Content/ImageProduct/icons/icon-heart-02.png" alt="ICON">
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
+				}
+			}
+			else
+			{
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+					<h6> No product in here! </h6>
 				</div>
 			}
 
@@ -277,11 +251,16 @@
 		</div>
 
 		<!-- Load more -->
-		<div class="flex-c-m flex-w w-full p-t-45">
-			<a href="#" id="loadmore" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-				Load More
-			</a>
+		<div class="row">
+			<div class="col">
+				Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+			</div>
+
+
+			@Html.PagedListPager(Model, Page_No => Url.Action("AllProduct", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
+
 		</div>
 	</div>
 </div>
+
 

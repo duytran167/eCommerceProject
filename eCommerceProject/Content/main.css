@@ -1782,22 +1782,23 @@ button.mfp-close {
 /*//////////////////////////////////////////////////////////////////
 [ Num Product ]*/
 .wrap-num-product {
-  width: 140px;
+  width: 100px;
   height: 45px;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   overflow: hidden;
+  float:left;
 }
 
 .btn-num-product-up,
 .btn-num-product-down {
-  width: 45px;
+  width: 35px;
   height: 100%;
   cursor: pointer;
 }
 
 .num-product {
-  width: calc(100% - 90px);
+  width: calc(100% - 70px);
   height: 100%;
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
@@ -1928,21 +1929,28 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .table-shopping-cart .column-3 {
-  width: 120px;
+  width: 140px;
   font-size: 16px;
+  text-align:center
 }
 
 .table-shopping-cart .column-4 {
   width: 145px;
-  text-align: right;
+  text-align: center;
 }
 
 .table-shopping-cart .column-5 {
-  width: 172px;
-  padding-right: 50px;
+  width: 100px;
+  padding-right: 10px;
   text-align: right;
   font-size: 16px;
 }
+  .table-shopping-cart .column-6 {
+    width: 32px;
+    padding-right: 10px;
+    text-align: right;
+    font-size: 16px;
+  }
 
 .table-shopping-cart .table_row {
   height: 185px;
@@ -2116,6 +2124,8 @@ input.num-product::-webkit-inner-spin-button {
 [ Block2 ]*/
 .block2-pic {
   position: relative;
+  height:100%;
+  
 }
 
 .block2-btn {
@@ -2209,6 +2219,9 @@ input.num-product::-webkit-inner-spin-button {
 .cl10 {color: #1d1d1d;}
 .cl11 {color: #f9ba48;}
 .cl12 {color: #ccc;}
+.cl13 {
+  color: #e1534b
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ S-Text 0 - 15 ]*/
@@ -3180,18 +3193,21 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .hov-img0 {
+  height: 100%;
   display: block;
   overflow: hidden;
-  
+  object-fit: cover;
 }
 
-.hov-img0 img{
-  width: 100%;
-  -webkit-transition: transform 0.9s ease;
-  -o-transition: transform 0.9s ease;
-  -moz-transition: transform 0.9s ease;
-  transition: transform 0.9s ease;
-}
+  .hov-img0 img {
+    height:100%;
+    width: 100%;
+    object-fit: cover;
+    -webkit-transition: transform 0.9s ease;
+    -o-transition: transform 0.9s ease;
+    -moz-transition: transform 0.9s ease;
+    transition: transform 0.9s ease;
+  }
 
 .hov-img0:hover img {
   -webkit-transform: scale(1.1);
