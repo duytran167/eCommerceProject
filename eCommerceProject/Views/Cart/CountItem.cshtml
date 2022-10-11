@@ -1,0 +1,34 @@
+﻿@model List<eCommerceProject.ViewModel.Cart>
+@{
+	ViewBag.Title = "CountItem";
+	Layout = "~/Views/Shared/_BlankLayout.cshtml";
+
+}
+
+
+@if (Model != null && Model.Count() > 0)
+{
+	
+<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+		 data-notify="
+	@Model.Sum(m => m.amount)">
+	<a href="@Url.Action("Index", "Cart")" class="cl2 hov-cl1">
+		<i class="zmdi zmdi-shopping-cart"></i>
+
+	</a>
+	
+
+</div>
+	}
+else
+
+	{
+<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+		 data-notify="0">
+	<a href="@Url.Action("Index", "Cart")" class="cl2 hov-cl1">
+		<i class="zmdi zmdi-shopping-cart"></i>
+
+	</a>
+</div>}
+
+

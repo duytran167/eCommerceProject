@@ -269,8 +269,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				Id = id,
 				Product = product,
 				Categories = db.Categories.ToList(),
-				Sizes = db.Sizes.ToList(),
-				ImageProducts = db.ImageProducts.ToList(),
+
 
 			};
 
@@ -286,125 +285,45 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
-		[ValidateAntiForgeryToken]
+
 		public ActionResult Edit(ViewModel.ProductVM model)
 		{
 			if (ModelState.IsValid)
 			{
+				var product = db.Products.SingleOrDefault(t => t.Id == model.Id);
 
-				List<ImageProduct> fileDetails = new List<ImageProduct>();
-				for (int i = 0; i < Request.Files.Count; i++)
-				{
-					var file = Request.Files[i];
-					// get asnd create image
-					if (file != null && file.ContentLength > 0)
-					{
-						var fileName = Path.GetFileName(file.FileName);
-						ImageProduct fileDetail = new ImageProduct()
-						{
-							FileName = "~/Content/ImageProduct/" + fileName,
-							Extension = Path.GetExtension(fileName),
-							Id = Guid.NewGuid()
-						};
-						fileDetails.Add(fileDetail);
-
-						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileDetail.Id + fileDetail.Extension);
-
-						file.SaveAs(path);
-
-						List<Size> sizes = new List<Size>();
-
-						foreach (var item in model.Sizes)
-						{
-							var sizeV = new Size()
-
-							{
-								SizeName = item.SizeName,
-								Stock = item.Stock,
-
-							};
-							sizes.Add(sizeV);
-						}
+				product.ProductName = model.Product.ProductName;
+				product.CategoriesID = model.Product.CategoriesID;
+				product.ShortDesc = model.Product.ShortDesc;
+				product.Description = model.Product.Description;
+				product.ProductCode = model.Product.ProductCode;
+				product.Active = model.Product.Active;
+				product.BestSellers = model.Product.BestSellers;
+				product.PriceSale = model.Product.PriceSale;
+				product.Discount = model.Product.Discount;
+				product.Price = model.Product.Price;
 
 
-						try
-						{
-							var product = db.Products.SingleOrDefault(t => t.Id == model.Id);
-							product.ProductName = model.Product.ProductName;
-							product.CategoriesID = model.Id;
-							product.ShortDesc = model.Product.ShortDesc;
-							product.Description = model.Product.Description;
-							product.ImageProducts = fileDetails;
-							product.Active = model.Product.Active;
-							product.BestSellers = model.Product.BestSellers;
-
-							product.Discount = model.Product.Discount;
-							product.Price = model.Product.Price;
-							product.Sizes = sizes;
 
 
-							db.Products.Add(product);
-							db.SaveChanges();
-							TempData["success"] = "Edit Success!";
-							return RedirectToAction("Index");
-						}
-						catch (Exception ex)
-						{
-							ViewBag.Msg = ex.Message;
-						}
-					}
-					else
-					{//get size
-						List<Size> sizes = new List<Size>();
-						for (int y = 0; y < Request.Files.Count; y++)
-						{
-							var size = new Size()
-							{
-								SizeName = model.Size.SizeName,
-								Stock = model.Size.Stock,
-
-							};
-							sizes.Add(size);
-						}
-
-
-						try
-						{
-							var product = db.Products.SingleOrDefault(t => t.Id == model.Id);
-							product.ProductName = model.Product.ProductName;
-							product.CategoriesID = model.Id;
-							product.ShortDesc = model.Product.ShortDesc;
-							product.Description = model.Product.Description;
-							//product.ImageProducts = fileDetails;
-							product.Active = model.Product.Active;
-							product.BestSellers = model.Product.BestSellers;
-							product.CreatedDate = model.Product.CreatedDate;
-							product.Discount = model.Product.Discount;
-							product.Price = model.Product.Price;
-							product.Sizes = sizes;
-
-							db.Products.Add(product);
-							db.SaveChanges();
-							TempData["success"] = "Edit Success!";
-							return RedirectToAction("Index");
-						}
-						catch (Exception ex)
-						{
-							ViewBag.Msg = ex.Message;
-						}
-					}
-				}
-
-
+				db.SaveChanges();
+				TempData["success"] = "Edit Success!";
+				return RedirectToAction("Index");
 
 			}
-			//get error when model state í false
 			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
 		.SelectMany(E => E.Errors)
 		.Select(E => E.ErrorMessage)
 		.ToList();
 			return View(model);
 		}
+		//	//get error when model state í false
+		//	var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+		//.SelectMany(E => E.Errors)
+		//.Select(E => E.ErrorMessage)
+		//.ToList();
+		//	return View(model);
+		//}
 
 		// GET: Admin/Products/Delete/5
 		public ActionResult Delete(int id)

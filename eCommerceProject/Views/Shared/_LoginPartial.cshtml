@@ -43,7 +43,10 @@
 				<a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "flex-c-m trans-04 p-lr-25" })</a>
 				<a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "flex-c-m trans-04 p-lr-25" })</a>
 			}
-
+			@if (User.IsInRole("Admin"))
+			{
+			@Html.ActionLink("Dashboard","Index", "Admin/Admin", routeValues: null, htmlAttributes: new { title = "Management", @class = "flex-c-m trans-04 p-lr-25", area = "Admin" })
+			}
 
 
 		</div>

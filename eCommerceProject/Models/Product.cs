@@ -35,6 +35,7 @@ namespace eCommerceProject.Models
 		public bool BestSellers { get; set; }
 		public bool Active { get; set; }
 		public DateTime CreatedDate { get; set; }
+
 		public Product()
 		{
 			CreatedDate = DateTime.Now;

@@ -56,219 +56,206 @@
 		font-size: 15px;
 	}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/Content/fonts/iconic/css/material-design-iconic-font.min.css" rel="stylesheet" />
 <div class="page-header">
-	<h2 class="header-title">Edit Product</h2>
+	<h2 class="header-title">Product</h2>
 	<div class="header-sub-title">
 		<nav class="breadcrumb breadcrumb-dash">
-			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-			<a class="breadcrumb-item" href="#">Product</a>
-			<span class="breadcrumb-item active">Edit @Model.Product.ProductName</span>
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Product</a>
+			<a class="breadcrumb-item" href="#">Edit</a>
+			<span class="breadcrumb-item active">@Model.Product.ProductName</span>
 		</nav>
 	</div>
 </div>
 
+<div class="page-header no-gutters has-tab">
+	<div class="d-md-flex m-b-15 align-items-center justify-content-between">
+		<div class="media align-items-center m-b-15">
+			<div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+				@foreach (var item in result)
+				{
+					<img src="@Url.Content(item.Key)" alt="">
+				}
+
+			</div>
+			<div class="m-l-15">
+				<h4 class="m-b-0">
+					@Model.Product.ProductName
+
+				</h4>
+
+				<p class="text-muted m-b-0">Code: #@Model.Product.ProductCode</p>
+			</div>
+		</div>
+
+	</div>
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#product-edit-option">Option Info</a>
+		</li>
+
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#product-image-basic">Image Info</a>
+		</li>
 
 
+	</ul>
+</div>
 @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-	@Html.AntiForgeryToken()
-	@Html.HiddenFor(model => model.Id)
 
-<div class="form-horizontal">
-
-	<hr />
 	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-	<div class="row">
+	<div class="tab-content m-t-15">
 
-
-		<div class="form-group col-md-8">
-			@Html.Label("Product Name", htmlAttributes: new { @class = "control-label col-md-4" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
-			</div>
-		</div>
-		<div class="form-group col-md-4">
-			@Html.Label("Product Code SKU:", htmlAttributes: new { @class = "control-label col-md-8" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="form-group col">
-			@Html.Label("Category", new { @class = "col-md-4 control-label" })
-			<div class="col-md-12">
-
-				@Html.DropDownListFor(m => m.Id, new SelectList(Model.Categories, "Id", "CategoryName", "ImagePath"), "--Select Category--", new { @class = "dropdown form-control" })
-			</div>
-		</div>
-
-		<div class="form-group col">
-			@Html.Label("Tag", htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-12">
-				@Html.EditorFor(model => model.Product.ShortDesc, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.Product.ShortDesc, "", new { @class = "text-danger" })
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-12">
-			@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
-			@Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
-		</div>
-	</div>
-
-	<div class="form-group">
-		@Html.Label("Product Image", htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="row">
-
-			<div class="col-sm-2 imgUp">
-				<div class="imagePreview"></div>
-				<label class="btn btn-primary">
-					Upload<input type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
-				</label>
-			</div><!-- col-2 -->
-			<i class="fa fa-plus imgAdd"></i>
-		</div><!-- row -->
-	</div>
-	<div class="form-group p-l-20">
-		<div id="inputFormRow" style="width: 35%">
-			<div id="inputFormRow" style="width: 35%">
-				<div class="input-group mb-3">
-					@foreach (var item in Model.Sizes)
-					{
-						@Html.EditorFor(model => model.Size.SizeName, new { htmlAttributes = new { @class = "form-control col-md-12" } })
-						@Html.EditorFor(model => model.Size.Stock, new { htmlAttributes = new { @class = "form-control col-md-12" } })
-						}
-						<div class="input-group-append">
-							<button id="removeRow" type="button" class="btn btn-danger" style="margin-right: 5px">Remove</button>';
-
-						</div>
+		<div class="tab-pane fade show active" id="product-edit-basic">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productName">Product Name: </label>
+						@Html.EditorFor(model => model.Product.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.ProductName, "", new { @class = "text-danger" })
 					</div>
-				<div class="input-group mb-3">
-					<br />
-					<div class="input-group-append"></div>
-				</div>
-			</div>
-			<div id="newRow">
-				<input type="hidden" id="totalLans" value="0" />
-			</div>
-			<button id="addRow" type="button" class="btn btn-info">Add Size</button>
-		</div>
-		@*<div class="form-group p-l-20">
-			<div id="inputFormRow" style="width: 35%">
-				<div class="input-group mb-3">
-					<br />
-					<div class="input-group-append"></div>
-				</div>
-			</div>
-			<div id="newRow">
-				<input type="hidden" id="totalLans" value="0" />
-			</div>
-			<button id="addRow" type="button" class="btn btn-info">Add Size</button>
-		</div>*@
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productName">Product Code: </label>
+						@Html.EditorFor(model => model.Product.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.ProductCode, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Price: </label>
 
-		<div class="editor-field">
-			<input type="file" name="file" multiple="multiple" />
-
-			<ul class="attachment">
-				@foreach (var item in Model.ImageProducts)
-				{
-
-					<li>
-						<div class="col-sm-2 imgUp">
-							<div class="imagePreview">
-								<label class="btn btn-primary">
-									Upload<input src="@Url.Content(item.FileName)" type="file" class="uploadFile img" name="file" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden; cursor:pointer">
-								</label>
-							</div><i class="fa fa-times del"></i>
-						</div>
-						<a class="title" href="/Support/Download/?p=@(item.Id + item.Extension)&d=@item.FileName">@item.FileName</a>
-						<a href="javascript:void(0);" data-id="@item.Id" class="deleteItem">X</a>
-					</li>
-
-				}
-			</ul>
-		</div>
-
-
-
-		@*<div class="row">
-				<div class="form-group col-sm-6">
-					@Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col-md-12">
 						@Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control" } })
 						@Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
 					</div>
-				</div>
-
-				<div class="form-group col-sm-6">
-					@Html.LabelFor(model => model.Product.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col-md-12">
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Discount: </label>
 						@Html.EditorFor(model => model.Product.Discount, new { htmlAttributes = new { @class = "form-control" } })
 						@Html.ValidationMessageFor(model => model.Product.Discount, "", new { @class = "text-danger" })
 					</div>
+
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productPrice">Price Sale: </label>
+
+						@Html.EditorFor(model => model.Product.PriceSale, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.PriceSale, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productName">Short Description: </label>
+						@Html.EditorFor(model => model.Product.ShortDesc, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(model => model.Product.ShortDesc, "", new { @class = "text-danger" })
+					</div>
+
+					<div class="form-group">
+						<label class="font-weight-semibold" for="productCategory">Category: </label>
+						@Html.DropDownListFor(m => m.Product.CategoriesID, new SelectList(Model.Categories, "Id", "CategoryName"), "Select Category", new { @class = "dropdown form-control col-md-12" })
+					</div>
+
+
+
+					<div class="form-group">
+						@Html.Label("Public", htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.CheckBoxFor(model => model.Product.Active, new { data_toggle = "toggle", data_onstyle = "success" })
+
+							@Html.ValidationMessageFor(m => m.Product.Active, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.Label("Best Seller", htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.CheckBoxFor(model => model.Product.BestSellers, new { data_toggle = "toggle", data_onstyle = "success" })
+
+							@Html.ValidationMessageFor(m => m.Product.BestSellers, "",
+
+new { @class = "text-danger" })
+
+						</div>
+					</div>
+
+
 				</div>
-			</div>*@
+			</div>
+		</div>
 
 
-		@*<div class="form-group">
-				@Html.Label(" Total Stock", htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.Product.UnitsInStock, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Product.UnitsInStock, "", new { @class = "text-danger" })
+		<div class="tab-pane fade" id="product-edit-description">
+			<div class="card">
+				<div class="card-body">
+					<div id="productDescription">
+						@Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control content-editor" })
+					</div>
 				</div>
-			</div>*@
-
-		<div class="form-group">
-			@Html.Label("Active", htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.CheckBoxFor(model => model.Product.BestSellers, new { data_toggle = "toggle", data_onstyle = "success" })
-
-				@Html.ValidationMessageFor(m => m.Product.BestSellers, "", new { @class = "text-danger" })
 			</div>
 		</div>
 
-		<div class="form-group">
-			@Html.Label("Best Sellers", htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.CheckBoxFor(model => model.Product.Active, new { data_toggle = "toggle", data_onstyle = "success" })
+		<div class="tab-pane fade" id="product-edit-option">
+			<div class="card">
+				<div class="card-body row">
 
-				@Html.ValidationMessageFor(m => m.Product.Active, "", new { @class = "text-danger" })
+					@foreach (var size in Model.Product.Sizes)
+					{
+						<div class="file">
+							<div class="media align-items-center">
+								<div class="m-r-15 font-size-30">
+									<i class="anticon anticon-info-circle text-success"></i>
+								</div>
+								<div>
+									<h6 class="mb-0">Size Name: <span class="font-size-13 text-muted">@size.SizeName</span></h6>
+									<h6 class="mb-0">Total Stock: <span class="font-size-13 text-muted">@size.Stock</span></h6>
+								</div>
+							</div>
+						</div>
+
+
+					}
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="product-image-basic">
+			<div class="card">
+				<div class="card-body">
+
+					@foreach (var photo in Model.Product.ImageProducts)
+					{
+						<img src="@Url.Content(photo.FileName)" width="120" />
+					}
+
+				</div>
 			</div>
 		</div>
 
-
-
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-12">
-				<input type="submit" value="Create" class="btn btn-success btn-tone col-md-12" />
-			</div>
-		</div>
 	</div>
-	}
-
-
-
+	<div class="m-b-15">
+		<button class="btn btn-primary">
+			<i class="anticon anticon-save"></i>
+			<span>Save</span>
+		</button>
 	</div>
-
 }
-		<div>
-			@Html.ActionLink("Back to List", "Index")
-		</div>
-		@section Scripts {
-			@Scripts.Render("~/bundles/jqueryval")
-			<script src="~/Scripts/jquery.validate.min.js"></script>
-			<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-			<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-			<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-			<script type="text/javascript">
+	<script type="text/javascript">
 			$(document).ready(function () {
 				var max_fields = 10; //maximum input boxes allowed
 				var wrapper = $(".myinput"); //Fields wrapper
@@ -427,5 +414,5 @@
 
 				});
 			});
-			</script>
-		}
+	</script>
+}

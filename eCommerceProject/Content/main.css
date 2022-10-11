@@ -1782,22 +1782,23 @@ button.mfp-close {
 /*//////////////////////////////////////////////////////////////////
 [ Num Product ]*/
 .wrap-num-product {
-  width: 140px;
+  width: 100px;
   height: 45px;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   overflow: hidden;
+  float:left;
 }
 
 .btn-num-product-up,
 .btn-num-product-down {
-  width: 45px;
+  width: 35px;
   height: 100%;
   cursor: pointer;
 }
 
 .num-product {
-  width: calc(100% - 90px);
+  width: calc(100% - 70px);
   height: 100%;
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
@@ -1928,21 +1929,28 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .table-shopping-cart .column-3 {
-  width: 120px;
+  width: 140px;
   font-size: 16px;
+  text-align:center
 }
 
 .table-shopping-cart .column-4 {
   width: 145px;
-  text-align: right;
+  text-align: center;
 }
 
 .table-shopping-cart .column-5 {
-  width: 172px;
-  padding-right: 50px;
+  width: 100px;
+  padding-right: 10px;
   text-align: right;
   font-size: 16px;
 }
+  .table-shopping-cart .column-6 {
+    width: 32px;
+    padding-right: 10px;
+    text-align: right;
+    font-size: 16px;
+  }
 
 .table-shopping-cart .table_row {
   height: 185px;

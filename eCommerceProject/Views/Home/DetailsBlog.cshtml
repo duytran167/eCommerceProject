@@ -1,7 +1,7 @@
 ﻿@model eCommerceProject.ViewModel.BlogVM
 @using Microsoft.AspNet.Identity
 @{
-	ViewBag.Title =  Model.BlogPost.Title;
+	ViewBag.Title = Model.BlogPost.Title;
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -207,7 +207,7 @@
 					</div>
 
 					<!-- comment -->
-					
+
 					<div class="p-t-40">
 						<div class="be-comment-block">
 							<h5 class="mtext-113 cl2 p-b-12">Comments (@ViewBag.CmtCount)</h5>
@@ -298,7 +298,7 @@
 
 			<div class="col-md-4 col-lg-3 p-b-80">
 				<div class="side-menu">
-					
+
 
 					<!-- blog features -->
 					@{
@@ -448,6 +448,7 @@
 		</div>
 	</div>
 </section>
+
 @section scripts{
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -530,6 +531,6 @@
 					}
 				});
 		}
-		
+
 	</script>
 }

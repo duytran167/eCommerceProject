@@ -23,8 +23,12 @@ namespace eCommerceProject.Controllers
 
 		//	_usermanager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 		//}
-		public ActionResult Index(Customer user)
+		public ActionResult Index()
 		{
+
+			// Tạo ra 1 CartItem mới
+
+
 
 			return View();
 		}
@@ -109,6 +113,7 @@ namespace eCommerceProject.Controllers
 			product.Product = db.Products.
 							Include(i => i.Categories).
 							Include(i => i.Sizes).
+
 						SingleOrDefault(t => t.Id == id);
 			//comment product
 			ViewBag.ProductId = id.Value;
