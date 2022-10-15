@@ -326,6 +326,10 @@
     <Compile Include="Migrations\202209190254156_addfieldvalueforcomment.Designer.cs">
       <DependentUpon>202209190254156_addfieldvalueforcomment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210151011319_changeGFuid3.cs" />
+    <Compile Include="Migrations\202210151011319_changeGFuid3.Designer.cs">
+      <DependentUpon>202210151011319_changeGFuid3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\SendMail.cs" />
@@ -1558,6 +1562,9 @@
     <Content Include="Areas\Admin\Views\SendEmails\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\SendEmails\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Management\adminTopbar.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\EditSize.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\CreateSize.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\CreateImage.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1992,6 +1999,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209190254156_addfieldvalueforcomment.resx">
       <DependentUpon>202209190254156_addfieldvalueforcomment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210151011319_changeGFuid3.resx">
+      <DependentUpon>202210151011319_changeGFuid3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

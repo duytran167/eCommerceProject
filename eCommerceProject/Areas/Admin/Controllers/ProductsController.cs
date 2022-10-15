@@ -346,9 +346,203 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					.SingleOrDefault(t => t.Id == id);
 				db.StarRatingAndComments.Remove(removeCmt);
 				db.SaveChanges();
-				return RedirectToAction("DetailsProduct", "", new { id = removeCmt.ProductId });
+				return RedirectToAction("Details", "", new { id = removeCmt.ProductId });
 			}
 			return View(id);
+		}
+
+		// for size----------------------------------------------------
+		public ActionResult CreateSize()
+		{
+			var size = new ViewModel.ProductVM()
+			{
+				Sizes = db.Sizes.ToList(),
+			};
+
+			return View(size);
+		}
+
+		// POST: BlogCategories/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CreateSize([Bind(Include = "Id,SizeName,Stock,ProductId")] Size size, int id)
+		{
+			if (ModelState.IsValid)
+			{
+
+				var newSize = new Size()
+				{
+					SizeName = size.SizeName,
+					Stock = size.Stock,
+					ProductId = id
+				};
+				db.Sizes.Add(newSize);
+				db.SaveChanges();
+				TempData["success"] = "Create Success!";
+				return RedirectToAction("Details", new { id = newSize.ProductId });
+
+			}
+			return View(size);
+		}
+		public ActionResult EditSize(int? id)
+		{
+			if (id == null)
+			{
+				return RedirectToAction("Error", "Admin");
+			}
+			Size size = db.Sizes.Find(id);
+			if (size == null)
+			{
+				return RedirectToAction("Error", "Admin");
+			}
+			return View(size);
+		}
+
+		// POST: BlogCategories/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditSize([Bind(Include = "Id,SizeName,Stock")] Size size)
+		{
+			if (ModelState.IsValid)
+			{
+				var post = db.Sizes.FirstOrDefault(t => t.Id == size.Id);
+				post.SizeName = size.SizeName;
+				post.Stock = size.Stock;
+				db.SaveChanges();
+				TempData["success"] = "Edit Success!";
+				return RedirectToAction("Details", new { id = post.Product.Id });
+			}
+
+			return View(size);
+		}
+		public ActionResult DeleteSize(int id)
+		{
+			var removeSize = db.Sizes.SingleOrDefault(t => t.Id == id);
+			db.Sizes.Remove(removeSize);
+			db.SaveChanges();
+			TempData["success"] = "Delete Successfully!";
+			return RedirectToAction("Details", new { id = removeSize.Product.Id });
+		}
+		//image crud for product
+
+		////for Filter parital view
+		//[ChildActionOnly]
+		//public ActionResult EditImage(int? id)
+		//{
+		//	if (id == null)
+		//	{
+		//		return RedirectToAction("Error", "Admin");
+		//	}
+		//	ImageProduct size = db.ImageProducts.Find(id);
+		//	if (size == null)
+		//	{
+		//		return RedirectToAction("Error", "Admin");
+		//	}
+		//	return PartialView(size);
+		//}
+
+		//// POST: BlogCategories/Edit/5
+		//// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+		//// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		//[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult EditImage([Bind(Include = "Id,FileName,Extension")] ImageProduct image, HttpPostedFileBase fileImage)
+		//{
+		//	if (ModelState.IsValid)
+		//	{
+		//		if (fileImage != null && fileImage.ContentLength > 0)
+		//		{
+		//			var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+		//			var fileName = Path.GetFileName(fileImage.FileName);
+		//			string exe = Path.GetExtension(fileImage.FileName);
+		//			fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+		//			image.FileName = "~/Content/ImageProduct/" + fileName;
+		//			fileName = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileName);
+		//			fileImage.SaveAs(fileName);
+
+
+		//			var post = db.ImageProducts.FirstOrDefault(t => t.Id == image.Id);
+		//			post.FileName = image.FileName;
+
+		//			post.Extension = Path.GetExtension(fileName);
+
+
+		//			db.SaveChanges();
+		//			TempData["success"] = "Update Image Successfully";
+		//			return RedirectToAction("Details", new { id = post.ProductId });
+		//		}
+
+		//	}
+
+		//	return View(image);
+		//}
+		public ActionResult CreateImage()
+		{
+			var size = new ViewModel.ProductVM()
+			{
+				ImageProducts = db.ImageProducts.ToList(),
+			};
+
+			return View(size);
+		}
+
+		// POST: BlogCategories/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CreateImage([Bind(Include = "Id,FileName,Extension,ProductId")] ImageProduct image, int id)
+		{
+
+
+
+
+			List<ImageProduct> fileDetails = new List<ImageProduct>();
+			for (int i = 0; i < Request.Files.Count; i++)
+			{
+				var file = Request.Files[i];
+				// get asnd create image
+				if (file != null && file.ContentLength > 0)
+				{
+					var fileName = Path.GetFileName(file.FileName);
+					ImageProduct fileDetail = new ImageProduct()
+					{
+						FileName = "~/Content/ImageProduct/" + fileName,
+						Extension = Path.GetExtension(fileName),
+						Id = Guid.NewGuid(),
+						ProductId = id
+					};
+					fileDetails.Add(fileDetail);
+
+					var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileDetail.Id + fileDetail.Extension);
+
+					file.SaveAs(path);
+					db.ImageProducts.Add(fileDetail);
+
+					db.SaveChanges();
+					TempData["success"] = "Create Success!";
+					return RedirectToAction("Details", new { id = fileDetail.ProductId });
+
+				}
+			}
+
+			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+		.SelectMany(E => E.Errors)
+		.Select(E => E.ErrorMessage)
+		.ToList();
+			return View(image);
+		}
+		public ActionResult DeleteImage(Guid id)
+		{
+			var removeImage = db.ImageProducts.SingleOrDefault(t => t.Id == id);
+			db.ImageProducts.Remove(removeImage);
+			db.SaveChanges();
+			TempData["success"] = "Delete Successfully!";
+			return RedirectToAction("Details", new { id = removeImage.ProductId });
 		}
 
 		protected override void Dispose(bool disposing)
