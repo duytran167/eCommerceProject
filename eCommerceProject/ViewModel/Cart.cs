@@ -13,6 +13,6 @@ namespace eCommerceProject.ViewModel
 		public Size Size { get; set; }
 
 		public double TotalMoney => amount * Product.PriceSale;
-		public double TotalMoneyAfterShipping => TotalMoney + 30000;
+
 	}
 }

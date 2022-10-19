@@ -15,7 +15,11 @@
 	{
 		Layout = "~/Views/Shared/_Layout.cshtml";
 	}
+	var username = User.Identity.GetUserName();
+	List<eCommerceProject.Models.Order> DanhSachDonHang = ViewBag.DonHang;
+	//var total = DanhSachDonHang.Sum(x => x.TotalMoney).ToString("#,##0");
 }
+<link href="~/Content/myAccount.css" rel="stylesheet" />
 <style>
 	.active {
 		color: #02a499;
@@ -153,7 +157,7 @@
 										<i class="m-r-10 text-primary anticon anticon-compass"></i>
 										<span>Location: </span>
 									</p>
-									<p class="col font-weight-semibold"> @Model.PhoneNumber</p>
+									<p class="col font-weight-semibold"> @Model.User.Address</p>
 								</li>
 							</ul>
 							<div class="d-flex font-size-22 m-t-15">
@@ -176,7 +180,21 @@
 			</div>
 		</div>
 	</div>
+
+
+
+	<!-- Mobile menu start -->
+	<!-- mini cart start -->
+	<!-- my account wrapper start -->
+
+	@{
+		Html.RenderAction("Dashboard", "Account");
+
+	}
+	<!-- my account wrapper end -->
+
 </div>
+
 
 
 

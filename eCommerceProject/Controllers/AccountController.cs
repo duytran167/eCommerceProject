@@ -5,11 +5,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
 namespace eCommerceProject.Controllers
 {
 	[Authorize]
@@ -95,6 +95,7 @@ namespace eCommerceProject.Controllers
 				case SignInStatus.Success:
 					if (User.IsInRole("Admin"))
 					{
+						TempData["success"] = "Login Success!";
 						return RedirectToAction("Index", "Admin");
 					}
 					return RedirectToLocal(returnUrl);
@@ -534,6 +535,29 @@ namespace eCommerceProject.Controllers
 
 			ViewBag.ReturnUrl = returnUrl;
 			return View(model);
+		}
+		// view dashboard profile
+
+		public ActionResult Dashboard()
+		{
+			var taikhoanID = User.Identity.GetUserId();
+			if (taikhoanID != null)
+			{
+				var khachhang = db.Customers.AsNoTracking().SingleOrDefault(x => x.Id == taikhoanID);
+				if (khachhang != null)
+				{
+					var lsDonHang = db.Orders
+							.Include(x => x.TransactStatus)
+							.AsNoTracking()
+							.Where(x => x.CustomerId == khachhang.Id)
+							.OrderByDescending(x => x.OrderDate)
+							.ToList();
+					ViewBag.DonHang = lsDonHang;
+					return View(khachhang);
+				}
+
+			}
+			return RedirectToAction("Login");
 		}
 
 		//

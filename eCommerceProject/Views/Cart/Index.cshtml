@@ -210,7 +210,7 @@
 			</div>
 		</div>
 	</div>-->
-						<div class="row p-t-10 p-b-10">
+						@*<div class="row p-t-10 p-b-10">
 							<div class="col-4">
 								<span class="mtext-102 cl2">
 									Shipping:
@@ -222,7 +222,7 @@
 									30.000 VND
 								</span>
 							</div>
-						</div>
+						</div>*@
 						<i class="stext-111 cl6 p-t-2">
 							Apply voucher to use the promo!
 						</i>
@@ -236,14 +236,24 @@
 
 							<div class="col-8">
 								<span class="mtext-110 cl2">
-									@Model.Sum(m => m.TotalMoneyAfterShipping).ToString("#,##0").Replace(',', '.') VND
+									@Model.Sum(m => m.TotalMoney).ToString("#,##0").Replace(',', '.') VND
 								</span>
 							</div>
 						</div>
+						@if (Request.IsAuthenticated)
+						{
+							@*@Html.ActionLink("Checkout", "Index", "Checkout", new { @class= "flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" })*@
+							<a href="@Url.Action("Index", "Checkout" )">Details</a>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Checkout
-						</button>
+						}
+						else
+						{
+							<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+								Login To Shopping
+							</button>
+
+						}
+
 					</div>
 				</div>
 			}
