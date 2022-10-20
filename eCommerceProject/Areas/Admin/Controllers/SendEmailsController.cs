@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class SendEmailsController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
@@ -49,7 +50,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		public ActionResult Create(SendEmail sendEmail)
 		{
 			//string path = "~/Content/ImageEmail/" + Guid.NewGuid() + "/";
-						if (ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 
 				MailMessage mailMessage = new MailMessage();

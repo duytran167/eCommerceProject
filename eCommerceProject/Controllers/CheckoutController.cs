@@ -114,7 +114,7 @@ namespace eCommerceProject.Controllers
 					orderDetail.ProductId = item.Product.Id;
 					orderDetail.Amount = item.amount;
 					orderDetail.TotalMoney = donhang.TotalMoney;
-					orderDetail.Price = item.Product.Price;
+					orderDetail.Price = item.Product.PriceSale;
 					orderDetail.CreateDate = DateTime.Now;
 					db.OrderDetails.Add(orderDetail);
 

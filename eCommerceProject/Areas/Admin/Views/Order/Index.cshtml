@@ -1,0 +1,236 @@
+﻿@model PagedList.IPagedList<eCommerceProject.Models.Order>
+
+@using PagedList.Mvc;
+
+@{
+	ViewData["Title"] = "Order List" + Model.PageNumber;
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+	.active {
+		color: #02a499;
+	}
+
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #02a499;
+			border-radius: 50% !important;
+			color: white;
+		}
+</style>
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+			<span class="breadcrumb-item active">Order List : @Model.PageNumber </span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="row m-b-30">
+			<div class="col-lg-8">
+				@using (Html.BeginForm("Export", "Order", new { @class = "form-control" }, FormMethod.Post))
+				{
+
+
+					<button class="btn btn-primary">
+
+						<i class="anticon anticon-file-excel "></i>
+						<span type="submit">
+							Export
+						</span>
+
+					</button>
+
+				}
+			</div>
+			<div class="col-lg-4 text-right">
+
+			</div>
+		</div>
+
+		<div class="table-responsive">
+			<table class="table table-hover e-commerce-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Đơn hàng</th>
+						<th>Ngày mua</th>
+						<th>Tổng tiền</th>
+						<th>Trạng thái</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+
+							<tr>
+								<td>@item.OrderId</td>
+								<td>@item.Customer.FullName</td>
+								<td>@item.OrderDate</td>
+								@*<td>@item.OrderDetails.Sum(x =>x.TotalMoney).Value.ToString("#,##0") VNĐ</td>*@
+								<td>@item.TotalMoney.ToString("#,##0") VNĐ</td>
+								<td>@item.TransactStatus.Status</td>
+
+
+
+								<td>
+									@Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "btn btn-primary btn-tone m-r-5" })
+
+									<a class="btn btn-secondary btn-tone" id="@item.OrderId" onclick="Details(this.id)">Show</a>
+									<button class="btn btn-danger btn-tone" onclick="remove(@item.OrderId)">Delete</button>
+								</td>
+							</tr>
+
+						}
+					}
+				</tbody>
+
+			</table>
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+					</div>
+
+
+					@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Change Status</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+@section scripts{
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+				function Details(id) {
+						$.get("@Url.Action("ChangeStatus","Order")/" + id,
+								function (data) {
+										$('.modal-body').html(data);
+								});
+
+								$("#myModal").modal("show");
+		}
+		//delete
+		function remove(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover order!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Admin/Order/Delete/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+	</script>
+}
+

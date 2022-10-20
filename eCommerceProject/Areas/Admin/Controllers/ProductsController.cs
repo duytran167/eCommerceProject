@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class ProductsController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
@@ -103,7 +104,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					break;
 			}
 
-			int Size_Of_Page = 10;
+			int Size_Of_Page = 20;
 			int No_Of_Page = (Page_No ?? 1);
 			return View(products.ToPagedList(No_Of_Page, Size_Of_Page));
 		}
