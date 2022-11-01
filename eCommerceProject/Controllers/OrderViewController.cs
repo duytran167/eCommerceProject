@@ -39,6 +39,7 @@ namespace eCommerceProject.Controllers
 
 				var chitietdonhang = db.OrderDetails
 						.Include(x => x.Product)
+						.Include(x => x.Size)
 						.AsNoTracking()
 						.Where(x => x.OrderId == id)
 						.OrderBy(x => x.OrderDetailId)

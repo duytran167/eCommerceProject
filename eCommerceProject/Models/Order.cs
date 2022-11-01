@@ -22,6 +22,7 @@ namespace eCommerceProject.Models
 		public int TotalMoney { get; set; }
 		public int? PaymentId { get; set; }
 		public string Note { get; set; }
+		public string PaymentMethod { get; set; }
 		public string Address { get; set; }
 		public int? LocationId { get; set; }
 		public int? District { get; set; }

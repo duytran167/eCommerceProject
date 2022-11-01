@@ -20,7 +20,7 @@ namespace eCommerceProject.ViewModel
 		public int QuanHuyen { get; set; }
 		[Required(ErrorMessage = "Vui lòng chọn Phường/Xã")]
 		public int PhuongXa { get; set; }
-		public int PaymentID { get; set; }
+		public string PaymentMethod { get; set; }
 		public string Note { get; set; }
 	}
 }

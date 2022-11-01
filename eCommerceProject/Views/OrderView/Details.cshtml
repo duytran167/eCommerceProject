@@ -10,17 +10,33 @@
 		<div class="col-md-6">
 			<h3>Thông tin đơn hàng: #@Model.Orders.OrderId</h3>
 			<br />
-			<p>Ngày đặt hàng: @Model.Orders.OrderDate</p>
+
 			<p>Trạng thái đơn hàng: @Model.Orders.TransactStatus.Status</p>
 			<p>Tổng giá trị đơn hàng: <strong> @total VNĐ</strong></p>
+			<p>Ngày đặt hàng: @Model.Orders.OrderDate</p>
+			<p>Ngày đặt hàng: @Model.Orders.PackageDate</p>
 			<p>Ngày ship hàng: @Model.Orders.ShipDate</p>
 		</div>
 		<div class="col-md-6">
 			<br />
 			<br />
 			<br />
-			<p>Hình thức thanh toán: <span class="text-primary">VNPAY</span></p>
-			<p>Trạng thái thanh toán: <span class="text-success">Thành công</span></p>
+			<p>Hình thức thanh toán: <span class="text-primary">@Model.Orders.PaymentMethod</span></p>
+			<p>
+				Trạng thái thanh toán:
+				@if (@Model.Orders.Paid == true)
+				{
+					<span class="text-success">
+						Pay
+					</span>
+				}
+				else
+				{
+					<span class="text-success">
+						Not Pay
+					</span>
+				}
+			</p>
 
 		</div>
 	</div>
@@ -39,7 +55,7 @@
 					{
 						<tr>
 							<td>@item.ProductId</td>
-							<td>@item.Product.ProductName</td>
+							<td>@item.Product.ProductName (<strong>@item.Size.SizeName</strong>)</td>
 							<td>@item.Amount</td>
 							<td>@item.Product.PriceSale.ToString("#,##0") VNĐ</td>
 							<td>@item.TotalMoney.Value.ToString("#,##0") VNĐ</td>

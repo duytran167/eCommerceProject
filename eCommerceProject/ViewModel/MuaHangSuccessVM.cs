@@ -9,5 +9,6 @@
 		public string PhuongXa { get; set; }
 		public string QuanHuyen { get; set; }
 		public string TinhThanh { get; set; }
+		public bool Paid { get; set; }
 	}
 }

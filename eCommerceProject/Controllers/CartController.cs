@@ -26,7 +26,7 @@ namespace eCommerceProject.Controllers
 				return gh;
 			}
 		}
-		public ActionResult AddToCart(int SanPhamID, int? amount, string size)
+		public ActionResult AddToCart(int SanPhamID, int? amount, int? size)
 		{
 			if (Session["giohang"] == null) // Nếu giỏ hàng chưa được khởi tạo
 			{
@@ -38,7 +38,7 @@ namespace eCommerceProject.Controllers
 
 			// Kiểm tra xem sản phẩm khách đang chọn đã có trong giỏ hàng chưa
 
-			if (giohang.FirstOrDefault(m => m.Product.Id == SanPhamID) == null) // ko co sp nay trong gio hang
+			if (giohang.FirstOrDefault(m => m.Product.Id == SanPhamID && m.SizeId == size) == null) // ko co sp nay trong gio hang
 			{
 				Product sp = db.Products
 					.Find(SanPhamID); // tim sp theo sanPhamID
@@ -48,6 +48,7 @@ namespace eCommerceProject.Controllers
 					ProductId = SanPhamID,
 					Product = sp,
 					amount = amount.HasValue ? amount.Value : 1,
+					SizeId = size.Value
 					//Size = size
 
 
@@ -95,14 +96,14 @@ namespace eCommerceProject.Controllers
 			return RedirectToAction("Index");
 
 		}
-		public JsonResult Update(string cartModel)
+		public JsonResult Update(string cartModel, int? sizeId)
 		{
 			var jsonCart = new JavaScriptSerializer().Deserialize<List<Cart>>(cartModel);
 			var sessionCart = (List<Cart>)Session["giohang"];
 
 			foreach (var item in sessionCart)
 			{
-				var jsonItem = jsonCart.SingleOrDefault(x => x.Product.Id == item.Product.Id);
+				var jsonItem = jsonCart.SingleOrDefault(x => x.Product.Id == item.Product.Id && item.SizeId == x.SizeId);
 				if (jsonItem != null)
 				{
 					item.amount = jsonItem.amount;
@@ -125,9 +126,11 @@ namespace eCommerceProject.Controllers
 		public ActionResult Index()
 		{
 			List<Cart> giohang = Session["GioHang"] as List<Cart>;
+			ViewBag.Size = db.Sizes.ToList();
 			return View(giohang);
 
 		}
+
 
 	}
 

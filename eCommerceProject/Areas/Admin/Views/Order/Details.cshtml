@@ -34,11 +34,12 @@
 							<span class="font-weight-semibold text-dark">Họ và Tên: @Model.Customer.FullName</span>
 						</address>
 						<address class="p-l-10  m-t--10 ">
-							<span>Địa chỉ: @Model.Customer.Address</span>
-						</address>
-						<address class="p-l-10  m-t--10 ">
 							<span>Số điện thoại: @Model.Customer.PhoneNumber</span>
 						</address>
+						<address class="p-l-10  m-t--10 ">
+							<span>Địa chỉ: @Model.Customer.Address</span>
+						</address>
+
 					</div>
 					<div class="col-sm-6">
 						<div class="m-t-80">
@@ -110,7 +111,7 @@
 
 											<th>@i</th>
 
-											<td><a target="_blank" href="/Home/DetailsProduct/@item.ProductId">@item.Product.ProductName</a></td>
+											<td><a target="_blank" href="/Home/DetailsProduct/@item.ProductId" style="text-decoration: none; color: black; ">@item.Product.ProductName</a> (<strong>@item.Size.SizeName</strong>)</td>
 											<td>@item.Amount</td>
 											<td>@item.Price.Value.ToString("#,##0") VNĐ</td>
 											<td>@item.TotalMoney.Value.ToString("#,##0") VNĐ</td>
@@ -136,12 +137,12 @@
 	</div>
 </div>
  
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#btnSubmit").click(function () {
-                $("input[name='GridHtml']").val($("#Grid").html());
-            });
-        });
-    </script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript">
+				$(function () {
+						$("#btnSubmit").click(function () {
+								$("input[name='GridHtml']").val($("#Grid").html());
+						});
+				});
+		</script>
 

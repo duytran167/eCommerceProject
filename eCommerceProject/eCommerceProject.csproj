@@ -362,6 +362,22 @@
     <Compile Include="Migrations\202210200751151_addShipdate.Designer.cs">
       <DependentUpon>202210200751151_addShipdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210220138587_addpricefororder.cs" />
+    <Compile Include="Migrations\202210220138587_addpricefororder.Designer.cs">
+      <DependentUpon>202210220138587_addpricefororder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210271035008_addPaymentMethod.cs" />
+    <Compile Include="Migrations\202210271035008_addPaymentMethod.Designer.cs">
+      <DependentUpon>202210271035008_addPaymentMethod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210280241557_addPaymnetmehtodforcustomer.cs" />
+    <Compile Include="Migrations\202210280241557_addPaymnetmehtodforcustomer.Designer.cs">
+      <DependentUpon>202210280241557_addPaymnetmehtodforcustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210280307129_addPaymnetmehtodforcustomer2.cs" />
+    <Compile Include="Migrations\202210280307129_addPaymnetmehtodforcustomer2.Designer.cs">
+      <DependentUpon>202210280307129_addPaymnetmehtodforcustomer2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Order.cs" />
@@ -371,6 +387,9 @@
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\StarRatingAndComment.cs" />
     <Compile Include="Models\TransactStatus.cs" />
+    <Compile Include="Others\PayCompare.cs" />
+    <Compile Include="Others\PayLib.cs" />
+    <Compile Include="Others\Util.cs" />
     <Compile Include="ViewModel\BlogVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminCustomersController.cs" />
@@ -2066,6 +2085,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210200751151_addShipdate.resx">
       <DependentUpon>202210200751151_addShipdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210220138587_addpricefororder.resx">
+      <DependentUpon>202210220138587_addpricefororder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210271035008_addPaymentMethod.resx">
+      <DependentUpon>202210271035008_addPaymentMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210280241557_addPaymnetmehtodforcustomer.resx">
+      <DependentUpon>202210280241557_addPaymnetmehtodforcustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210280307129_addPaymnetmehtodforcustomer2.resx">
+      <DependentUpon>202210280307129_addPaymnetmehtodforcustomer2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

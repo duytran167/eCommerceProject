@@ -119,7 +119,8 @@ namespace eCommerceProject.Controllers
 			ViewBag.ProductId = id.Value;
 			var comments = db.StarRatingAndComments.Where(d => d.ProductId.Equals(id.Value)).Include(t => t.User).ToList();
 			ViewBag.Comments = comments;
-
+			var sizes = db.Sizes.Where(d => d.ProductId.Equals(id.Value)).ToList();
+			ViewBag.Sizes = sizes;
 			var ratings = db.StarRatingAndComments.Where(d => d.ProductId.Equals(id.Value)).Include(t => t.User).ToList();
 			if (ratings.Count() > 0)
 			{
