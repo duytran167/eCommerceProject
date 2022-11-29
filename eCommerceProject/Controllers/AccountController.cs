@@ -98,14 +98,17 @@ namespace eCommerceProject.Controllers
 						TempData["success"] = "Login Success!";
 						return RedirectToAction("Index", "Admin");
 					}
+					TempData["success"] = "Login Success!";
 					return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 					return View("Lockout");
 				case SignInStatus.RequiresVerification:
+					TempData["success"] = "Login Success!";
 					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 				case SignInStatus.Failure:
 				default:
 					ModelState.AddModelError("", "Invalid login attempt.");
+					TempData["error"] = "Login Success!";
 					return View(model);
 			}
 		}
@@ -201,7 +204,7 @@ namespace eCommerceProject.Controllers
 
 					ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
 													+ "before you can log in.";
-
+					TempData["success"] = "Register Success!";
 					return View("Info");
 
 
@@ -209,7 +212,10 @@ namespace eCommerceProject.Controllers
 				}
 				AddErrors(result);
 			}
-
+			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+		.SelectMany(E => E.Errors)
+		.Select(E => E.ErrorMessage)
+		.ToList();
 
 			// If we got this far, something failed, redisplay form
 			return View(model);
@@ -319,6 +325,10 @@ namespace eCommerceProject.Controllers
 				}
 				AddErrors(result);
 			}
+			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+		.SelectMany(E => E.Errors)
+		.Select(E => E.ErrorMessage)
+		.ToList();
 			// If we got this far, something failed, redisplay form
 			return View(model);
 		}

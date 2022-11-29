@@ -2,15 +2,17 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Seller")]
 
 	public class AdminController : Controller
 	{
@@ -28,9 +30,71 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		}
 		public ActionResult Index()
 		{
+			var now = DateTime.Now;
+			var first = new DateTime(now.Year, now.Month, 1);
+			var last = first.AddMonths(1).AddDays(-1);
+			var orderbyMonth = (from u in db.OrderDetails
+													where u.CreateDate < last
+													where u.CreateDate > first
+													select u).ToList();
+			var totalMoneyByMonth = (from u in db.OrderDetails
+
+															 where u.CreateDate < last
+															 where u.CreateDate > first
+															 select u.TotalMoney).ToList();
+			var totalUserByMonth = (from u in db.Customers
+
+															where u.CreatedDate < last
+															where u.CreatedDate > first
+															select u).ToList();
+			var totalItemSellByMonth = (from u in db.OrderDetails
+
+																	where u.CreateDate < last
+																	where u.CreateDate > first
+																	select u.Amount).ToList();
+			ViewBag.CountOrderByMonth = orderbyMonth.Count();
+			ViewBag.TotalMoneyByMonth = totalMoneyByMonth.Sum();
+			ViewBag.TotalUserByMonth = totalUserByMonth.Count();
+			ViewBag.TotalItemSellByMonth = totalItemSellByMonth.Count();
 			return View();
 		}
+		public ActionResult GetDataByCategories()
+		{
 
+			int top = db.Products.Include(t => t.Categories).Where(x => x.Categories.CategoryName == "TOP").Count();
+			int outerwear = db.Products.Include(t => t.Categories).Where(x => x.Categories.CategoryName == "OUTERWEAR").Count();
+			int bottoms = db.Products.Include(t => t.Categories).Where(x => x.Categories.CategoryName == "BOTTOMS").Count();
+			int accessories = db.Products.Include(t => t.Categories).Where(x => x.Categories.CategoryName == "ACCESSORIES").Count();
+			Cate obj = new Cate();
+			obj.TOP = top;
+			obj.OUTERWEAR = outerwear;
+			obj.BOTTOMS = bottoms;
+			obj.ACCESSORIES = accessories;
+			return Json(obj, JsonRequestBehavior.AllowGet);
+		}
+		public ActionResult GetDataTotalMoney()
+		{
+
+
+			var query = db.OrderDetails.Include(t => t.Product)
+						 .GroupBy(p => p.Product.ProductName)
+						 .Select(g => new { name = g.Key, count = g.Sum(w => w.TotalMoney) }).ToList();
+			return Json(query, JsonRequestBehavior.AllowGet);
+		}
+		public class Cate
+		{
+			public int TOP { get; set; }
+			public int OUTERWEAR { get; set; }
+			public int BOTTOMS { get; set; }
+			public int ACCESSORIES { get; set; }
+		}
+		public ActionResult GetDataBestSeller()
+		{
+			var query = db.OrderDetails.Include(t => t.Product)
+						 .GroupBy(p => p.Product.ProductName)
+						 .Select(g => new { name = g.Key, count = g.Sum(w => w.Amount) }).ToList();
+			return Json(query, JsonRequestBehavior.AllowGet);
+		}
 		// GET: Admin/Details/5
 		public ActionResult Details(int id)
 		{

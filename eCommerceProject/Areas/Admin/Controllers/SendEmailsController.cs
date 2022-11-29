@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Seller")]
 	public class SendEmailsController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();

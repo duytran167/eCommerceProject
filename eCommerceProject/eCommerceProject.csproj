@@ -107,6 +107,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
     <Reference Include="SendGrid, Version=9.28.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\SendGrid.9.28.0\lib\net452\SendGrid.dll</HintPath>
     </Reference>
@@ -240,6 +243,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminAccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
@@ -248,6 +252,7 @@
     <Compile Include="Areas\Admin\Services\SharedServices.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\OrderViewController.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Migrations\202208020841560_updatecomment.cs" />
@@ -378,8 +383,20 @@
     <Compile Include="Migrations\202210280307129_addPaymnetmehtodforcustomer2.Designer.cs">
       <DependentUpon>202210280307129_addPaymnetmehtodforcustomer2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211010245520_TotalStockSoldForEachProduct.cs" />
+    <Compile Include="Migrations\202211010245520_TotalStockSoldForEachProduct.Designer.cs">
+      <DependentUpon>202211010245520_TotalStockSoldForEachProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211200419067_addContact.cs" />
+    <Compile Include="Migrations\202211200419067_addContact.Designer.cs">
+      <DependentUpon>202211200419067_addContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211250538309_addNotificationforOrder.cs" />
+    <Compile Include="Migrations\202211250538309_addNotificationforOrder.Designer.cs">
+      <DependentUpon>202211250538309_addNotificationforOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ImageProduct.cs" />
-    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
@@ -1553,6 +1570,9 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chart\export-data.js" />
+    <Content Include="Scripts\chart\exporting.js" />
+    <Content Include="Scripts\chart\highcharts.js" />
     <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.min.js" />
     <Content Include="Scripts\DataTables-1.10.0\dataTables.bootstrap.js" />
@@ -1629,6 +1649,11 @@
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Order\ChangeStatus.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\GetData.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\CountNoti.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\CountNoti.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1655,6 +1680,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\quill.min.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\slick-custom.js" />
@@ -1923,6 +1949,10 @@
     <Content Include="Views\Checkout\Success.cshtml" />
     <Content Include="Views\OrderView\Details.cshtml" />
     <Content Include="Views\Account\Dashboard.cshtml" />
+    <Content Include="Views\Checkout\Failed.cshtml" />
+    <Content Include="Views\Contacts\Create.cshtml" />
+    <Content Include="Views\Contacts\Delete.cshtml" />
+    <Content Include="Views\Contacts\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2097,6 +2127,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210280307129_addPaymnetmehtodforcustomer2.resx">
       <DependentUpon>202210280307129_addPaymnetmehtodforcustomer2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211010245520_TotalStockSoldForEachProduct.resx">
+      <DependentUpon>202211010245520_TotalStockSoldForEachProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211200419067_addContact.resx">
+      <DependentUpon>202211200419067_addContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211250538309_addNotificationforOrder.resx">
+      <DependentUpon>202211250538309_addNotificationforOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

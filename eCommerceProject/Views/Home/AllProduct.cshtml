@@ -362,9 +362,10 @@
 			<div class="col">
 				Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 			</div>
-
-
-			@Html.PagedListPager(Model, Page_No => Url.Action("AllProduct", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
+			@Html.PagedListPager(Model, Page_No => Url.Action("AllProduct", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, 
+				 Filter_Value = ViewBag.FilterValue, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), 
+				 new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", 
+					 LinkToLastPageFormat = ">>" })
 
 		</div>
 	</div>

@@ -237,10 +237,10 @@ namespace eCommerceProject.Controllers
 			}
 			switch (Sorting_Order)
 			{
-				case "ProductNameZA":
+				case "ProductNameAZ":
 					products = products.OrderBy(stu => stu.ProductName);
 					break;
-				case "ProductNameAZ":
+				case "ProductNameZA":
 					products = products.OrderByDescending(stu => stu.ProductName);
 					break;
 				case "NewsestProduct":
@@ -527,6 +527,12 @@ namespace eCommerceProject.Controllers
 				db.Dispose();
 			}
 			base.Dispose(disposing);
+		}
+
+		public ActionResult ContactUs()
+		{
+			ViewBag.Error = "Something didn't find here :(";
+			return View();
 		}
 	}
 }

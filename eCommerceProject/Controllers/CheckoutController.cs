@@ -58,7 +58,7 @@ namespace eCommerceProject.Controllers
 
 			}
 			ViewBag.Size = db.Sizes.ToList();
-			ViewData["lsTinhThanh"] = new SelectList(db.Locations.Where(x => x.Levels == 1).OrderBy(x => x.Type).ToList(), "Location", "Name");
+
 			ViewBag.GioHang = gh;
 			return View(model);
 		}
@@ -259,7 +259,7 @@ namespace eCommerceProject.Controllers
 					donhang.CustomerId = model.CustomerId;
 					donhang.Address = model.Address;
 					donhang.PaymentMethod = model.PaymentMethod;
-
+					donhang.Noti = false;
 					donhang.OrderDate = DateTime.Now;
 					donhang.TransactStatusId = 1;//Don hang moi
 					donhang.Deleted = false;
@@ -296,7 +296,7 @@ namespace eCommerceProject.Controllers
 
 					//tao danh sach don hang
 
-					var viewId = "/OrderView/Details/" + donhang.OrderId;
+					//var viewId = "/OrderView/Details/" + donhang.OrderId;
 
 					string paymentUrl = pay.CreateRequestUrl(url, hashSecret);
 
@@ -311,77 +311,65 @@ namespace eCommerceProject.Controllers
 						orderDetail.SizeId = item.SizeId;
 						var sizeName = db.Sizes.Where(t => t.Id == item.SizeId);
 						//value to get from string text fopr email
-						using (var reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/OrderTemplate.html")))
-						{
-							body.Append(reader.ReadToEnd());
-							foreach (var i in sizeName)
-							{
-								var sizename = i.SizeName;
+						//using (var reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/OrderTemplate.html")))
+						//{
+						//	body.Append(reader.ReadToEnd());
+						//	foreach (var i in sizeName)
+						//	{
+						//		var sizename = i.SizeName;
 
-								body.Replace("{Size}", Convert.ToString(sizename));
+						//		body.Replace("{Size}", Convert.ToString(sizename));
 
-							}
-
-
-							orderDetail.TotalMoney = item.Product.PriceSale * item.amount;
-							orderDetail.Price = item.Product.PriceSale;
-							orderDetail.CreateDate = DateTime.Now;
-
-							//tru di stock có sẵn của product
-							Size size = db.Sizes.ToList().Find(t => t.ProductId == item.ProductId);
-							size.Stock -= item.amount;
+						//	}
 
 
-							//get size name
+						orderDetail.TotalMoney = item.Product.PriceSale * item.amount;
+						orderDetail.Price = item.Product.PriceSale;
+						orderDetail.CreateDate = DateTime.Now;
 
-							db.OrderDetails.Add(orderDetail);
+						//tru di stock có sẵn của product
+						Size size = db.Sizes.ToList().Find(t => t.ProductId == item.ProductId);
+						size.Stock -= item.amount;
+						// cong vao stock da ban duoc cua san pham do
+						item.Product.TotalStockSold += item.amount;
 
-							//valueProvider for email
+
+						//get size name
+
+						db.OrderDetails.Add(orderDetail);
+
+						//valueProvider for email
 
 
-							body.Replace("{UserName}", donhang.Customer.FullName);
-							body.Replace("{Address}", donhang.Customer.Address);
-							body.Replace("{PhoneNumber}", donhang.Customer.PhoneNumber);
-							body.Replace("{OrderId}", Convert.ToString(donhang.OrderId));
-							body.Replace("{Total}", donhang.TotalMoney.ToString("#,##0"));
-							body.Replace("{OrderDate}", Convert.ToString(donhang.OrderDate));
-							body.Replace("{View}", viewId);
-
-							body.Replace("{ProductName}", item.Product.ProductName);
-							body.Replace("{ProductPrice}", (item.Product.PriceSale * item.amount).ToString("#,##0"));
-							body.Replace("{ProductForEachPrice}", item.Product.PriceSale.ToString("#,##0"));
-							body.Replace("{Quantity}", Convert.ToString(item.amount));
-
-							body.Append("<br />");
-						}
 
 					}
+
+					//}
 
 					db.SaveChanges();
 					//mail
 					//declare body fgor email
 
 
-					//clear gio hang
-					HttpContext.Session.Remove("GioHang");
-					//Xuat thong bao
-					TempData["success"] = "Order Success!";
-					//goi mail 
-					using (MailMessage mailMessage = new MailMessage())
-					{
-						mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["Email"].ToString());
-						mailMessage.To.Add(new MailAddress(model.Email));
-						mailMessage.Subject = "Thanks for your order - COCO Store";
-						mailMessage.Body = body.ToString();
-						mailMessage.IsBodyHtml = true;
-						//mailMessage.To.Add(new MailAddress(email.Recipient));
-						SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
-						System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["Email"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
-						smtpClient.Credentials = credentials;
-						smtpClient.EnableSsl = true;
 
-						smtpClient.Send(mailMessage);
-					}
+					//Xuat thong bao
+					//TempData["success"] = "Order Success!";
+					//goi mail 
+					//using (MailMessage mailMessage = new MailMessage())
+					//{
+					//	mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["Email"].ToString());
+					//	mailMessage.To.Add(new MailAddress(model.Email));
+					//	mailMessage.Subject = "Thanks for your order - COCO Store";
+					//	mailMessage.Body = body.ToString();
+					//	mailMessage.IsBodyHtml = true;
+					//	//mailMessage.To.Add(new MailAddress(email.Recipient));
+					//	SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+					//	System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["Email"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
+					//	smtpClient.Credentials = credentials;
+					//	smtpClient.EnableSsl = true;
+
+					//	smtpClient.Send(mailMessage);
+					//}
 					//cap nhat thong tin khach hang
 
 					return Redirect(paymentUrl);
@@ -403,11 +391,11 @@ namespace eCommerceProject.Controllers
 					donhang.CustomerId = model.CustomerId;
 					donhang.Address = model.Address;
 					donhang.PaymentMethod = model.PaymentMethod;
-
+					donhang.Noti = false;
 					donhang.OrderDate = DateTime.Now;
 					donhang.TransactStatusId = 1;//Don hang moi
 					donhang.Deleted = false;
-					donhang.Paid = true;
+					donhang.Paid = false;
 					donhang.Note = muaHang.Note;
 					//donhang.Note = Utilities.StripHTML(model.Note);
 					donhang.TotalMoney = Convert.ToInt32(gh.Sum(x => x.TotalMoney));
@@ -455,7 +443,7 @@ namespace eCommerceProject.Controllers
 							Size size = db.Sizes.ToList().Find(t => t.ProductId == item.ProductId);
 							size.Stock -= item.amount;
 
-
+							item.Product.TotalStockSold += item.amount;
 							//get size name
 
 							db.OrderDetails.Add(orderDetail);
@@ -486,18 +474,13 @@ namespace eCommerceProject.Controllers
 					//declare body fgor email
 
 
-					//clear gio hang
-					HttpContext.Session.Remove("GioHang");
 					//Xuat thong bao
 					TempData["success"] = "Order Success!";
-					//cap nhat thong tin khach hang
-
-
-
+					//goi mail 
 					using (MailMessage mailMessage = new MailMessage())
 					{
 						mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["Email"].ToString());
-						mailMessage.To.Add(new MailAddress(muaHang.Email));
+						mailMessage.To.Add(new MailAddress(model.Email));
 						mailMessage.Subject = "Thanks for your order - COCO Store";
 						mailMessage.Body = body.ToString();
 						mailMessage.IsBodyHtml = true;
@@ -509,6 +492,11 @@ namespace eCommerceProject.Controllers
 
 						smtpClient.Send(mailMessage);
 					}
+					//cap nhat thong tin khach hang
+
+
+
+
 					return RedirectToAction("Success");
 				}
 
@@ -520,56 +508,13 @@ namespace eCommerceProject.Controllers
 
 		}
 
-		public ActionResult PaymentConfirm()
-		{
-			if (Request.QueryString.Count > 0)
-			{
-				string hashSecret = ConfigurationManager.AppSettings["HashSecret"]; //Chuỗi bí mật
-				var vnpayData = Request.QueryString;
-				PayLib pay = new PayLib();
 
-				//lấy toàn bộ dữ liệu được trả về
-				foreach (string s in vnpayData)
-				{
-					if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
-					{
-						pay.AddResponseData(s, vnpayData[s]);
-					}
-				}
-
-				long orderId = Convert.ToInt64(pay.GetResponseData("vnp_TxnRef")); //mã hóa đơn
-				long vnpayTranId = Convert.ToInt64(pay.GetResponseData("vnp_TransactionNo")); //mã giao dịch tại hệ thống VNPAY
-				string vnp_ResponseCode = pay.GetResponseData("vnp_ResponseCode"); //response code: 00 - thành công, khác 00 - xem thêm https://sandbox.vnpayment.vn/apis/docs/bang-ma-loi/
-				string vnp_SecureHash = Request.QueryString["vnp_SecureHash"]; //hash của dữ liệu trả về
-
-				bool checkSignature = pay.ValidateSignature(vnp_SecureHash, hashSecret); //check chữ ký đúng hay không?
-
-				if (checkSignature)
-				{
-					if (vnp_ResponseCode == "00")
-					{
-						//Thanh toán thành công
-						ViewBag.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
-					}
-					else
-					{
-						//Thanh toán không thành công. Mã lỗi: vnp_ResponseCode
-						ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId + " | Mã lỗi: " + vnp_ResponseCode;
-					}
-				}
-				else
-				{
-					ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý" + vnp_ResponseCode;
-				}
-			}
-
-			return View();
-		}
 		[Route("dat-hang-thanh-cong.html", Name = "Success")]
 		public ActionResult Success()
 		{
 			try
 			{
+				var gh = Session["GioHang"] as List<Cart>;
 				var taikhoanID = User.Identity.GetUserId();
 				if (string.IsNullOrEmpty(taikhoanID))
 				{
@@ -587,56 +532,162 @@ namespace eCommerceProject.Controllers
 				successVM.Address = khachhang.Address;
 
 
-
-				//save data to vnpay
-				if (Request.QueryString.Count > 0)
+				//email
+				var body = new StringBuilder();
+				var viewId = "/OrderView/Details/" + donhang.OrderId;
+				foreach (var item in gh)
 				{
-					string hashSecret = ConfigurationManager.AppSettings["HashSecret"]; //Chuỗi bí mật
-					var vnpayData = Request.QueryString;
-					PayLib pay = new PayLib();
-
-					//lấy toàn bộ dữ liệu được trả về
-					foreach (string s in vnpayData)
+					OrderDetail orderDetail = new OrderDetail();
+					orderDetail.OrderId = donhang.OrderId;
+					orderDetail.ProductId = item.Product.Id;
+					orderDetail.Amount = item.amount;
+					orderDetail.SizeId = item.SizeId;
+					var sizeName = db.Sizes.Where(t => t.Id == item.SizeId);
+					using (var reader = new StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/Content/OrderTemplate.html")))
 					{
-						if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
+						body.Append(reader.ReadToEnd());
+						foreach (var i in sizeName)
 						{
-							pay.AddResponseData(s, vnpayData[s]);
+							var sizename = i.SizeName;
+
+							body.Replace("{Size}", Convert.ToString(sizename));
+
 						}
+
+
+						orderDetail.TotalMoney = item.Product.PriceSale * item.amount;
+						orderDetail.Price = item.Product.PriceSale;
+						orderDetail.CreateDate = DateTime.Now;
+
+						//tru di stock có sẵn của product
+						Size size = db.Sizes.ToList().Find(t => t.ProductId == item.ProductId);
+						size.Stock -= item.amount;
+						// cong vao stock da ban duoc cua san pham do
+						item.Product.TotalStockSold += item.amount;
+
+
+						//get size name
+
+
+
+						//valueProvider for email
+
+
+						body.Replace("{UserName}", donhang.Customer.FullName);
+						body.Replace("{Address}", donhang.Customer.Address);
+						body.Replace("{PhoneNumber}", donhang.Customer.PhoneNumber);
+						body.Replace("{OrderId}", Convert.ToString(donhang.OrderId));
+						body.Replace("{Total}", donhang.TotalMoney.ToString("#,##0"));
+						body.Replace("{OrderDate}", Convert.ToString(donhang.OrderDate));
+						body.Replace("{View}", viewId);
+
+						body.Replace("{ProductName}", item.Product.ProductName);
+						body.Replace("{ProductPrice}", (item.Product.PriceSale * item.amount).ToString("#,##0"));
+						body.Replace("{ProductForEachPrice}", item.Product.PriceSale.ToString("#,##0"));
+						body.Replace("{Quantity}", Convert.ToString(item.amount));
+
+						body.Append("<br />");
 					}
-
-					long orderId = Convert.ToInt64(pay.GetResponseData("vnp_TxnRef")); //mã hóa đơn
-					long vnpayTranId = Convert.ToInt64(pay.GetResponseData("vnp_TransactionNo")); //mã giao dịch tại hệ thống VNPAY
-					string vnp_ResponseCode = pay.GetResponseData("vnp_ResponseCode"); //response code: 00 - thành công, khác 00 - xem thêm https://sandbox.vnpayment.vn/apis/docs/bang-ma-loi/
-					string vnp_SecureHash = Request.QueryString["vnp_SecureHash"]; //hash của dữ liệu trả về
-
-					bool checkSignature = pay.ValidateSignature(vnp_SecureHash, hashSecret); //check chữ ký đúng hay không?
-
-					if (checkSignature)
+				}
+				//send email confirm to user
+				if (donhang.PaymentMethod == "VNPAY")
+				{
+					//save data to vnpay
+					if (Request.QueryString.Count > 0)
 					{
-						if (vnp_ResponseCode == "00")
+						string hashSecret = ConfigurationManager.AppSettings["HashSecret"]; //Chuỗi bí mật
+						var vnpayData = Request.QueryString;
+						PayLib pay = new PayLib();
+
+						//lấy toàn bộ dữ liệu được trả về
+						foreach (string s in vnpayData)
 						{
-							//Thanh toán thành công
-							ViewBag.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
+							if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
+							{
+								pay.AddResponseData(s, vnpayData[s]);
+							}
+						}
+
+						long orderId = Convert.ToInt64(pay.GetResponseData("vnp_TxnRef")); //mã hóa đơn
+						long vnpayTranId = Convert.ToInt64(pay.GetResponseData("vnp_TransactionNo")); //mã giao dịch tại hệ thống VNPAY
+						string vnp_ResponseCode = pay.GetResponseData("vnp_ResponseCode"); //response code: 00 - thành công, khác 00 - xem thêm https://sandbox.vnpayment.vn/apis/docs/bang-ma-loi/
+						string vnp_SecureHash = Request.QueryString["vnp_SecureHash"]; //hash của dữ liệu trả về
+
+						bool checkSignature = pay.ValidateSignature(vnp_SecureHash, hashSecret); //check chữ ký đúng hay không?
+
+						if (checkSignature)
+						{
+							if (vnp_ResponseCode == "00")
+							{
+								donhang.Paid = true;
+								db.SaveChanges();
+								//Thanh toán thành công
+								using (MailMessage mailMessage = new MailMessage())
+								{
+									mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["Email"].ToString());
+									mailMessage.To.Add(new MailAddress(donhang.Customer.Email));
+									mailMessage.Subject = "Thanks for your order - COCO Store";
+									mailMessage.Body = body.ToString();
+									mailMessage.IsBodyHtml = true;
+									//mailMessage.To.Add(new MailAddress(email.Recipient));
+									SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+									System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["Email"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
+									smtpClient.Credentials = credentials;
+									smtpClient.EnableSsl = true;
+
+									smtpClient.Send(mailMessage);
+								}
+								TempData["success"] = "Order Success!";
+								ViewBag.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
+								HttpContext.Session.Remove("GioHang");
+								return View(successVM);
+
+							}
+							else
+							{
+								donhang.TransactStatusId = 5;
+								donhang.Paid = false;
+								db.SaveChanges();
+								//Thanh toán không thành công. Mã lỗi: vnp_ResponseCode
+								ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId + " | Mã lỗi: " + vnp_ResponseCode;
+								TempData["error"] = "Order Failed!";
+								return RedirectToAction("Failed", "Checkout");
+
+							}
 						}
 						else
 						{
 							donhang.Paid = false;
-							//Thanh toán không thành công. Mã lỗi: vnp_ResponseCode
-							ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId + " | Mã lỗi: " + vnp_ResponseCode;
+							donhang.TransactStatusId = 5;
+							db.SaveChanges();
+							ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý";
+							TempData["error"] = "Order Failed!";
+							HttpContext.Session.Remove("GioHang");
+							return RedirectToAction("Failed", "Checkout");
+
 						}
-					}
-					else
-					{
-						donhang.Paid = false;
-						ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý";
+
+						//clear gio hang
+
 					}
 				}
-				return View(successVM);
+				else
+				{
+					donhang.Paid = false;
+					db.SaveChanges();
+					TempData["success"] = "Order Success!";
+					return View(successVM);
+				}
+				return View();
 			}
 			catch
 			{
 				return View();
 			}
+		}
+		public ActionResult Failed()
+		{
+			return View();
 		}
 	}
 

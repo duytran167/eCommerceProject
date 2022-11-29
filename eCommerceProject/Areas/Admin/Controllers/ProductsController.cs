@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Seller")]
 	public class ProductsController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
@@ -67,7 +67,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			ViewBag.category = db.Categories.ToList();
 
 			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking()
-										 .OrderByDescending(t => t.CreatedDate)
+										 .OrderBy(t => t.CreatedDate)
 										 .Include(t => t.ImageProducts)
 										 .Include(t => t.Categories).ToList()
 										 select stu;
@@ -198,7 +198,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						};
 						fileDetails.Add(fileDetail);
 
-						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileDetail.Id + fileDetail.Extension);
+						var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileName);
 
 						file.SaveAs(path);
 					}
@@ -309,7 +309,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 				db.SaveChanges();
 				TempData["success"] = "Edit Success!";
-				return RedirectToAction("Index");
+				return RedirectToAction("Details", new { id = product.Id });
 
 			}
 			var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
@@ -519,7 +519,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					};
 					fileDetails.Add(fileDetail);
 
-					var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileDetail.Id + fileDetail.Extension);
+					var path = Path.Combine(Server.MapPath("~/Content/ImageProduct/"), fileName);
 
 					file.SaveAs(path);
 					db.ImageProducts.Add(fileDetail);

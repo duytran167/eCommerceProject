@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace eCommerceProject.Controllers
 {
-	[Authorize]
+
 	public class ManageController : Controller
 	{
 		private ApplicationSignInManager _signInManager;
@@ -93,34 +93,103 @@ namespace eCommerceProject.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditProfile([Bind(Include = "Id,ImageFile,PhoneNumber,Address,FullName")] ApplicationUser blogPost)
+		public ActionResult EditProfile([Bind(Include = "Id,ImageFile,PhoneNumber,Address,FullName")] ApplicationUser blogPost, HttpPostedFileBase file)
 		{
 			if (ModelState.IsValid)
 			{
-				var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
-				string fileName = Path.GetFileNameWithoutExtension(blogPost.ImageFile.FileName);
-				string exe = Path.GetExtension(blogPost.ImageFile.FileName);
-				fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
-				blogPost.ImagePath = "~/Content/ImageUser/" + fileName;
-				fileName = Path.Combine(Server.MapPath("~/Content/ImageUser/"), fileName);
-				blogPost.ImageFile.SaveAs(fileName);
-				//get user id
-				var userId = User.Identity.GetUserId();
-				var post = db.Users.FirstOrDefault(t => t.Id == blogPost.Id);
+				if (file != null && file.ContentLength > 0)
+				{
+					var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+					string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+					string exe = Path.GetExtension(file.FileName);
+					fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+					blogPost.ImagePath = "~/Content/ImageUser/" + fileName;
+					fileName = Path.Combine(Server.MapPath("~/Content/ImageUser/"), fileName);
+					file.SaveAs(fileName);
+					//get user id
+					var userId = User.Identity.GetUserId();
+					var post = db.Users.FirstOrDefault(t => t.Id == blogPost.Id);
 
-				post.ImagePath = blogPost.ImagePath;
-				post.FullName = blogPost.FullName;
-				post.Address = blogPost.Address;
-				post.PhoneNumber = blogPost.PhoneNumber;
+					post.ImagePath = blogPost.ImagePath;
+					post.FullName = blogPost.FullName;
+					post.Address = blogPost.Address;
+					post.PhoneNumber = blogPost.PhoneNumber;
 
 
 
-				db.SaveChanges();
-				TempData["success"] = "Edit Success!";
-				return RedirectToAction("Index");
+					db.SaveChanges();
+					TempData["success"] = "Edit Success!";
+					return RedirectToAction("Index", "Manage");
+				}
+				else
+				{
+					var userId = User.Identity.GetUserId();
+					var post = db.Users.FirstOrDefault(t => t.Id == blogPost.Id);
+
+					post.ImagePath = blogPost.ImagePath;
+					post.FullName = blogPost.FullName;
+					post.Address = blogPost.Address;
+					post.PhoneNumber = blogPost.PhoneNumber;
+
+
+
+					db.SaveChanges();
+					TempData["success"] = "Edit Success!";
+					return RedirectToAction("Index", "Manage");
+				}
 			}
 			return View(blogPost);
 		}
+
+		//[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult EditProfile([Bind(Include = "Id,ImageFile,PhoneNumber,Address,FullName")] ApplicationUser blogPost)
+		//{
+		//	if (ModelState.IsValid)
+		//	{
+		//		var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+		//		string fileName = Path.GetFileNameWithoutExtension(blogPost.ImageFile.FileName);
+		//		if (blogPost.ImageFile != null && blogPost.ImageFile.ContentLength > 0)
+		//		{
+		//			string exe = Path.GetExtension(blogPost.ImageFile.FileName);
+		//			fileName = fileName + DateTime.Now.ToString("yymmssfff") + exe;
+		//			blogPost.ImagePath = "~/Content/ImageUser/" + fileName;
+		//			fileName = Path.Combine(Server.MapPath("~/Content/ImageUser/"), fileName);
+		//			blogPost.ImageFile.SaveAs(fileName);
+		//			//get user id
+		//			var userId = User.Identity.GetUserId();
+		//			var post = db.Users.FirstOrDefault(t => t.Id == blogPost.Id);
+
+		//			post.ImagePath = blogPost.ImagePath;
+		//			post.FullName = blogPost.FullName;
+		//			post.Address = blogPost.Address;
+		//			post.PhoneNumber = blogPost.PhoneNumber;
+
+
+
+		//			db.SaveChanges();
+		//			TempData["success"] = "Edit Success!";
+		//			return RedirectToAction("Index");
+		//		}
+		//		else
+		//		{
+		//			var userId = User.Identity.GetUserId();
+		//			var post = db.Users.FirstOrDefault(t => t.Id == blogPost.Id);
+
+		//			post.ImagePath = blogPost.ImagePath;
+		//			post.FullName = blogPost.FullName;
+		//			post.Address = blogPost.Address;
+		//			post.PhoneNumber = blogPost.PhoneNumber;
+
+
+
+		//			db.SaveChanges();
+		//			TempData["success"] = "Edit Success!";
+		//			return RedirectToAction("Index");
+		//		}
+		//	}
+		//	return View(blogPost);
+		//}
 		//
 		// POST: /Manage/RemoveLogin
 		[HttpPost]

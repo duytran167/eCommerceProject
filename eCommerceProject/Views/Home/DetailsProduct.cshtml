@@ -136,21 +136,22 @@
 
 												if (item.Stock <= 0)
 												{
-													<a id="txtsize" name="txtsize" value="1"><del>@item.SizeName </del></a>
-
+											
+												<del><a id="txtsize" name="txtsize">@item.SizeName </a></del>
+											
 												}
-												if (item.Stock > 0)
-												{
-													<option  value="@item.Id">
-														
+														if (item.Stock > 0)
+														{
+													<option value="@item.Id">
+
 														<a id="txtsize" name="txtsize" value="">@item.SizeName</a>
 													</option>
 
-												}
+													}
 
 
-											}
-										</select>
+													}
+												</select>
 
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -557,7 +558,7 @@
 
 	//addtocart
 		
-		$("#add-to-cart").click(function () {
+  $("#add-to-cart").click(function () {
 			
 				var productid = @Model.Product.Id;
 				var amount = $('#txtsoLuong').val();

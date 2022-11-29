@@ -55,5 +55,13 @@ namespace eCommerceProject.Controllers
 				return RedirectToAction("Error", "Home");
 			}
 		}
+		public ActionResult CancelOrder(int id)
+		{
+			Order cancleOrder = db.Orders.ToList().Find(t => t.OrderId == id);
+			cancleOrder.TransactStatusId = 5;
+			db.SaveChanges();
+			TempData["success"] = "Cancel Order Success!";
+			return View(cancleOrder);
+		}
 	}
 }

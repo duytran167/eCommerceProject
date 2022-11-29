@@ -17,16 +17,10 @@ namespace eCommerceProject.Models
 		public string ShortDesc { get; set; }
 		[AllowHtml]
 		public string Description { get; set; }
-
 		public virtual ICollection<ImageProduct> ImageProducts { get; set; }
-		//[DisplayName("Upload File")]
-		//public string ImagePath { get; set; }
-
-		//[NotMapped]
-		//public HttpPostedFileBase ImageFile { get; set; }
 		public virtual ICollection<Size> Sizes { get; set; }
-
 		public int CategoriesID { get; set; }
+		public int TotalStockSold { get; set; }
 		public Category Categories { get; set; }
 		public int PriceSale { get; set; }
 		public int Price { get; set; }
@@ -35,7 +29,6 @@ namespace eCommerceProject.Models
 		public bool BestSellers { get; set; }
 		public bool Active { get; set; }
 		public DateTime CreatedDate { get; set; }
-
 		public Product()
 		{
 			CreatedDate = DateTime.Now;

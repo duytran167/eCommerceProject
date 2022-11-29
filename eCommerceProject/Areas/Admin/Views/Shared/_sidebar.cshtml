@@ -15,7 +15,7 @@
 				<ul class="dropdown-menu">
 					<li>
 						<a href="@Url.Action("Index","Admin")" class="waves-effect">
-							<i class="ti-home"></i><span class="badge badge-pill badge-primary float-right">2</span>
+							<i class="ti-home"></i>
 							<span>Dashboard</span>
 						</a>
 					</li>
@@ -24,63 +24,22 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="dropdown-toggle" href="@Url.Action("Index","Order")">
+					
+
 					<span class="icon-holder">
 						<i class="anticon anticon-appstore"></i>
+						
+						
 					</span>
-					<span class="title">Order</span>
-					@*<span class="arrow">
-						<i class="arrow-icon"></i>
-					</span>*@
+					<span class="title">Order</span><span class="badge badge-pill badge-primary float-right">
+	@{
+		Html.RenderAction("CountNoti", "Order");
+
+	}
+</span>
+					
 				</a>
-				@*<ul class="dropdown-menu">
-					<li>
-						<a href="app-chat.html">Chat</a>
-					</li>
-					<li>
-						<a href="app-file-manager.html">File Manager</a>
-					</li>
-					<li>
-						<a href="app-mail.html">Mail</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a href="javascript:void(0);">
-							<span>Projects</span>
-							<span class="arrow">
-								<i class="arrow-icon"></i>
-							</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="app-project-list.html">Project List</a>
-							</li>
-							<li>
-								<a href="app-project-details.html">Project Details</a>
-							</li>
-						</ul>
-					</li>
-					<li class="nav-item dropdown">
-						<a href="javascript:void(0);">
-							<span>E-commerce</span>
-							<span class="arrow">
-								<i class="arrow-icon"></i>
-							</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="app-e-commerce-order-list.html">Orders List</a>
-							</li>
-							<li>
-								<a href="app-e-commerce-products.html">Products</a>
-							</li>
-							<li>
-								<a href="app-e-commerce-products-list.html">Products List</a>
-							</li>
-							<li>
-								<a href="app-e-commerce-products-edit.html">Products Edit</a>
-							</li>
-						</ul>
-					</li>
-				</ul>*@
+				
 			</li>
 			<li class="nav-item dropdown">
 				<a class="dropdown-toggle" href="javascript:void(0);">
@@ -162,22 +121,35 @@
 						<i class="arrow-icon"></i>
 					</span>
 				</a>
+				
 				<ul class="dropdown-menu">
-					<li>
-						<a href="@Url.Action("Index","AdminCustomers")" class="waves-effect">
-							<i class="ti-home"></i>
-							<span>Customers</span>
-						</a>
-					</li>
-					<li>
-						<a href="@Url.Action("Index","Seller")" class="waves-effect">
-							<i class="ti-home"></i>
-							<span>Seller</span>
-						</a>
-					</li>
+					@if (User.IsInRole("Admin"))
+					{
+						<li>
+							<a href="@Url.Action("Index", "AdminCustomers")" class="waves-effect">
+								<i class="ti-home"></i>
+								<span>Customers</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="@Url.Action("Index", "Seller")" class="waves-effect">
+								<i class="ti-home"></i>
+								<span>Seller</span>
+							</a>
+						</li>
+					}
+					@if (User.IsInRole("Seller")) {
+				<li>
+					<a href="@Url.Action("Index", "AdminCustomers")" class="waves-effect">
+						<i class="ti-home"></i>
+						<span>Customers</span>
+					</a>
+				</li>
+					}
 					@*<li>
-						<a href="form-validation.html">Form Validation</a>
-					</li>*@
+			<a href="form-validation.html">Form Validation</a>
+		</li>*@
 				</ul>
 			</li>
 			<li class="nav-item dropdown">
@@ -207,23 +179,19 @@
 				</ul>
 			</li>
 			<li class="nav-item dropdown">
-				<a class="dropdown-toggle" href="javascript:void(0);">
+				<a class="" href="@Url.Action("Index","Contact")">
 					<span class="icon-holder">
-						<i class="anticon anticon-table"></i>
+						<i class="anticon anticon-mail"></i>
 					</span>
-					<span class="title">Tables</span>
-					<span class="arrow">
-						<i class="arrow-icon"></i>
-					</span>
+					<span class="title">Support</span><span class="badge badge-pill badge-primary float-right">
+	@{
+		Html.RenderAction("CountNoti", "Contact");
+
+	}
+</span>
+
 				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="basic-table.html">Basic Table</a>
-					</li>
-					<li>
-						<a href="data-table.html">Data Table</a>
-					</li>
-				</ul>
+
 			</li>
 			<li class="nav-item dropdown">
 				<a class="" href="@Url.Action("Index","SendEmails")">
@@ -235,53 +203,7 @@
 				</a>
 				
 			</li>
-			<li class="nav-item dropdown">
-				<a class="dropdown-toggle" href="javascript:void(0);">
-					<span class="icon-holder">
-						<i class="anticon anticon-file"></i>
-					</span>
-					<span class="title">Pages</span>
-					<span class="arrow">
-						<i class="arrow-icon"></i>
-					</span>
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="profile.html">Profile</a>
-					</li>
-					<li>
-						<a href="invoice.html">Invoice</a>
-					</li>
-					<li>
-						<a href="members.html">Members</a>
-					</li>
-					<li>
-						<a href="pricing.html">Pricing</a>
-					</li>
-					<li>
-						<a href="setting.html">Setting</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a href="javascript:void(0);">
-							<span>Blog</span>
-							<span class="arrow">
-								<i class="arrow-icon"></i>
-							</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="blog-grid.html">Blog Grid</a>
-							</li>
-							<li>
-								<a href="blog-list.html">Blog List</a>
-							</li>
-							<li>
-								<a href="blog-post.html">Blog Post</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
+			
 			@*<li class="nav-item dropdown">
 				<a class="dropdown-toggle" href="javascript:void(0);">
 					<span class="icon-holder">

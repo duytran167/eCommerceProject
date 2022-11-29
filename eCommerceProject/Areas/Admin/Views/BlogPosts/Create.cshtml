@@ -122,22 +122,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<script type="text/javascript">
-			$(document).ready(function () {
-				var max_fields = 10; //maximum input boxes allowed
-				var wrapper = $(".myinput"); //Fields wrapper
-				var add_button = $(".btnAddNew"); //Add button ID
-				var x = 0; //initlal text box count
-				$(add_button).click(function (e) { //on add input button click
-					e.preventDefault();
-					if (x < max_fields) { //max input box allowed
-						x++; //text box increment
-						$(wrapper).append('<div>  <div class="form-group "> @Html.LabelFor(model => model.Size.SizeName, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-6">@Html.EditorFor(model => model.Size.SizeName, new { @class = "form-control" })@Html.ValidationMessageFor(model => model.Size.SizeName, "", new { @class = "text-danger" })</div></div><div class="form-group ">@Html.LabelFor(model => model.Size.Stock, htmlAttributes: new { @class = "control-label col-md-2" })<div class="col-md-6">@Html.EditorFor(model => model.Size.Stock, new { @class = "form-control" })@Html.ValidationMessageFor(model => model.Size.Stock, "", new { @class = "text-danger" })</div></div><a href="#" class="btnRemove">Xóa</a></div>'); //add input box
-					}
-				});
-				$(wrapper).on("click", ".btnRemove", function (e) { //user click on remove text
-					e.preventDefault(); $(this).parent('div').remove(); x--;
-				})
-			});
+			
 			$(document).ready(function () {
 				$(".content-editor").summernote({
 					height: 300,

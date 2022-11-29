@@ -146,40 +146,41 @@
 					@Html.DisplayFor(modelItem => item.Categories.CategoryName)
 				</td>
 				<td>
-					@item.Price.ToString("#,##0") VND
+					@item.PriceSale.ToString("#,##0") VND
 				</td>
 				<td>
 
 					@if (item.BestSellers == true)
 					{
 						<div class="switch m-r-10">
-							<input type="checkbox" id="switch-1" disabled="">
-							<label for="switch-2"></label>
+							<input type="checkbox" id="switch-1" checked="">
+							<label for="switch-1"></label>
 						</div>
 					}
-					@if (item.BestSellers == false)
+					else
 					{
 						<div class="switch m-r-10">
-							<input type="checkbox" id="switch-2" disabled="">
+							<input type="checkbox" id="switch-2">
 							<label for="switch-2"></label>
 						</div>
+
 					}
 
 				</td>
 				<td>
 					@if (item.Active == true)
 					{
-						<div class="switch m-r-10">
-							<input type="checkbox" id="switch-1" disabled="">
-							<label for="switch-2"></label>
-						</div>
+					<div class="switch m-r-10">
+						<input type="checkbox" id="switch-1" checked="">
+						<label for="switch-1"></label>
+					</div>
 					}
-					@if (item.Active == false)
+					else
 					{
-						<div class="switch m-r-10">
-							<input type="checkbox" id="switch-2" disabled="">
-							<label for="switch-2"></label>
-						</div>
+				<div class="switch m-r-10">
+					<input type="checkbox" id="switch-2">
+					<label for="switch-2"></label>
+				</div>
 					}
 				</td>
 

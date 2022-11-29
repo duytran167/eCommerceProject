@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Selller")]
 	[Authorize]
 	public class OrderController : Controller
 	{
@@ -59,6 +59,9 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					.Include(o => o.Customer)
 					.Include(o => o.TransactStatus)
 					.FirstOrDefaultAsync(m => m.OrderId == id);
+
+			order.Noti = true;
+			db.SaveChanges();
 
 			if (order == null)
 			{
@@ -211,6 +214,13 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		{
 			return db.Orders.Any(e => e.OrderId == id);
 		}
+		public ActionResult CountNoti()
+		{
+			var noti = db.Orders.Where(t => t.Noti == false).ToList();
+			ViewBag.CountNoti = noti.Count();
+			return View();
+		}
+
 	}
 
 }

@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace eCommerceProject.Areas.Admin.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	[Authorize(Roles = "Admin,Seller")]
 	public class SellerController : Controller
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();

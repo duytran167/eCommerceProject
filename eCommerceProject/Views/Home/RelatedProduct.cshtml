@@ -38,9 +38,25 @@
 					@item.ProductName
 				</a>
 
-				<span class="stext-105 cl3">
-					@item.Price.ToString("#,##0") VND
-				</span>
+				@if (item.Discount != null)
+				{
+					<span class="mtext-106 cl2">
+						@item.PriceSale.ToString("#,##0") VND
+					</span>
+					<span class="mtext-106 cl7">
+						<del>@item.Price.ToString("#,##0") VND</del>
+						<span class="mtext-106 cl13">
+							-@item.Discount%
+						</span>
+					</span>
+
+					
+
+				}
+				else
+				{<span class="mtext-106 cl2">
+						@item.Price.ToString("#,##0") VND
+					</span>}
 			</div>
 
 			<div class="block2-txt-child2 flex-r p-t-3">

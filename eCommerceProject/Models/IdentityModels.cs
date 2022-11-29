@@ -58,7 +58,7 @@ namespace eCommerceProject.Models
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 		public DbSet<TransactStatus> TransactStatuses { get; set; }
-		public DbSet<Location> Locations { get; set; }
+		public DbSet<Contact> Contacts { get; set; }
 		public DbSet<StarRatingAndComment> StarRatingAndComments { get; set; }
 
 		public static ApplicationDbContext Create()

@@ -26,15 +26,32 @@
 				</a>
 				}
 
-				<div class="size-215 flex-col-t p-t-8">
-					<a href="@Url.Action("DetailsProduct","Home",  new { id = item.Id })" class="stext-116 cl8 hov-cl1 trans-04">
-						@item.ProductName
-					</a>
+			<div class="size-215 flex-col-t p-t-8">
+				<a href="@Url.Action("DetailsProduct","Home",  new { id = item.Id })" class="stext-116 cl8 hov-cl1 trans-04">
+					@item.ProductName
+				</a>
+				@if (item.Discount != null)
+				{
+			<span class="mtext-106 cl2">
+				@item.PriceSale.ToString("#,##0") VND
+			</span>
+			<span class="mtext-106 cl7">
+				<del>@item.Price.ToString("#,##0") VND</del>
+				<span class="mtext-106 cl13">
+					-@item.Discount%
+				</span>
+			</span>
 
-					<span class="stext-116 cl6 p-t-20">
-						@item.Price.ToString("#.##0") VND
-					</span>
-				</div>
+					
+
+				}
+				else
+				{<span class="mtext-106 cl2">
+						@item.Price.ToString("#,##0") VND
+					</span>}
+
+				
+			</div>
 			</li>
 		}
 	</ul>

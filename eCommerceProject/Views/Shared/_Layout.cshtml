@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - COCO Store (Paradise Street Style for Teenager)</title>
+	<title>@ViewBag.Title - COCO® Local Streetwear Brand & Menswear</title>
 	<link rel="icon" type="image/png" href="~/Content/ImageProduct/icons/favicon.png" />
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')" />
 	<!--===============================================================================================-->
@@ -105,11 +105,11 @@
 							</li>
 
 							<li>
-								<a href="about.html">About</a>
+								<a href="@Url.Action("About","Home")">About</a>
 							</li>
 
 							<li>
-								<a href="contact.html">Contact</a>
+								<a href="@Url.Action("Create","Contacts", new { area = "" }, null)">Contacts</a>
 							</li>
 						</ul>
 					</div>
@@ -137,7 +137,7 @@
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="index.html"><img src="~/Content/ImageProduct/icons/logo-01.png" alt="IMG-LOGO"></a>
+				<a href="/Home"><img src="~/Content/ImageProduct/icons/logo-01.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -168,30 +168,10 @@
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
 			<ul class="topbar-mobile">
-				<li>
-					<div class="left-top-bar">
-						Free shipping for standard order over $100
-					</div>
-				</li>
+				
 
 				<li>
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							USD
-						</a>
-					</div>
+					@Html.Partial("_LoginPartial")
 				</li>
 			</ul>
 
@@ -199,33 +179,32 @@
 				<li>
 					<a href="@Url.Action("Index","Home")">Home</a>
 
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
+
 				</li>
 
+				
 				<li>
-					<a href="@Url.Action("Index","Home")">Shop</a>
-					<ul class="sub-menu">
+					<a href="index.html">Shop</a>
+					<ul class="sub-menu-m">
 						<li><a href="@Url.Action("AllProduct","Home")">Shop ALL</a></li>
 						@{
 							Html.RenderAction("CategoryNavbar", "Home");
 
 						}
-
 					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
 				</li>
 
-				<li class="label1" data-label1="hot">
-					<a href="shoping-cart.html">Features</a>
-				</li>
+
 
 				<li>
 					<a href="@Url.Action("Blog","Home")">Blog</a>
 				</li>
 
 				<li>
-					<a href="about.html">About</a>
+					<a href="@Url.Action("About","Home")">About</a>
 				</li>
 
 				<li>

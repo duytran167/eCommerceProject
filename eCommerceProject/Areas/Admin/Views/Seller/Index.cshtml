@@ -106,15 +106,19 @@
 
 							</div>
 						}
+					<div class="container">
+						<button class="btn btn-primary btn-tone">
+							<i class="anticon anticon-plus"></i>
+							@Html.ActionLink("Create", "CreateAccount", "AdminAccount")
+						</button>
+					</div>
 					</form>
 				</div>
 				<div class="col-lg-4 text-right">
+
 					@using (Html.BeginForm("Export", "Seller", new { @class = "form-control" }, FormMethod.Post))
 					{
-						<button class="btn btn-primary btn-tone m-r-5">
-							<i class="anticon anticon-plus"></i>
-							@Html.ActionLink("Create New", "CreateAccount", "AdminAccount")
-						</button>
+
 
 						<button class="btn btn-primary">
 
@@ -128,7 +132,9 @@
 					}
 
 
+
 				</div>
+				
 
 			</div>
 			<div class="table-responsive">

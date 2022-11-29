@@ -90,6 +90,7 @@ namespace eCommerceProject.Models
 		public string PhoneNumber { get; set; }
 		public string Address { get; set; }
 		public Customer Customer { get; set; }
+
 		public string RoleName { get; set; }
 		public List<string> Roles { get; internal set; }
 		public Seller Seller { get; set; }

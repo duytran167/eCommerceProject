@@ -102,10 +102,10 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Đơn hàng</th>
-						<th>Ngày mua</th>
-						<th>Tổng tiền</th>
-						<th>Trạng thái</th>
+						<th>Order<th>
+						<th>Date</th>
+						<th>Total</th>
+						<th>Status</th>
 
 					</tr>
 				</thead>
@@ -115,23 +115,37 @@
 						foreach (var item in Model)
 						{
 
-							<tr>
-								<td>@item.OrderId</td>
-								<td>@item.Customer.FullName</td>
-								<td>@item.OrderDate</td>
-								@*<td>@item.OrderDetails.Sum(x =>x.TotalMoney).Value.ToString("#,##0") VNĐ</td>*@
-								<td>@item.TotalMoney.ToString("#,##0") VNĐ</td>
-								<td>@item.TransactStatus.Status</td>
+					<tr>
+						@if (item.Noti == false)
+						{
+							<td class="text-primary">@item.OrderId</td>
+							<td class="text-primary">@item.Customer.FullName</td>
+							<td class="text-primary">@item.OrderDate</td>
+
+							<td class="text-primary">@item.TotalMoney.ToString("#,##0") VNĐ</td>
+							<td class="text-primary">@item.TransactStatus.Status</td>
+						}
+						else
+						{
+							<td>@item.OrderId</td>
+							<td>@item.Customer.FullName</td>
+							<td>@item.OrderDate</td>
+
+							<td>@item.TotalMoney.ToString("#,##0") VNĐ</td>
+							<td>@item.TransactStatus.Status</td>
+
+}
 
 
 
-								<td>
-									@Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "btn btn-primary btn-tone m-r-5" })
 
-									<a class="btn btn-secondary btn-tone" id="@item.OrderId" onclick="Details(this.id)">Show</a>
-									<button class="btn btn-danger btn-tone" onclick="remove(@item.OrderId)">Delete</button>
-								</td>
-							</tr>
+						<td>
+							@Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "btn btn-primary btn-tone m-r-5" })
+
+							<a class="btn btn-secondary btn-tone" id="@item.OrderId" onclick="Details(this.id)">Show</a>
+							<button class="btn btn-danger btn-tone" onclick="remove(@item.OrderId)">Delete</button>
+						</td>
+					</tr>
 
 						}
 					}
