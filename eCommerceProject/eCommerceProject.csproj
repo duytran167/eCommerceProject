@@ -243,6 +243,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminAccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CollectionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
@@ -395,6 +396,15 @@
     <Compile Include="Migrations\202211250538309_addNotificationforOrder.Designer.cs">
       <DependentUpon>202211250538309_addNotificationforOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211300803108_addCollection.cs" />
+    <Compile Include="Migrations\202211300803108_addCollection.Designer.cs">
+      <DependentUpon>202211300803108_addCollection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212011536042_allownull.cs" />
+    <Compile Include="Migrations\202212011536042_allownull.Designer.cs">
+      <DependentUpon>202212011536042_allownull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ImageProduct.cs" />
     <Compile Include="Models\Order.cs" />
@@ -1654,6 +1664,11 @@
     <Content Include="Areas\Admin\Views\Contact\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Order\CountNoti.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\CountNoti.cshtml" />
+    <Content Include="Areas\Admin\Views\Collections\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Collections\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Collections\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Collections\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Collections\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />
@@ -1953,6 +1968,9 @@
     <Content Include="Views\Contacts\Create.cshtml" />
     <Content Include="Views\Contacts\Delete.cshtml" />
     <Content Include="Views\Contacts\Edit.cshtml" />
+    <Content Include="Views\Home\Collections.cshtml" />
+    <Content Include="Views\Home\DetailsCollection.cshtml" />
+    <Content Include="Views\Home\NewCollection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2136,6 +2154,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211250538309_addNotificationforOrder.resx">
       <DependentUpon>202211250538309_addNotificationforOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211300803108_addCollection.resx">
+      <DependentUpon>202211300803108_addCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212011536042_allownull.resx">
+      <DependentUpon>202212011536042_allownull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

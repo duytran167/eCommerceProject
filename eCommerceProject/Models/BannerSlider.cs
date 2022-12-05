@@ -12,7 +12,7 @@ namespace eCommerceProject.Models
 		[Required]
 		[StringLength(255)]
 		public string Title { get; set; }
-
+		public string Link { get; set; }
 		public string Description { get; set; }
 		public DateTime? ArticleDate { get; set; }
 		public BannerSlider()

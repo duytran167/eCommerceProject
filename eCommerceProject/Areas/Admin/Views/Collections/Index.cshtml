@@ -1,0 +1,242 @@
+﻿@model IEnumerable<eCommerceProject.Models.Collection>
+
+@{
+	ViewBag.Title = "Collections Manage";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Content/toastr.css" rel="stylesheet" />
+
+<style>
+	.editor-container {
+		height: 100px;
+	}
+</style>
+<div class="page-header">
+	<h2 class="header-title">@ViewBag.Title</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Collections</a>
+			<span class="breadcrumb-item active">@ViewBag.Title</span>
+		</nav>
+	</div>
+	<div nclass="container wrap">
+		<button value="Create" type="button" class="btn btn-primary btn-tone" data-toggle="modal" data-target="#myModal">
+			<i class="anticon anticon-plus"></i> Create
+		</button>
+	</div>
+</div>
+
+
+
+<!-- Add Banner Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Create</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="formStudentId">
+				@{
+					Html.RenderAction("Create", "Collections");
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-lg-11 mx-auto">
+		<div class="row">
+			<div class="col-md-12">
+				@foreach (var item in Model)
+				{
+					<div class="card">
+						<img class="card-img-top" src="@Url.Content(@item.ImagePath)" alt="">
+						<div class="card-body">
+							<h4 class="m-t-10">@item.Name</h4>
+							
+							<div class="d-flex align-items-center justify-content-between">
+								
+								<a class="text-primary btn btn-sm btn-hover" href="blog-post.html">
+									@Html.ActionLink("Read More", "Details", new { id = item.Id }, new { @class = "btn btn-hover font-weight-semibold" })
+								</a>
+							</div>
+						</div>
+
+					</div>
+				}
+				</div>
+
+		</div>
+		@section scripts{
+			<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+			<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+			<script type="text/javascript">
+
+				function remove(id) {
+					swal({
+						title: "Are you sure?",
+						text: "Once deleted, you will not be able to recover your image!",
+						icon: "warning",
+						buttons: true,
+						dangerMode: true,
+					})
+						.then((willDelete) => {
+							event.preventDefault()
+							if (willDelete) {
+								$.ajax({
+									type: "POST",
+									url: "/Admin/Admin/DeleteBanner/" + id,
+									contentType: "application/json; charset=utf-8",
+									dataType: "json",
+									success: function (response) {
+										swal("Banner Image has been deleted!", {
+											icon: "success",
+										}).then(function () {
+											window.location.reload();
+										});
+
+									},
+									failure: function (response) {
+										swal("Banner Image has been deleted!", {
+											icon: "success",
+										}).then(function () {
+											window.location.reload();
+										});
+									},
+									error: function (response) {
+										swal("Banner Image has been deleted!", {
+											icon: "success",
+										}).then(function () {
+											window.location.reload();
+										});
+									}
+
+								});
+
+							}
+							else {
+								swal("Let's Continue!");
+							}
+						});
+				}
+
+			</script>
+
+			@Scripts.Render("~/bundles/jqueryval")
+
+			<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+			<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+			<script type="text/javascript">
+
+				$(document).ready(function () {
+
+					$("#imageBrowes").change(function () {
+
+						var File = this.files;
+
+						if (File && File[0]) {
+							ReadImage(File[0]);
+						}
+
+					})
+
+
+				})
+
+
+				var ReadImage = function (file) {
+
+					var reader = new FileReader;
+					var image = new Image;
+
+					reader.readAsDataURL(file);
+					reader.onload = function (_file) {
+
+						image.src = _file.target.result;
+						image.onload = function () {
+
+							var height = this.height;
+							var width = this.width;
+							var type = file.type;
+							var size = ~~(file.size / 1024) + "KB";
+
+							$("#targetImg").attr('src', _file.target.result);
+							$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+							$("#imgPreview").show();
+
+						}
+
+					}
+
+				}
+
+				var ClearPreview = function () {
+					$("#imageBrowes").val('');
+					$("#description").text('');
+					$("#imgPreview").hide();
+
+				}
+
+				$(document).ready(function () {
+					$(".content-editor").summernote({
+						height: 300,
+						minHeight: null,
+						maxHeight: null,
+						codemirror: {
+							theme: "monokai"
+						},
+						callbacks: {
+							onImageUpload: function (files) {
+								for (var i = 0; i < files.length; i++) {
+									uploadImage(files[i]);
+								}
+							}
+						},
+						fontSizes: ['12', '14', '16', '18', '24', '36', '48'],
+						toolbar: [
+							['style', ['style']],
+							['font', ['bold', 'underline', 'clear']],
+							['fontname', ['fontname']],
+							['fontsize', ['fontsize']],
+							['color', ['color']],
+							['para', ['ul', 'ol', 'paragraph']],
+							['table', ['table']],
+							['insert', ['link', 'picture', 'video']],
+							['view', ['fullscreen', 'codeview', 'help']],
+						],
+					});
+				});
+				function uploadImage(file) {
+					var formData = new FormData();
+					formData.append("uploadedFiles", file);
+					$.ajax({
+						data: formData,
+						type: "POST",
+						url: '/BlogPosts/UploadFile',
+						cache: false,
+						contentType: false,
+						processData: false,
+						success: function (FileUrl) {
+							alert(FileUrl);
+							var imgNode = document.createElement('img');
+							imgNode.src = FileUrl;
+							$('.content-editor').summernote('insertNode', imgNode);
+						},
+						error: function (data) {
+							alert(data.responseText);
+						}
+					});
+				}
+
+			</script>
+		}

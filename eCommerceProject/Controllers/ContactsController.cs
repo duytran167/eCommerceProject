@@ -53,7 +53,7 @@ namespace eCommerceProject.Controllers
 					PhoneNumber = contact.PhoneNumber,
 					Email = contact.Email,
 					Content = contact.Content,
-					ArticleDate = contact.ArticleDate,
+					ArticleDate = DateTime.Now,
 					ImagePath = contact.ImagePath,
 					Noti = false
 				};

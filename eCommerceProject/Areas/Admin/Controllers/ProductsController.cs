@@ -67,7 +67,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			ViewBag.category = db.Categories.ToList();
 
 			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking()
-										 .OrderBy(t => t.CreatedDate)
+										 .OrderByDescending(t => t.CreatedDate)
 										 .Include(t => t.ImageProducts)
 										 .Include(t => t.Categories).ToList()
 										 select stu;
@@ -119,8 +119,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			}
 			var product = new ViewModel.ProductVM();
 			product.Product = db.Products.
-							Include(i => i.Categories).
-
+							Include(i => i.Categories).Include(i => i.Collection).
 						SingleOrDefault(t => t.Id == id);
 			//comment product
 			ViewBag.ProductId = id;
@@ -154,6 +153,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			var product = new ProductVM()
 			{
 				Categories = db.Categories.ToList(),
+				Collections = db.Collections.ToList(),
 			};
 
 			ViewBag.Categories = new SelectList(db.Categories, "Id", "CategoryName", product.Categories);
@@ -226,6 +226,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						ProductName = model.Product.ProductName,
 						ProductCode = model.Product.ProductCode,
 						CategoriesID = model.Id,
+						CollectionID = model.CollectionId,
 						ShortDesc = model.Product.ShortDesc,
 						Description = model.Product.Description,
 						ImageProducts = fileDetails,
@@ -270,7 +271,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				Id = id,
 				Product = product,
 				Categories = db.Categories.ToList(),
-
+				Collections = db.Collections.ToList()
 
 			};
 
@@ -295,6 +296,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 				product.ProductName = model.Product.ProductName;
 				product.CategoriesID = model.Product.CategoriesID;
+				product.CollectionID = model.Product.CollectionID;
 				product.ShortDesc = model.Product.ShortDesc;
 				product.Description = model.Product.Description;
 				product.ProductCode = model.Product.ProductCode;

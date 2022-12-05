@@ -1,0 +1,363 @@
+﻿@model  IPagedList<eCommerceProject.Models.Product>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<style>
+	.active {
+		color: #02a499;
+	}
+
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #02a499;
+			border-radius: 50% !important;
+			color: white;
+		}
+</style>
+<!-- Content Wrapper START -->
+
+<div class="page-header">
+	<h2 class="header-title">Collection</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Collection</a>
+			@foreach (var item in Model.Take(1))
+			{
+				<span class="breadcrumb-item active">@item.Collection.Name</span>
+			}
+
+		</nav>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-body">
+		@foreach (var item in Model.Take(1))
+		{
+			<div class="container">
+				<h2 class="font-weight-normal m-b-10">
+					@item.Collection.Name
+					
+					<span style=" cursor:pointer" data-toggle="modal" data-target="#myModal">
+						<i class="anticon anticon-edit text-success"></i>
+					</span>
+					<span onclick="remove(@item.Collection.Id)"><i class="anticon anticon-delete text-danger" style=" cursor:pointer"></i></span>
+				</h2>
+				<div class="d-flex m-b-30">
+
+					<div class="m-l-15">
+
+						<p class="m-b-0 text-muted font-size-13">@item.Collection.ArticleDate</p>
+					</div>
+				</div>
+				<img alt="" class="img-fluid w-100" src="@Url.Content(item.Collection.ImagePath)">
+				<div class="m-t-30">
+					@Html.Raw(item.Collection.Description)
+				</div>
+
+				<hr>
+
+
+
+			</div>
+		}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-11 mx-auto">
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				<div class="col-md-4">
+					<div class="card">
+						@foreach (var photo in item.ImageProducts.GroupBy(x => x.FileName).First())
+						{
+							<img src="@Url.Content(photo.FileName)" alt="IMG-PRODUCT" class="card-img-top">
+						}
+
+						<div class="card-body">
+							<h4 class="m-t-10">@item.ProductName</h4>
+
+							@if (item.Discount != null)
+							{
+								<span class="stext-105 cl3">
+									<del>@item.Price.ToString("#,##0") VND </del>
+								</span>
+								<span class="stext-105 cl3">
+
+									@item.PriceSale.ToString("#,##0") VND
+								</span>
+							}
+							else
+							{
+								<span class="stext-105 cl3">
+
+									@item.PriceSale.ToString("#,##0") VND
+								</span>
+
+							}
+
+							<div class="d-flex align-items-center justify-content-between">
+								<p class="m-b-0 text-dark font-weight-semibold font-size-15">@item.CreatedDate.ToString("dd MMMM yy")</p>
+								<a class="text-primary btn btn-sm btn-hover" href="blog-post.html">
+									@Html.ActionLink("View", "Details", "Products", new { id = item.Id }, new { @class = "btn btn-hover font-weight-semibold" })
+
+								</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+				of @Model.PageCount
+			</div>
+
+
+			@Html.PagedListPager(Model, page => Url.Action("Details", new { page = page, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
+
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Edit</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="formStudentId">
+				@{
+					Html.RenderAction("Edit", "Collections");
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+
+			$("#imageBrowes").change(function () {
+
+				var File = this.files;
+
+				if (File && File[0]) {
+					ReadImage(File[0]);
+				}
+
+			})
+
+
+		})
+
+
+		var ReadImage = function (file) {
+
+			var reader = new FileReader;
+			var image = new Image;
+
+			reader.readAsDataURL(file);
+			reader.onload = function (_file) {
+
+				image.src = _file.target.result;
+				image.onload = function () {
+
+					var height = this.height;
+					var width = this.width;
+					var type = file.type;
+					var size = ~~(file.size / 1024) + "KB";
+
+					$("#targetImg").attr('src', _file.target.result);
+					$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+					$("#imgPreview").show();
+
+				}
+
+			}
+
+		}
+
+		var ClearPreview = function () {
+			$("#imageBrowes").val('');
+			$("#description").text('');
+			$("#imgPreview").hide();
+
+		}
+
+		$(document).ready(function () {
+			$(".content-editor").summernote({
+				height: 300,
+				minHeight: null,
+				maxHeight: null,
+				codemirror: {
+					theme: "monokai"
+				},
+				callbacks: {
+					onImageUpload: function (files) {
+						for (var i = 0; i < files.length; i++) {
+							uploadImage(files[i]);
+						}
+					}
+				},
+				fontSizes: ['12', '14', '16', '18', '24', '36', '48'],
+				toolbar: [
+					['style', ['style']],
+					['font', ['bold', 'underline', 'clear']],
+					['fontname', ['fontname']],
+					['fontsize', ['fontsize']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']],
+					['table', ['table']],
+					['insert', ['link', 'picture', 'video']],
+					['view', ['fullscreen', 'codeview', 'help']],
+				],
+			});
+		});
+		function uploadImage(file) {
+			var formData = new FormData();
+			formData.append("uploadedFiles", file);
+			$.ajax({
+				data: formData,
+				type: "POST",
+				url: '/BlogPosts/UploadFile',
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (FileUrl) {
+					alert(FileUrl);
+					var imgNode = document.createElement('img');
+					imgNode.src = FileUrl;
+					$('.content-editor').summernote('insertNode', imgNode);
+				},
+				error: function (data) {
+					alert(data.responseText);
+				}
+			});
+		}
+		function remove(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Admin/Collections/Delete/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/Collections/");
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/Collections/");
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/Collections/");
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+	</script>
+
+
+
+
+
+
+}
+

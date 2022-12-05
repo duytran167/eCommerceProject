@@ -122,10 +122,10 @@
 			<th>Category</th>
 			<th><div class="row"><div class="col-md-8">Price </div> <div class="col-md-2">@Html.ActionLink(" ", "Index", new { Sorting_Order = ViewBag.SortingPrice, Filter_Value = ViewBag.FilterValue }, new { @class = " text-muted fa-solid fa-sort" })</div></div>
 			<th>
-				Best Seller
+				Public
 			</th>
 			<th>
-				Public
+				Best Seller
 			</th>
 			<th>
 				Created Date
@@ -150,7 +150,7 @@
 				</td>
 				<td>
 
-					@if (item.BestSellers == true)
+					@if (item.Active == true)
 					{
 						<div class="switch m-r-10">
 							<input type="checkbox" id="switch-1" checked="">
@@ -168,7 +168,7 @@
 
 				</td>
 				<td>
-					@if (item.Active == true)
+					@if (item.BestSellers == true)
 					{
 					<div class="switch m-r-10">
 						<input type="checkbox" id="switch-1" checked="">

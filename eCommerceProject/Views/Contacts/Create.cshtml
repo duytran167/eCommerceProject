@@ -4,7 +4,7 @@
 	ViewBag.Title = "Supported";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 <div class="container">
 	<div class="col-sm-12 text-center justify-content-between">
 		<h2>SUPPORTED</h2>
@@ -50,8 +50,8 @@
 
 			<div class="form-group">
 				@Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-12" >
-					@Html.TextAreaFor(model => model.Content, new { @class = "form-control col-md-12 editor", @style = "height: 200px" } )
+				<div class="col-md-12">
+					@Html.TextAreaFor(model => model.Content, new { @class = "form-control col-md-12 editor", @style = "height: 200px" })
 					@Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
 				</div>
 			</div>
@@ -90,75 +90,89 @@
 		@Html.ActionLink("Back to List", "Index")
 	</div>
 </div>
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-<script src="~/Scripts/quill.min.js"></script>
+@section Scripts {
+	
 
-<script>
+	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-	$(document).ready(function () {
+	<script>
 
-		$("#imageBrowes").change(function () {
+		$(document).ready(function () {
 
-			var File = this.files;
+			$("#imageBrowes").change(function () {
 
-			if (File && File[0]) {
-				ReadImage(File[0]);
-			}
+				var File = this.files;
+
+				if (File && File[0]) {
+					ReadImage(File[0]);
+				}
+
+			})
+
 
 		})
 
+		var BaseHeader = Quill.import('formats/header');
+		class Header extends BaseHeader {
+			insertAt(index, value, embedValue) {
+				if (value === 'image' && embedValue) return;
+				super.insertAt(index, value);
+			}
+		}
 
-	})
-	var toolbarOptions = [
-		[{ 'header': [1, 2, 3, false] }],
-		[{ 'color': [] }, { 'background': [] }],
-		['bold', 'italic', 'underline', 'strike'],
-		['blockquote', 'code-block'],
-		[{ 'list': 'ordered' }, { 'list': 'bullet' }],
-		[{ 'indent': '-1' }, { 'indent': '+1' }],
-		['clean']
-	]
-	var quill = new Quill('.editor', {
-		modules: {
-			toolbar: toolbarOptions
-		},
-		theme: 'snow'
-	});
+		Quill.register(Header, true);
 
-	
+		var quill = new Quill('.editor', {
+			modules: {
+				toolbar: [
+					[{ header: [1, 2, false] }],
+					['bold', 'italic', 'underline'],
+					['image', 'code-block']
+				]
+			},
+			placeholder: 'Compose an epic...',
+			theme: 'snow'  // or 'bubble'
+		});
 
-	var ReadImage = function (file) {
+		quill.insertText(0, 'Header');
+		quill.formatLine(0, 10, 'header', 1);
+		quill.insertEmbed(2, 'image', 'img.png');
 
-		var reader = new FileReader;
-		var image = new Image;
 
-		reader.readAsDataURL(file);
-		reader.onload = function (_file) {
+		var ReadImage = function (file) {
 
-			image.src = _file.target.result;
-			image.onload = function () {
+			var reader = new FileReader;
+			var image = new Image;
 
-				var height = this.height;
-				var width = this.width;
-				var type = file.type;
-				var size = ~~(file.size / 1024) + "KB";
+			reader.readAsDataURL(file);
+			reader.onload = function (_file) {
 
-				$("#targetImg").attr('src', _file.target.result);
-				$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
-				$("#imgPreview").show();
+				image.src = _file.target.result;
+				image.onload = function () {
+
+					var height = this.height;
+					var width = this.width;
+					var type = file.type;
+					var size = ~~(file.size / 1024) + "KB";
+
+					$("#targetImg").attr('src', _file.target.result);
+					$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+					$("#imgPreview").show();
+
+				}
 
 			}
 
 		}
 
-	}
+		var ClearPreview = function () {
+			$("#imageBrowes").val('');
+			$("#description").text('');
+			$("#imgPreview").hide();
 
-	var ClearPreview = function () {
-		$("#imageBrowes").val('');
-		$("#description").text('');
-		$("#imgPreview").hide();
-
-	}
+		}
 
 
-</script>
+	</script>
+}

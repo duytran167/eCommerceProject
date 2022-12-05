@@ -61,17 +61,17 @@
 					<div class="col-lg-6 col-12">
 
 						<div class="checkbox-form">
-							<h3>Đặt hàng thành công</h3>
-							<p>Mã đơn hàng: #@Model.DonHangID <a href="@Url.Action("Details","OrderView",new {id=Model.DonHangID})">View</a></p> 
-							<p>Cảm ơn bạn đã đặt hàng</p>
+							<h3>Order SuccessFully</h3>
+							<p>Order ID: #@Model.DonHangID <a href="@Url.Action("Details","OrderView",new {id=Model.DonHangID})">View</a></p> 
+							<p>Thanks for your shopping</p>
 							<br />
-							<h3>THÔNG TIN ĐƠN HÀNG</h3>
-							<p>Thông tin giao hàng</p>
-							<p>Người nhận hàng: <strong>@Model.FullName</strong></p>
-							<p>Số điện thoại: <strong>@Model.Phone</strong></p>
-							<p>Địa chỉ: <strong>@Model.Address</strong></p>
+							<h3>ORDER INFORMATION</h3>
+							<p>DELIVERY INFOMATION</p>
+							<p>Customer Name: <strong>@Model.FullName</strong></p>
+							<p>Phone Number: <strong>@Model.Phone</strong></p>
+							<p>Address: <strong>@Model.Address</strong></p>
 							<br />
-							Để xem chi tiết đơn hàng vui lòng truy cập vào <a asp-controller="Accounts" asp-action="Dashboard"><strong>Tài khoản cá nhân.</strong></a> Cần hỗ trợ? Liên hệ với chúng tôi qua số điện thoại 0963102916
+							For more information of an order please follow <a asp-controller="Accounts" asp-action="Dashboard"><strong>Tài khoản cá nhân.</strong></a> Cần hỗ trợ? Liên hệ với chúng tôi qua số điện thoại 0963102916
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">

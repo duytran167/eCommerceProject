@@ -137,6 +137,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					Description = banner.Description,
 					ArticleDate = banner.ArticleDate,
 					ImagePath = banner.ImagePath,
+					Link = banner.Link,
 				};
 				db.BannerSliders.Add(newBanner);
 				db.SaveChanges();

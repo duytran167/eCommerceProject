@@ -54,7 +54,7 @@ namespace eCommerceProject.Controllers
 		//-------------------------------------------------------------
 		public ActionResult BannerSlider()
 		{
-			var banner = db.BannerSliders.ToList();
+			var banner = db.BannerSliders.OrderByDescending(t => t.ArticleDate).ToList();
 			return View(banner);
 		}
 		//-------------------------------------------------------------
@@ -82,7 +82,13 @@ namespace eCommerceProject.Controllers
 		//-------------------------------------------------------------
 		public ActionResult Category()
 		{
-			var banner = db.Categories.ToList();
+			var banner = db.Categories.Take(4).ToList();
+
+			return View(banner);
+		}
+		public ActionResult NewCollection()
+		{
+			var banner = db.Collections.Take(2).OrderByDescending(t => t.ArticleDate).ToList();
 
 			return View(banner);
 		}
@@ -90,16 +96,16 @@ namespace eCommerceProject.Controllers
 		public ActionResult BestSeller()
 		{
 			int recordCount = 4;
-			var bestSeller = db.Products.OrderBy(x => x.CreatedDate).Include(t => t.ImageProducts).Where(x => x.BestSellers).Take(recordCount).ToList();
-			ViewBag.product = db.Products.OrderBy(x => x.CreatedDate).Include(t => t.ImageProducts).Where(x => x.BestSellers).Take(recordCount).ToList();
+			var bestSeller = db.Products.OrderByDescending(x => x.CreatedDate).Include(t => t.ImageProducts).Where(x => x.BestSellers == true).Take(recordCount).ToList();
+			ViewBag.product = db.Products.OrderByDescending(x => x.CreatedDate).Include(t => t.ImageProducts).Where(x => x.BestSellers == true).Take(recordCount).ToList();
 			return View(bestSeller);
 		}
 		//-------------------------------------------------------------
 		public ActionResult NewestProduct()
 		{
 			int recordCount = 4;
-			var bestSeller = db.Products.OrderBy(x => x.CreatedDate).Include(t => t.ImageProducts).Take(recordCount).ToList();
-			ViewBag.product = db.Products.OrderBy(x => x.CreatedDate).Include(t => t.ImageProducts).Take(recordCount).ToList();
+			var bestSeller = db.Products.OrderByDescending(x => x.CreatedDate).Include(t => t.ImageProducts).Take(recordCount).ToList();
+			ViewBag.product = db.Products.OrderByDescending(x => x.CreatedDate).Include(t => t.ImageProducts).Take(recordCount).ToList();
 			return View(bestSeller);
 		}
 		//-------------------------------------------------------------
@@ -371,6 +377,7 @@ namespace eCommerceProject.Controllers
 			}
 			return View(blog.ToPagedList(page ?? 1, 5));
 		}
+
 		//-------------------------------------------------------------
 		public ActionResult Blog(int? page, string search, int? filter)
 		{
@@ -533,6 +540,30 @@ namespace eCommerceProject.Controllers
 		{
 			ViewBag.Error = "Something didn't find here :(";
 			return View();
+		}
+		public ActionResult Collections()
+		{
+
+			var collections = from s in db.Collections.OrderByDescending(t => t.ArticleDate).ToList() select s;
+
+
+
+			return View(collections);
+		}
+		public ActionResult DetailsCollection(int? id, string search, int? page)
+		{
+			if (id == null)
+			{
+				return RedirectToAction("Error", "Home");
+			}
+
+			var collections = from s in db.Products.Where(t => t.CollectionID == id).Include(t => t.Collection).OrderByDescending(t => t.CreatedDate).ToList() select s;
+
+			if (collections == null)
+			{
+				return RedirectToAction("Error", "Home");
+			}
+			return View(collections);
 		}
 	}
 }
