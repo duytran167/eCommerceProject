@@ -1,0 +1,198 @@
+﻿@model IPagedList<eCommerceProject.Models.BlogPost>
+
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+	.active {
+		color: #02a499;
+	}
+
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #02a499;
+			border-radius: 50% !important;
+			color: white;
+		}
+</style>
+<div class="page-header">
+	<h2 class="header-title">Blog List</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Blog</a>
+			<span class="breadcrumb-item active">Blog List</span>
+		</nav>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row m-b-30">
+		<div class="col-lg-8">
+			<form>
+				@using (Html.BeginForm("Index", "BlogPosts", "POST"))
+				{
+					<div class="d-md-flex ">
+						<div class="m-b-10 col-md-3 form-row ">
+
+							@Html.DropDownList("filter", (IEnumerable<SelectListItem>)ViewBag.DanhMuc, "Select Category", new { @class = "form-control col-md-12 " })
+
+
+
+
+						</div>
+						<div class="input-affix m-b-10 ">
+
+							<i class="prefix-icon anticon anticon-search"></i>
+							@Html.TextBox("search", null, new { @type = "text", @class = "form-control col-md-10", @placeholder = "Search..." })
+
+
+						</div>
+						<input style="height: 45px" value="Filter" type="submit" class="btn btn-info btn-tone m-r-5" />
+
+					</div>
+				}
+			</form>
+
+		</div>
+		<div class="col-lg-4 text-right">
+			<button class="btn btn-primary btn-tone">
+				<i class="anticon anticon-plus-circle m-r-5"></i>
+				<span>@Html.ActionLink("Add New", "Create")</span>
+			</button>
+		</div>
+	</div>
+	@foreach (var item in Model)
+	{
+		<div class="card" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; ">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-4">
+						<img class="img-fluid" style="object-fit:cover; " src="@Url.Content(@item.ImagePath)"
+								 alt="">
+					</div>
+					<div class="col-md-8">
+						<h4 class="m-b-10">@item.Title</h4>
+						<div class="d-flex align-items-center m-t-5 m-b-15">
+							<button class="text-gray" style="border:1px solid black; background-color: transparent;">@item.BlogCategories.CategoryName</button>
+						</div>
+
+						<div class="d-flex align-items-center m-t-5 m-b-15">
+
+							<div class="avatar avatar-image avatar-sm">
+								<img src="@Url.Content(@item.User.ImagePath)" alt="">
+							</div>
+							<!-- HTML !-->
+
+							<div class="m-l-10">
+								<span class="text-gray font-weight-semibold">@item.User.FullName</span>
+								<span class="m-h-5 text-gray">|</span>
+								<span class="text-gray"></span>
+								<span class="text-gray">@item.CreateDate.ToString("dd MMM yyyy")</span>
+							</div>
+						</div>
+						<p class="m-b-20" style="width: 500px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@item.ShortContents</p>
+						<div class="text-right">
+							@Html.ActionLink("Read More", "Details", new { id = item.Id }, new { @class = "btn btn-hover font-weight-semibold" })
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	}
+
+<div class="container">
+	<div class="row">
+		<div class="col" >
+			Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+			of @Model.PageCount
+		</div>
+		
+
+				@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
+			
+	</div>
+</div>
+</div>
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			jQuery('#txtCatID').change(function () {
+				var catID = jQuery(this).children(":selected").attr("value");
+				catID = parseFloat(catID);
+				$("#txtCatID option")
+					.removeAttr('selected');
+				$("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+				$.ajax({
+					url: '/Admin/BlogPosts/Filter',
+					dataType: "json",
+					type: "GET",
+					data: {
+						CatID = catID
+					},
+					async: true,
+					success: function (results) {
+						if (results.status == "success") {
+							window.location.href = results.redirectUrl;
+
+						}
+					},
+					error: function (xhr) {
+						alert('error')
+					}
+				});
+			});
+		});
+	</script>
+}

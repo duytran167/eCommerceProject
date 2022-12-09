@@ -1,0 +1,84 @@
+﻿@model eCommerceProject.Models.Seller
+
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+		<dl class="dl-horizontal">
+			@if (Model.ImagePath != null)
+			{
+				<div class="avatar avatar-cyan avatar-img">
+					<img src="@Url.Content(Model.ImagePath)" alt="">
+				</div>
+
+			}
+			else
+			{
+				<div class="avatar avatar-cyan avatar-img">
+					<img src="https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg" alt="">
+				</div>
+
+			}
+
+			<dt>
+				@Html.DisplayNameFor(model => model.FullName)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.FullName)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.Email)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.Email)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.EmailConfirmed)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.EmailConfirmed)
+			</dd>
+
+
+
+			<dt>
+				@Html.DisplayNameFor(model => model.PhoneNumber)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.PhoneNumber)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.UserName)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.UserName)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.Address)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.Address)
+			</dd>
+
+		</dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-info btn-tone"}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

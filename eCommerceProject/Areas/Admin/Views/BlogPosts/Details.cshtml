@@ -1,0 +1,315 @@
+﻿@model eCommerceProject.ViewModel.BlogVM
+@using Microsoft.AspNet.Identity
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+	<h2 class="header-title">Blog Post</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Blog List</a>
+			<span class="breadcrumb-item active">@Model.BlogPost.Title</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="container">
+			<h2 class="font-weight-normal m-b-10">
+				@Model.BlogPost.Title
+
+				@Html.ActionLink(" ", "Edit", new { id = Model.BlogPost.Id }, new
+				{
+					@class = "anticon anticon-edit text-success",
+						 //onclick = "return confirm('Are you sure you want to remove " + Model.BlogPost.Title + " to list ?');"
+					 })
+				<span onclick="remove(@Model.BlogPost.Id)"><i class="anticon anticon-delete text-danger" style=" cursor:pointer"></i></span>
+
+			</h2>
+			<div class="d-flex align-items-center m-r-10">
+				@if (Model.BlogPost.isPublic == true)
+				{
+
+					<div class="badge badge-success badge-dot m-r-10"></div>
+					<div class="m-r-10">In Public</div>
+
+				}
+				@if (Model.BlogPost.isPublic == false)
+				{
+
+					<div class="badge badge-danger badge-dot m-r-10"></div>
+					<div class="m-r-10">Not Public</div>
+
+
+				}
+				@if (Model.BlogPost.isHotNews == true)
+				{
+
+					<div class="badge badge-success badge-dot m-r-10"></div>
+					<div class="m-r-10">In Hot News</div>
+
+				}
+				@if (Model.BlogPost.isHotNews == false)
+				{
+
+					<div class="badge badge-danger badge-dot m-r-10"></div>
+					<div class="m-r-10">Not Hot News</div>
+
+				}
+			</div>
+			<div class="d-flex m-b-30">
+				<div class="avatar avatar-cyan avatar-img">
+					<img src="@Url.Content(Model.BlogPost.User.ImagePath)" alt="">
+				</div>
+				<div class="m-l-15">
+					<a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">@Model.BlogPost.User.FullName</a>
+					<p class="m-b-0 text-muted font-size-13">@Model.BlogPost.CreateDate</p>
+					<a><i class="anticon anticon-eye"></i> @Model.BlogPost.BlogPostView</a>
+				</div>
+			</div>
+			<img alt="" class="img-fluid w-100" src="@Url.Content(Model.BlogPost.ImagePath)">
+			<div class="m-t-30">
+				<p><strong>@Model.BlogPost.ShortContents</strong></p>
+				<br />
+				@Html.Raw(@Model.BlogPost.Contents)
+			</div>
+			<div class="d-flex m-t-40 align-items-center">
+				<span class="m-r-15">Share this post: </span>
+				<ul class="list-inline m-b-0">
+					<li class="list-inline-item">
+						<button class="font-size-16 btn btn-hover btn-icon btn-rounded">
+							<i class="anticon anticon-facebook"></i>
+						</button>
+					</li>
+					<li class="list-inline-item">
+						<button class="font-size-16 btn btn-hover btn-icon btn-rounded">
+							<i class="anticon anticon-twitter"></i>
+						</button>
+					</li>
+					<li class="list-inline-item">
+						<button class="font-size-16 btn btn-hover btn-icon btn-rounded">
+							<i class="anticon anticon-instagram"></i>
+						</button>
+					</li>
+				</ul>
+			</div>
+			<hr>
+			<h5>Comments (@ViewBag.CmtCount)</h5>
+			<div class="m-t-20">
+				<ul class="list-group list-group-flush">
+					@if (Model.Comments != null && Model.Comments.Count > 0)
+					{
+						foreach (var comment in Model.Comments)
+						{
+							<li class="list-group-item p-h-0">
+								<div class="media m-b-15">
+									<div class="avatar avatar-image">
+										@if (comment.User.ImagePath != null)
+										{<img src="@Url.Content(comment.User.ImagePath)" alt="">}
+										@if (comment.User.ImagePath == null)
+										{<img src="" alt="">}
+									</div>
+									<div class="media-body m-l-20">
+										<h6 class="m-b-0">
+											<a href="" class="text-dark">@comment.User.FullName</a>
+										</h6>
+										<span class="font-size-13 text-gray">@comment.TimeStamp</span>
+									</div>
+								</div>
+								<span>@comment.Text</span>
+								
+									
+									<a style=" cursor:pointer" onclick="removeCmt(@comment.Id)">
+										<i href="" class="anticon anticon-delete text-danger"  aria-hidden="true"></i>
+									</a>
+								
+								<hr />
+								@*<div class="m-t-15">
+							<ul class="list-inline text-right">
+								<li class="d-inline-block m-r-20">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-like"></i>
+										<span>43</span>
+									</a>
+								</li>
+								<li class="d-inline-block m-r-30">
+									<a class="text-dark" href="javascript:void(0)">
+										<i class="anticon m-r-5 anticon-message"></i>
+										<span>Reply</span>
+									</a>
+								</li>
+							</ul>
+						</div>*@
+							</li>
+						}
+					}
+					else
+					{
+						<i>No comment</i>
+						<hr />
+					}
+
+
+				</ul>
+				<form id="commentForm">
+					<input type="hidden" value="@Model.EntityID" name="EntityID" />
+					<input type="hidden" value="@Model.BlogPost.Id" name="RecordID" />
+					<div class="form-group">
+						<label></label>
+						<textarea class="form-control" name="Text" rows="3" placeholder="Leave a Comment..."></textarea>
+						<br />
+						@if (Request.IsAuthenticated)
+						{
+							<button type="button" id="btnComment" class="btn btn-primary">Comment</button>
+						}
+						else
+						{
+							<button type="button" id="chkcondition" onclick="javascript: return RequestLogin();" class="btn btn-primary">Login and Comment</button>
+						}
+					</div>
+				</form>
+			</div>
+			
+
+			
+		</div>
+	</div>
+</div>
+<p>
+
+	@Html.ActionLink("Back to List", "Index")
+</p>
+@section scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+
+		function remove(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover your image!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Admin/BlogPosts/Delete/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/BlogPosts/");
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/BlogPosts/");
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.replace("/Admin/BlogPosts/");
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+
+		function RequestLogin() {
+		if ($("#chkcondition").is(':checked')) {
+			return true;
+		}
+		else {
+			swal("Please login!!!", "Login to Comment");
+			return false;
+		}
+			}
+	$("#btnComment").click(function () {
+		$.ajax({
+			url: "@Url.Action("LeaveComment", "BlogPosts")",
+			type: "post",
+			data:
+				$("#commentForm").serialize()
+		}).done(function (response) {
+			if (response.Success) {
+				window.location.reload();
+			}
+			else {
+				alert("Error!", response.Message, "error");
+			}
+		}).fail(function () {
+			alert("Error!", "Error Occured. please try again later.", "error");
+		});
+	});
+
+		function removeCmt(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover your image!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Admin/BlogPosts/DeleteComment/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+	</script>
+}

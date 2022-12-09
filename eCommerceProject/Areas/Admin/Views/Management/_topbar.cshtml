@@ -1,0 +1,77 @@
+﻿
+@using Microsoft.AspNet.Identity
+@{ 
+	var user = User.Identity.GetUserName();
+	
+}
+
+<div class="header">
+	<div class="logo logo-dark">
+		<a href="@Url.Action("Index","Admin")"
+			 style="padding:25px">
+			<img src="~/Content/ImageProduct/icons/logo-01.png" alt="IMG-LOGO">
+			<img class="logo-fold" src="~/Content/ImageProduct/icons/favicon.png" alt="Logo" />
+
+			
+		</a>
+	</div>
+	<div class="logo logo-white">
+		<a href="index.html">
+			<img src="~/Content/ImageProduct/icons/logo-01.png" alt="IMG-LOGO">
+			<img class="logo-fold" src="assets/images/logo/logo-fold-white.png" alt="Logo">
+		</a>
+	</div>
+	<div class="nav-wrap">
+		<ul class="nav-left">
+			<li class="desktop-toggle">
+				<a href="javascript:void(0);">
+					<i class="anticon"></i>
+				</a>
+			</li>
+			<li class="mobile-toggle">
+				<a href="javascript:void(0);">
+					<i class="anticon"></i>
+				</a>
+			</li>
+			
+		</ul>
+		<ul class="nav-right">
+			
+			<li class="dropdown dropdown-animated scale-left">
+
+				@{
+					Html.RenderAction("adminTopbar", "Management", new { area = "Admin" });
+
+				}
+				<a href="@Url.Action("Index", "Management")" class="dropdown-item d-block p-h-15 p-v-10">
+					<div class="d-flex align-items-center justify-content-between">
+						<div>
+							<i class="anticon opacity-04 font-size-16 anticon-user"></i>
+							<span class="m-l-10">Profile</span>
+						</div>
+
+					</div>
+				</a>
+				@using (Html.BeginForm("LogOff", "AdminAccount", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+				{
+					<a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item d-block p-h-15 p-v-10">
+						<div class="d-flex align-items-center justify-content-between">
+							@Html.AntiForgeryToken()
+							<div>
+								<i class="anticon opacity-04 font-size-16 anticon-logout"></i>
+								<span class="m-l-10">Log off</span>
+							</div>
+
+
+
+
+
+						</div>
+					</a>
+				}
+</div>
+			</li>
+			
+		</ul>
+	</div>
+</div>

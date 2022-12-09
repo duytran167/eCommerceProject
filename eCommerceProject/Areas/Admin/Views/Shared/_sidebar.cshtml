@@ -1,0 +1,254 @@
+﻿<!-- ========== Left Sidebar Start ========== -->
+<div class="side-nav">
+	<div class="side-nav-inner">
+		<ul class="side-nav-menu scrollable">
+			<li class="nav-item dropdown open">
+				<a class="dropdown-toggle" href="javascript:void(0);">
+					<span class="icon-holder">
+						<i class="anticon anticon-dashboard"></i>
+					</span>
+					<span class="title">Dashboard</span>
+					<span class="arrow">
+						<i class="arrow-icon"></i>
+					</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="@Url.Action("Index","Admin")" class="waves-effect">
+							<i class="ti-home"></i>
+							<span>Dashboard</span>
+						</a>
+					</li>
+
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="dropdown-toggle" href="@Url.Action("Index","Order")">
+					
+
+					<span class="icon-holder">
+						<i class="anticon anticon-appstore"></i>
+						
+						
+					</span>
+					<span class="title">Order</span><span class="badge badge-pill badge-primary float-right">
+	@{
+		Html.RenderAction("CountNoti", "Order");
+
+	}
+</span>
+					
+				</a>
+				
+			</li>
+			<li class="nav-item dropdown">
+				<a class="dropdown-toggle" href="javascript:void(0);">
+					<span class="icon-holder">
+						<i class="anticon anticon-build"></i>
+					</span>
+					<span class="title">Products</span>
+					<span class="arrow">
+						<i class="arrow-icon"></i>
+					</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="@Url.Action("Index","Category")" class="waves-effect">
+							<i class="ti-home"></i>
+							@*<span class="badge badge-pill badge-primary float-right">2</span>*@
+							<span>Category</span>
+						</a>
+					</li>
+					<li>
+						<a href="@Url.Action("Index","Products")" class="waves-effect">
+							<i class="ti-home"></i>
+							<span>Products</span>
+						</a>
+					</li>
+					<li>
+						<a href="@Url.Action("Index","Collections")" class="waves-effect">
+							<i class="ti-home"></i>
+							<span>Collections</span>
+						</a>
+					</li>
+					
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="dropdown-toggle" href="javascript:void(0);">
+					<span class="icon-holder">
+						<i class="anticon anticon-hdd"></i>
+					</span>
+					<span class="title">Images</span>
+					<span class="arrow">
+						<i class="arrow-icon"></i>
+					</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="@Url.Action("BannerManage","Admin")" class="waves-effect">
+							<i class="ti-home"></i>
+							<span>Banner Carousel</span>
+						</a>
+					</li>
+					@*<li>
+						<a href="carousel.html">Carousel</a>
+					</li>
+					<li>
+						<a href="dropdown.html">Dropdown</a>
+					</li>
+					<li>
+						<a href="modals.html">Modals</a>
+					</li>
+					<li>
+						<a href="toasts.html">Toasts</a>
+					</li>
+					<li>
+						<a href="popover.html">Popover</a>
+					</li>
+					<li>
+						<a href="slider-progress.html">Slider & Progress</a>
+					</li>
+					<li>
+						<a href="tabs.html">Tabs</a>
+					</li>
+					<li>
+						<a href="tooltips.html">Tooltips</a>
+					</li>*@
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="dropdown-toggle" href="javascript:void(0);">
+					<span class="icon-holder">
+						<i class="anticon anticon-user"></i>
+					</span>
+					<span class="title">User</span>
+					<span class="arrow">
+						<i class="arrow-icon"></i>
+					</span>
+				</a>
+				
+				<ul class="dropdown-menu">
+					@if (User.IsInRole("Admin"))
+					{
+						<li>
+							<a href="@Url.Action("Index", "AdminCustomers")" class="waves-effect">
+								<i class="ti-home"></i>
+								<span>Customers</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="@Url.Action("Index", "Seller")" class="waves-effect">
+								<i class="ti-home"></i>
+								<span>Seller</span>
+							</a>
+						</li>
+					}
+					@if (User.IsInRole("Seller")) {
+				<li>
+					<a href="@Url.Action("Index", "AdminCustomers")" class="waves-effect">
+						<i class="ti-home"></i>
+						<span>Customers</span>
+					</a>
+				</li>
+					}
+					@*<li>
+			<a href="form-validation.html">Form Validation</a>
+		</li>*@
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="dropdown-toggle" href="javascript:void(0);">
+					<span class="icon-holder">
+						<i class="anticon anticon-form"></i>
+					</span>
+					<span class="title">Blogs</span>
+					<span class="arrow">
+						<i class="arrow-icon"></i>
+					</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="@Url.Action("Index","BlogPosts")" class="waves-effect">
+							<i class="ti-home"></i>
+							<span>Blogs List</span>
+						</a>
+					</li>
+					<li>
+						<a href="@Url.Action("Index","BlogCategories")" class="waves-effect">
+							<i class="ti-home"></i>
+							<span>Blog Category</span>
+						</a>
+					</li>
+					
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="" href="@Url.Action("Index","Contact")">
+					<span class="icon-holder">
+						<i class="anticon anticon-mail"></i>
+					</span>
+					<span class="title">Support</span><span class="badge badge-pill badge-primary float-right">
+	@{
+		Html.RenderAction("CountNoti", "Contact");
+
+	}
+</span>
+
+				</a>
+
+			</li>
+			<li class="nav-item dropdown">
+				<a class="" href="@Url.Action("Index","SendEmails")">
+					<span class="icon-holder">
+						<i class="anticon anticon-mail"></i>
+					</span>
+					<span class="title">Mail</span>
+					
+				</a>
+				
+			</li>
+			
+			@*<li class="nav-item dropdown">
+				<a class="dropdown-toggle" href="javascript:void(0);">
+					<span class="icon-holder">
+						<i class="anticon anticon-lock"></i>
+					</span>
+					<span class="title">Authentication</span>
+					<span class="arrow">
+						<i class="arrow-icon"></i>
+					</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="login-1.html">Login 1</a>
+					</li>
+					<li>
+						<a href="login-2.html">Login 2</a>
+					</li>
+					<li>
+						<a href="login-3.html">Login 3</a>
+					</li>
+					<li>
+						<a href="sign-up-1.html">Sign Up 1</a>
+					</li>
+					<li>
+						<a href="sign-up-2.html">Sign Up 2</a>
+					</li>
+					<li>
+						<a href="sign-up-3.html">Sign Up 3</a>
+					</li>
+					<li>
+						<a href="error-1.html">Error 1</a>
+					</li>
+					<li>
+						<a href="error-2.html">Error 2</a>
+					</li>
+				</ul>
+			</li>*@
+		</ul>
+	</div>
+</div>
+
+<!-- Left Sidebar End -->

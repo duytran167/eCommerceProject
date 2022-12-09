@@ -1,22 +1,52 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
-    }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+<div class="top-bar">
+	<div class="content-topbar flex-sb-m h-full container">
+		<div class="left-top-bar">
+			Shipping around Viet Nam
+		</div>
+
+		<div class="right-top-bar flex-w h-full">
+			
+
+
+
+			@if (Request.IsAuthenticated)
+			{
+				using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+				{
+
+					@Html.AntiForgeryToken()
+					if (User.IsInRole("Admin"))
+					{
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Admin/Management", routeValues: null, htmlAttributes: new { title = "Management", @class = "flex-c-m trans-04 p-lr-25", @area = "Admin" })
+					}
+					if (User.IsInRole("Seller"))
+					{
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Admin/Management", routeValues: null, htmlAttributes: new { title = "Management", @class = "flex-c-m trans-04 p-lr-25", area = "Admin" })
+					}
+					if (User.IsInRole("Customer"))
+					{
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "flex-c-m trans-04 p-lr-25", area = "" })
+					}
+
+
+				
+
+				}
+			}
+			else
+			{
+
+				<a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "flex-c-m trans-04 p-lr-25" })</a>
+				<a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "flex-c-m trans-04 p-lr-25" })</a>
+			}
+			@if (User.IsInRole("Admin"))
+			{
+			@Html.ActionLink("Dashboard","Index", "Admin/Admin", routeValues: null, htmlAttributes: new { title = "Management", @class = "flex-c-m trans-04 p-lr-25", area = "Admin" })
+			}
+
+
+		</div>
+	</div>
+</div>

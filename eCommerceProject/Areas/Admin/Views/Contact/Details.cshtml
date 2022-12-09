@@ -1,0 +1,49 @@
+﻿@model eCommerceProject.Models.Contact
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div>
+	<h4>Supported</h4>
+	<hr />
+	<div class="container">
+
+		<div class="row">
+			<div class="col">
+				<h5>Full Name : <span>@Model.FullName</span></h5>
+			</div>
+			<div class="col">
+				<h5>Phone Number : <span>@Model.PhoneNumber</span></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h5>Email : <span>@Model.Email</span></h5>
+			</div>
+			<div class="col">
+				<h5>Date Send: <span>@Model.ArticleDate</span></h5>
+			</div>
+		</div>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Content</span>
+			</div>
+			<textarea class="form-control" aria-label="With textarea">@Html.Raw(Model.Content)</textarea>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h4>Image</h4>
+				<img src="@Url.Content(Model.ImagePath)"/>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<p>
+	
+	@Html.ActionLink("Back to List", "Index")
+</p>
+

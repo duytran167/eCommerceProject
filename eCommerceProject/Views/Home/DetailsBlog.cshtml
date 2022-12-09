@@ -1,0 +1,536 @@
+﻿@model eCommerceProject.ViewModel.BlogVM
+@using Microsoft.AspNet.Identity
+@{
+	ViewBag.Title = Model.BlogPost.Title;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+	be-comment-block {
+		margin-bottom: 50px !important;
+		border: 1px solid #edeff2;
+		border-radius: 2px;
+		padding: 50px 70px;
+		border: 1px solid #ffffff;
+	}
+
+	.comments-title {
+		font-size: 16px;
+		color: #262626;
+		margin-bottom: 15px;
+		font-family: 'Conv_helveticaneuecyr-bold';
+	}
+
+	.be-img-comment {
+		width: 60px;
+		height: 60px;
+		float: left;
+		margin-bottom: 15px;
+	}
+
+	.be-ava-comment {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+	}
+
+	.be-comment-content {
+		margin-left: 80px;
+	}
+
+		.be-comment-content span {
+			display: inline-block;
+			width: 49%;
+			margin-bottom: 15px;
+		}
+
+	.be-comment-name {
+		font-size: 13px;
+		font-family: 'Conv_helveticaneuecyr-bold';
+	}
+
+	.be-comment-content a {
+		color: #383b43;
+	}
+
+	.be-comment-content span {
+		display: inline-block;
+		width: 49%;
+		margin-bottom: 15px;
+	}
+
+	.be-comment-time {
+		text-align: right;
+	}
+
+	.be-comment-time {
+		font-size: 11px;
+		color: #b4b7c1;
+	}
+
+	.be-comment-text {
+		font-size: 13px;
+		line-height: 18px;
+		color: #7a8192;
+		display: block;
+		background: #f6f6f7;
+		border: 1px solid #edeff2;
+		padding: 15px 20px 20px 20px;
+	}
+
+	.form-group.fl_icon .icon {
+		position: absolute;
+		top: 1px;
+		left: 16px;
+		width: 48px;
+		height: 48px;
+		background: #f6f6f7;
+		color: #b5b8c2;
+		text-align: center;
+		line-height: 50px;
+		-webkit-border-top-left-radius: 2px;
+		-webkit-border-bottom-left-radius: 2px;
+		-moz-border-radius-topleft: 2px;
+		-moz-border-radius-bottomleft: 2px;
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+
+	.form-group .form-input {
+		font-size: 13px;
+		line-height: 50px;
+		font-weight: 400;
+		color: #b4b7c1;
+		width: 100%;
+		height: 50px;
+		padding-left: 20px;
+		padding-right: 20px;
+		border: 1px solid #edeff2;
+		border-radius: 3px;
+	}
+
+	.form-group.fl_icon .form-input {
+		padding-left: 70px;
+	}
+
+	.form-group textarea.form-input {
+		height: 150px;
+	}
+</style>
+<!-- breadcrumb -->
+<div class="container">
+	<div class="bread-crumb flex-w p-l-25  p-t-30 p-lr-0-lg">
+		<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+			Home
+			<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+		</a>
+
+		<a href="blog.html" class="stext-109 cl8 hov-cl1 trans-04">
+			Blog
+			<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+		</a>
+
+		<span class="stext-109 cl4">
+			@Model.BlogPost.Title
+		</span>
+	</div>
+</div>
+
+
+<!-- Content page -->
+<section class="bg0 p-t-52 p-b-20">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-lg-9 p-b-80">
+				<div class="p-r-45 p-r-0-lg">
+					<!--  -->
+					<div class="wrap-pic-w how-pos5-parent">
+						<img src="@Url.Content(Model.BlogPost.ImagePath)" alt="IMG-BLOG">
+
+						<div class="flex-col-c-m size-123 bg9 how-pos5">
+							<span class="ltext-107 cl2 txt-center">
+								@Model.BlogPost.CreateDate.ToString("dd")
+							</span>
+
+							<span class="stext-109 cl3 txt-center">
+								@Model.BlogPost.CreateDate.ToString("MM-yyyy ")
+							</span>
+						</div>
+					</div>
+
+					<div class="p-t-32">
+						<span class="flex-w flex-m stext-111 cl2 p-b-19">
+							<span>
+								<span class="cl4">By</span> @Model.BlogPost.User.FullName
+								<span class="cl12 m-l-4 m-r-6">|</span>
+							</span>
+
+							<span>
+								@Model.BlogPost.CreateDate.ToString("dd MMM yyyy")
+								<span class="cl12 m-l-4 m-r-6">|</span>
+							</span>
+
+							<span>
+								@Model.BlogPost.BlogPostView <i class="fas fa-eye"></i>
+								<span class="cl12 m-l-4 m-r-6">|</span>
+							</span>
+
+							<span>
+								@ViewBag.CmtCount Comments
+							</span>
+						</span>
+
+						<h4 class="ltext-109 cl2 p-b-28">
+							@Model.BlogPost.Title
+						</h4>
+
+						<p class="stext-117 cl6 p-b-26">
+							@Html.Raw(Model.BlogPost.Contents)
+						</p>
+
+
+					</div>
+
+					<div class="flex-w flex-t p-t-16">
+						<span class="size-216 stext-116 cl8 p-t-4">
+							Tags
+						</span>
+
+						<div class="flex-w size-217">
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Streetstyle
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Crafts
+							</a>
+						</div>
+					</div>
+
+					<!-- comment -->
+
+					<div class="p-t-40">
+						<div class="be-comment-block">
+							<h5 class="mtext-113 cl2 p-b-12">Comments (@ViewBag.CmtCount)</h5>
+							<div class="be-comment">
+								@if (Model.Comments != null && Model.Comments.Count > 0)
+								{
+									foreach (var comment in Model.Comments)
+									{
+										<div class="be-img-comment">
+											<a href="blog-detail-2.html">
+												@if (comment.User.ImagePath != null)
+												{
+													<img src="@Url.Content(comment.User.ImagePath)" alt="" class="be-ava-comment">
+												}
+												@if (comment.User.ImagePath == null)
+												{
+													<img class="be-ava-comment" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAwFBMVEX///9SlOJ1qejMz89CdrVSleN0qOjQ0c7JzMxDjeBNkuNupedIkONspOdOkuLN0M/c5/hGfsHp6urw8fFYmOM1b7JDebl7ren4+/5fnOSet9dem+Q9c7RQkNzq6+vY2trF2vVLh8+RsdmuwNSsyvDr8vu/1fORuuyEsurM2Olzo93CytGJrdrC2PS1z/Gbv+3l7vrI1ee3yeE4ecKFo8xfib91mMaovtp+qNykxe9nl9Lb5PBqkcJRgbvQ4Pa1w9FcOC3kAAAPEElEQVR4nO2dC1fiOheGLaUXegVsoRQcUKggKKiDjhxH+f//6kvSAgWhTXZSYL7Fu9aZC8fV9mHfkjTZc3V10UUXXXTRRRdddNFFF130jyiq9u4Hs+Fo1Gw2S+i/0Wg4G9z3qtGpH4xfwXNvMCzZtm2aphqrlPyOPkGfl4aDp2pw6seECcEtRqqNyUqHhUltdbR4ev7HMKPesJnDtsvZHPb+GaetDpo2PV2K0i4Nqqd++FwFzwSPkW5NadrNwfOpGbIU3Y/geGvI0fRc3bU6Uw/gqbbdarXanqfE8rw2+rttH/hpUx2eobcGveaeB0YWaXmK5Ej75UiK19pnddVu9s4ruUbTn3wY7gDZrry2bf74bppn5KzBtLRjB9Vu09KlKHeuYZam52HHYLoTfiq17XaltMxtRvUcGHvb9jNb3qGog0Caau/EfNVR2rdUG2q9tLztS45OmVeDWdp+ZlsAXqy2mWacncxVe2bqQWw+79yRo9jpeOydhC8abh4CnlwOS2lt/MMenqBy9FJja1sRzhczbr5C9enIfOkILIiPaM2o2sOjRmNVNY/Bh7SJR1U9YlKdrg1oio+/XXmrL1M1p8cCnK0N2CqcD2vtqubsKHxRcwVYsIOmtHJVs3mEnFotJR6qtkUWwGw53uqmxQdjbxWCxzMg0SrjFF79pyt/OU4EptVexUah+WaQAJrHNWAsJYl/e1A8oA16QsexKrEsBxbCq9svigJcJHeAzCGcSsWcTb+rz9Fz9Xs6MysVCGS7WMRF7CUqe5F3LGf4vT3oCr6H6FPmKyU51SwEMXFR9hB0Kvb9vgsG9za7IZNgLMKKCSB7CFZavYMX7dkV5uvZBaWbKRDQqWQ/yoDdjHYhRaMHBDTsvNcQz7bBetF4nGr3RAJWTViZr4woLj5i9tQY0RQ4gIvisSg7IN1cYAZDVFVxw/AmEJA24S2AiE1RgPF8sCgLkjvAEEXNF6cwQIMmBldqwtKNmFl/nGXYy0SbZeUoYF9ttUVlm4CsGpqs95cMtntXLeY7YES1xL8CR4KQHdBiHVbNmP1UIk825AUkpV5lnw56rN9twD6gV4h39fgAI+Kj7DevsKeAKbufegKq4lCFrVgogHsBJox4vqhy+SnxUQCgBRn5D9iNSLINzwA1gGUZRAjxnAhAGGcbeD6dwYJQcmDDqSbATz2uoQ2p9ZBlQws21ADkmjgUwXV/pAKX1SzY3rRnCCEORZVlgJgSTjOASojENGDbKABtBFDAyYYM10D3dEogwKurEmgZtY2LIuQ7xVMK4NIvtEINwQvFkElGgPMo6Iawaog1YB+bEuG6z25EbELg6xdr7/Iohe5BqYbMFdmNiJdmILUeq9IDEvbYV09jmehpWQcZ2ITQd/THJ/TYjRg0VWCa4SF8ghKiZKM22SIR10LwNgvgkAY4qCFSmGsijwklA/raZAHMpVJsRJZbVZEJ4a95nQ8g4Qd87wM2IsvodMhjQsn5D0j4H8fuDmREhilGpPKYUHJqsIWFqMZBiIzIsJ6BSgWHCSXl9wOI8OE3zwYIu2RSjzQCNG3i2a+m/A5BhCEXoccwiUJ5hseEknL7BSL8uuXaxIKemnZeOjC5TIgI/U8A4KfPR+iVTNohf1M1+U4U3HbmAMJ554aL0DFpSyJyUs49XTdlnz2bRn75hu+2bVo3HZgq350kqQEw4rzT4L2tSummTb48g6TUysyR+OmXa7y75ewSlZtGNl+ewYS35c5fRsK3Tpkv0Ug419g00dHjd1IUiGX/DxPgH7/MG4ZIJtWbqKHKv3cUuSmbnyIf5XdSSWrRvKYJmtxOSty03CnT59OojMRXK4i8EsU8+FmAkyLEBkL8op11BygIyw0Ru3JNM79ePJm8mRQLG7HceaNDJID8eQarRRGIC8D+0T3CkVjuNGgcNfrCgAKiUML7T/PXF0YinBQR3uDQ6pTz51EP5Y6gKMRSR3l+E6ginFRK/LTc8fMmUqFPAIX4KJKdu/hdtUWdMyB+iorGV5YZP7988lNifBSplTs0fRJ40KBRjs34fqgyfr7HBixzj0jXUsy8g4oDQU6Kb3YTIyLGv68/fSd4+ZvwCQtCrNzt0UNxhEm2iRnL769p9/l8fS+v+UQCSnbeqKYp8riPkjhqDOn7X+/zMAzn71/oz2s85KIiT+C08qYXQk7Ur6VItXJKHSQf/5L+sCYUUPLsbMBILOGqaGRIVJlY3zBnAlUVGIbJHbfNuKOayBCMlbO43yvg1J1yc4ixAD4UiL1MwntxnR82UvYzIr4iDvm1s1e+B8WczUYoN7eNFF2jdiMVwodSTXZBXBR2dBL3h7q5ucW6ucF/KepGUvbsArijhVZJJ6xC75Gzm2d0vPPZRcnJfj8D2QB5ZsrZ+gnbWXZWytlVx/dK5izkZA/b7MIIHccxkCzLwr85wNPcNDdqZRKKH9LgM+oIqG03R7PFYjCYDgaLxWzUNNsIGXxuPUtHJHScitVWh4PvA+10o+fv6bDUNtA3IPK27SMRItPZw3uK1rLB89PMhh3P36+j2BDhle5ZXpJG9yNhkEcgNAzznn1Da/BUcuC7vlLKJhSQSy1pBj0c8DxTwHv31sqpFmNeQsNZ8Jy0igbcdnTGmXfg2DtHrl7h7jkWzDjjMWff4CPX1S2Kd1v5ei6BN9ISwsfMq99x+Ehegwh6TXkKpHGXee0QTuh44nocVNvw5zCy3wX1wbnMAh1bOaSgBH+QfuaVJ9ALW8DDVQfF3i1j9SSTzOt2gYTCAa+uhkBEq5tNCFtrM4R1qEiJvc8CkZdNWAcNahy7kM6bsGcx69mEH5Avziimm2EEepaPbMJfkHJRKao/LOSUkBH+yrzmNaBcMDUxYdOI/fu2+tfZ15wAfL+4jpsR++KxMsnJCTrzDJG5xweL2LsQtPScS2rss4siOxgHrA/jfGg5l+yyphrwMS46sR72MsLscogIl4yXrBTb9zZiTKfOMrtYoIKos41qgA0i6MX4JsXTs4sFKhca20IG+DQlrdhOXTpjLadYoFTDFoigLiYsYut4YoR5iQYRMk2gcha2RIhpdGpN8hINSjUaSyCC2yfQi+m1tKflE9a1RwY3BbdPoBdL0TcetbxEg1KNu2S4ZOW7cMJvhnphLd3cRHN15coMe2oqxf97BVUGwpbsUlyxy+Km50WInDQ/DFEgsrjpeRFaSzk/DNFgV5fp5xfnRdiSdappgKvRr3yfFaFxp9GEIQpEmX4afFaEzkSmCUNUL3T6sek5EaIxqU5RK7Bcl3q15pwIrb5L56TYTalHbudE6GmUTkrcNKQ04hkRWiG1k2I3pZ0HnxGhp1M7KZ7o0xaM8yFEpULPW8DYKJDlCd0Xdz6E0kSWGVb9UK6hG5xaxf+Db09UKQGZkDrPYF3rsk613OxQn/WFKviiq83oianzDJYr00Wi8hvS44NFc6qmNdiE9HkGq67LMs03p9T814LQYr36dIcvZZkhzxAhI9LURNwB46UYNqIXum4ZqBYymjA2IsUqFz4K24F1haLRQ4fqAK1js5vw6kqWNYrRKTnsW5gVX/AhYQpCo6/JMvPVkRG1cW6yiY8zM3b5oNUrOQWdT2iMNYAJsRFdmnkiOcbkz8UXjWAeH/POfwRn4gJMGBsxP9kkJyj9L0jvqyx9vvmUJzBxmoGYEBtRdvOnwsmx+/zWAmz6kxwUzvdRx0QWhJjw6uqXjvw07/prxJzWAmx6SBoRUJWKpSvnvlI7oK5MVxQTxIzWAmxaNyIo1/Jvjn2UaUSaFhqd0uTTNSJm5Lfjw5qPBhDnUcYRaVrIiK6ef5fUge2O/7anfQK9gte3zUl9GhdVdBduQiRsxD6FEVNn0ju+P38Adp1/mKc7EdCcYye1Pm9/SZbw2E27oxmfps8yd/yv+Qvru+HoZf6Vwis3aM55W3caZLyWFvJTulBUpK3WAh2//BZSU0Yv4VvZ3+q0cEvTaYEEIY+PXpH1DNmVqf65qd0j6R3kr52/4etnlssGn6/hexn94BYe5UF9x5NxKeQcTmE/pamK+xjjqPT9xtv7PPzz+vLwiRThXx5eXv+E8/e3hr/VA4SJDwmP1vh8FIv4KU22kQ62Fog7fuxqtwNIio8OkGQZTh8lkmXKwp/FSC36Rguk1AOHa9vCdZ8uoa4gb6GQtVv6s/okjXLU+rTqBPGR/sUweszbWiMfaEuN2i1LHwnrkQByB2GsLkH8YNlJRBphUFMiOsY2GdYHARQQhLFcmRmRUFJgJnCMe4FjQObFp8PCVRGAKCWNMCTS8aNG1Gg04j+QDiASrE1GAshbCdMi2QaEmAL9KeDVEkAxWWalXzEiQ7opTnGSAc96D6keI9IXjeIA72JAQWl0o26MyHFAUYyMuNCLS6M/EPvKKZuDOFK/MMA14oTjfCevDG9SIOAK0XXHpwpGa0ymS4UBrhApXy2KF97VVSzgBrGvHJ/RSEKwUMBV0ZA1/eieao31BFB4mdhWXPplVwulY+ZURwpjDxVe6H/qWo6lLY9oRstcasl9hQ7VDiC6azOK6baSK8MJ3cSAbtFbP2Il+QZHo9j+R3vlWONJYsBic0xaSb5BZuzbRbuqZfeTCCw8x6S1CkZZk0OpSFc1lFBeReAxQjCllaei+98Vxmg4j/qK73geulJdXttRL4bRkDZ8snxED10pWJsRjcbvPNHxaHl3kzWf3j1ODt3VxowuiseWJS6vOpYX6qsEcxoDJtqYUda0/lhQfTSccV/b+OfxIzCt6xSji5y1ZfFCGlYLuefGfDrNabRCVZfTjPLykQfSsLzHpZzmO6GDbpRmXEOyx6TzA0/Wj1njM7XFiCC1STj2HIbM4xiONw4nWhrvTOy3Ut1NM2JIeRl+tBzLyLGmYxiW0voIl/o2Hoq/c+LD2mGMKSfL8NH04r6zW71YSUNa9Lk3/gj7E3mH7hz5sFBe3YGUXYSJHn7ZD+8eP8Z2q+15kue1W/b44/EOo5H/v0OHwq976vx5SAEy5C7kGvSnfqCtzHeaAQylrrv7ISmlu2drvpSgkPq/gRcrqHdlmYUSfSXd83bOPbqud12ZwpjoR9xu/Z8x3o4ChIl9Vt9DSj51uwjuX7PdHl1f1xFp18XJE++xchFYt16//lcNd9FFF1100f+d/geqll5bM3dehgAAAABJRU5ErkJggg==" alt="AVATAR">
+												}
+
+											</a>
+										</div>
+										<div class="be-comment-content">
+
+											<span class="be-comment-name">
+												<a href="blog-detail-2.html" class="stext-102">@comment.User.UserName</a>
+												@if (@comment.UserID == User.Identity.GetUserId())
+												{
+
+													<a style=" cursor:pointer" onclick="removeCmt(@comment.Id)">
+														<i href="" class="fas fa-trash text-danger" aria-hidden="true"></i>
+													</a>
+												}
+											</span>
+											<span class="be-comment-time">
+												<i class="fa fa-clock-o"></i>
+												@comment.TimeStamp
+											</span>
+
+											<p class="be-comment-text">
+												@comment.Text
+											</p>
+
+										</div>
+
+										<hr />
+									}
+								}
+								else
+								{
+									<i>No comment</i>
+									<hr />
+								}
+							</div>
+						</div>
+						<h5 class="mtext-113 cl2 p-b-12">
+							Leave a Comment
+						</h5>
+
+						<p class="stext-107 cl6 p-b-40">
+							Your email address will not be published. Required fields are marked *
+						</p>
+						<input type="hidden" value="@Model.BlogPost.Id" name="EntityID" />
+						<form id="commentForm">
+							<input type="hidden" value="@Model.EntityID" name="EntityID" />
+							<input type="hidden" value="@Model.BlogPost.Id" name="RecordID" />
+							<div class="bor19 m-b-20">
+								<textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15" name="Text" placeholder="Comment..."></textarea>
+							</div>
+							@if (Request.IsAuthenticated)
+							{
+
+								<button id="btnComment" class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
+									Post Comment
+								</button>
+							}
+							else
+							{
+								<button type="button" id="chkcondition" onclick="javascript: return RequestLogin();" class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">Login and Comment</button>
+							}
+
+
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4 col-lg-3 p-b-80">
+				<div class="side-menu">
+
+
+					<!-- blog features -->
+					@{
+						Html.RenderAction("CategoriesFeature", "Home");
+
+					}
+
+					<!-- blog features -->
+					@{
+						Html.RenderAction("ProductFeature", "Home");
+
+					}
+
+					<div class="p-t-55">
+						<h4 class="mtext-112 cl2 p-b-20">
+							Archive
+						</h4>
+
+						<ul>
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										July 2018
+									</span>
+
+									<span>
+										(9)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										June 2018
+									</span>
+
+									<span>
+										(39)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										May 2018
+									</span>
+
+									<span>
+										(29)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										April  2018
+									</span>
+
+									<span>
+										(35)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										March 2018
+									</span>
+
+									<span>
+										(22)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										February 2018
+									</span>
+
+									<span>
+										(32)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										January 2018
+									</span>
+
+									<span>
+										(21)
+									</span>
+								</a>
+							</li>
+
+							<li class="p-b-7">
+								<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+									<span>
+										December 2017
+									</span>
+
+									<span>
+										(26)
+									</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="p-t-50">
+						<h4 class="mtext-112 cl2 p-b-27">
+							Tags
+						</h4>
+
+						<div class="flex-w m-r--5">
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Fashion
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Lifestyle
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Denim
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Streetstyle
+							</a>
+
+							<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								Crafts
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section scripts{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+
+		function RequestLogin() {
+		if ($("#chkcondition").is(':checked')) {
+			return true;
+		}
+		else {
+			swal("Please login!!!", "Login to Comment");
+			return false;
+		}
+			}
+	$("#btnComment").click(function () {
+		$.ajax({
+			url: "@Url.Action("LeaveComment", "Home")",
+			type: "post",
+			data:
+				$("#commentForm").serialize()
+		}).done(function (response) {
+			if (response.Success) {
+				window.location.reload();
+			}
+			else {
+				alert("Error!", response.Message, "error");
+			}
+		}).fail(function () {
+			alert("Error!", "Error Occured. please try again later.", "error");
+		});
+	});
+
+		function removeCmt(id) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover your image!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/Home/DeleteComment/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+
+							},
+							failure: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							},
+							error: function (response) {
+								swal("Delete Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+
+	</script>
+}

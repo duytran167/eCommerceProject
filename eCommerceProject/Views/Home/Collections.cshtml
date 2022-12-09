@@ -1,0 +1,46 @@
+﻿@model IEnumerable<eCommerceProject.Models.Collection>
+@{
+	ViewBag.Title = "Collections";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12 col-lg-12 p-b-80">
+			<div class=" p-r-0-lg">
+				<!-- item blog -->
+				@foreach (var item in Model)
+				{<div class="p-b-63">
+						<div class="p-t-32">
+							<h4 class="p-b-15 text-center">
+								<a href="@Url.Action("DetailsCollection","Home",new {id=item.Id})" class="text-center ltext-108 cl2 hov-cl1 trans-04">
+									@item.Name
+								</a>
+							</h4>
+
+
+
+
+						</div>
+						<a href="@Url.Action("DetailsCollection","Home",new {id=item.Id})" class="hov-img0 how-pos5-parent">
+							<img src="@Url.Content(item.ImagePath)" alt="IMG-BLOG">
+
+
+						</a>
+
+
+					</div>
+				}
+
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+
+

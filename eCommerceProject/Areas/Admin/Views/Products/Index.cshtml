@@ -1,0 +1,245 @@
+﻿@model PagedList.IPagedList<eCommerceProject.Models.Product>
+
+@using PagedList.Mvc;
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+	.active {
+		color: #02a499;
+	}
+
+	.unactive {
+		color: #ec4561;
+	}
+
+	.disabled {
+		color: #f8b425;
+	}
+
+
+	.ul.pagination {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.pagination li {
+		display: inline;
+		/*border: 1px solid #02a499;*/
+		border-radius: 50% !important;
+		margin: 0 5px;
+	}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 50% !important;
+			transition: background-color .3s;
+		}
+
+		ul.pagination li.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a.active {
+			background-color: #02a499;
+			color: white;
+			border-radius: 50% !important;
+			margin: 0 5px;
+		}
+
+		ul.pagination li a:hover:not(.active) {
+			background-color: #02a499;
+			border-radius: 50% !important;
+			color: white;
+		}
+</style>
+
+<div class="page-header">
+	<h2 class="header-title">Product</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Product</a>
+			<span class="breadcrumb-item active">Index</span>
+		
+			
+		</nav>
+	</div>
+</div>
+
+<div class="row m-b-30">
+	<div class="col-lg-8">
+		<form>
+			@using (Html.BeginForm("Index", "Products", "POST"))
+			{
+				<div class="d-md-flex ">
+					<div class="m-b-10 col-md-3 form-row ">
+
+						@Html.DropDownList("filter", (IEnumerable<SelectListItem>)ViewBag.DanhMuc, "--Select Category--", new { @class = "form-control col-md-12 " })
+
+
+
+
+					</div>
+					<div class="input-affix m-b-10 ">
+
+						<i class="prefix-icon anticon anticon-search"></i>
+						
+						@Html.TextBox("Search_Data", ViewBag.FilterValue as string, new { @type = "text", @class = "form-control col-md-10", @placeholder = "Search..." })
+						
+
+					</div>
+					<input style="height: 45px" value="Filter" type="submit" class="btn btn-info btn-tone m-r-5" />
+
+				</div>
+			}
+		</form>
+
+	</div>
+	<div class="col-lg-4 text-right">
+		<button class="btn btn-primary btn-tone">
+			<i class="anticon anticon-plus-circle m-r-5"></i>
+			<span>@Html.ActionLink("Add Product", "Create")</span>
+		</button>
+	</div>
+</div>
+<div class="m-t-25">
+	<table class="table" id="demoGrid">
+		<tr>
+			<th class="row "><div class="col-md-8"># </div> <div class="col-md-4 ">@Html.ActionLink(" ", "Index", new { Sorting_Order = ViewBag.SortingId, Filter_Value = ViewBag.FilterValue }, new { @class = "text-muted fa-solid fa-sort" })</div></th>
+			<th>
+				<div class="row"><div class="col-md-10">Product Name </div> <div class="col-md-2">@Html.ActionLink(" ", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue }, new { @class = " text-muted fa-solid fa-sort" })</div></div>
+			</th>
+			<th>Category</th>
+			<th><div class="row"><div class="col-md-8">Price </div> <div class="col-md-2">@Html.ActionLink(" ", "Index", new { Sorting_Order = ViewBag.SortingPrice, Filter_Value = ViewBag.FilterValue }, new { @class = " text-muted fa-solid fa-sort" })</div></div>
+			<th>
+				Public
+			</th>
+			<th>
+				Best Seller
+			</th>
+			<th>
+				Created Date
+			</th>
+			<th></th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Id)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ProductName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Categories.CategoryName)
+				</td>
+				<td>
+					@item.PriceSale.ToString("#,##0") VND
+				</td>
+				<td>
+
+					@if (item.Active == true)
+					{
+						<div class="switch m-r-10">
+							<input type="checkbox" id="switch-1" checked="">
+							<label for="switch-1"></label>
+						</div>
+					}
+					else
+					{
+						<div class="switch m-r-10">
+							<input type="checkbox" id="switch-2">
+							<label for="switch-2"></label>
+						</div>
+
+					}
+
+				</td>
+				<td>
+					@if (item.BestSellers == true)
+					{
+					<div class="switch m-r-10">
+						<input type="checkbox" id="switch-1" checked="">
+						<label for="switch-1"></label>
+					</div>
+					}
+					else
+					{
+				<div class="switch m-r-10">
+					<input type="checkbox" id="switch-2">
+					<label for="switch-2"></label>
+				</div>
+					}
+				</td>
+
+
+				<td>
+					@item.CreatedDate.ToString("dd MMM yyyy")
+				</td>
+
+				<td>
+					@Html.ActionLink(" ", "Details", new { id = item.Id }, new
+				{
+					@class = "anticon anticon-eye text-primary",
+						 //onclick = "return confirm('Are you sure you want to remove " + Model.BlogPost.Title + " to list ?');"
+					 })
+					
+				</td>
+			</tr>
+		}
+
+	</table>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+			</div>
+
+			
+			@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+					new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue, search = Request.QueryString["search"], filter = Request.QueryString["filter"] }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>" })
+
+
+		</div>
+	</div>
+	
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+@section Scripts{
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$('#example').DataTable({
+				columnDefs: [
+					{
+						targets: [0],
+						orderData: [0, 1],
+					},
+					{
+						targets: [1],
+						orderData: [1, 0],
+					},
+					{
+						targets: [4],
+						orderData: [4, 0],
+					},
+				],
+			});
+		});
+	</script>
+}

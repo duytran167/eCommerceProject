@@ -1,0 +1,349 @@
+﻿@model eCommerceProject.ViewModel.BlogVM
+
+@{
+	ViewBag.Title = "Create";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+	<h2 class="header-title">Create Blog</h2>
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" href="#">Blog</a>
+			<span class="breadcrumb-item active">Create</span>
+		</nav>
+	</div>
+</div>
+
+
+
+@using (Html.BeginForm("Create", "BlogPosts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>Create</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group">
+			@Html.LabelFor(model => model.BlogPost.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.BlogPost.Title, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.BlogPost.Title, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-group">
+			@Html.Label("Category", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.DropDownListFor(m => m.Id, new SelectList(Model.BlogCategories, "Id", "CategoryName"), "Select Category", new { @class = "dropdown form-control" })
+			</div>
+
+		</div>
+
+		<div class="form-group">
+
+			@Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(m => m.BlogPost.ShortContents, new { htmlAttributes = new { @class = "form-control col-md-12" } })
+				@Html.ValidationMessageFor(model => model.BlogPost.ShortContents, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.BlogPost.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.TextAreaFor(model => model.BlogPost.Contents, new { @class = "form-control content-editor" })
+				@Html.ValidationMessageFor(model => model.BlogPost.Contents, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.BlogPost.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.TextBoxFor(m => m.BlogPost.ImageFile, new { type = "file", id = "imageBrowes", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.BlogPost.ImagePath, "*required", new { @class = "text-danger" })
+			</div>
+			<hr />
+
+			<div id="imgPreview" class="col-md-10" style="display:none">
+				<img class="img-responsive col-md-12" id="targetImg" />
+				<div class="caption">
+					<a href="#" onclick="ClearPreview()"><i class="fas fa-trash"></i></a>
+					<span id="description"></span>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			@Html.Label("Public", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.CheckBoxFor(model => model.BlogPost.isPublic, new { data_toggle = "toggle", data_onstyle = "success" })
+
+				@Html.ValidationMessageFor(m => m.BlogPost.isPublic, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.Label("Hot News", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.CheckBoxFor(model => model.BlogPost.isHotNews, new { data_toggle = "toggle", data_onstyle = "success" })
+
+				@Html.ValidationMessageFor(m => m.BlogPost.isHotNews, "",
+
+					new { @class = "text-danger" })
+
+			</div>
+		</div>
+
+		@Html.HiddenFor(m => m.BlogPost.UserId)
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Create" class="btn btn-success btn-tone col-md-12" />
+			</div>
+		</div>
+	</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/jqueryval")
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script type="text/javascript">
+			
+			$(document).ready(function () {
+				$(".content-editor").summernote({
+					height: 300,
+					minHeight: null,
+					maxHeight: null,
+					codemirror: {
+						theme: "monokai"
+					},
+					callbacks: {
+						onImageUpload: function (files) {
+							for (var i = 0; i < files.length; i++) {
+								uploadImage(files[i]);
+							}
+						}
+					},
+					fontSizes: ['12', '14', '16', '18', '24', '36', '48'],
+					toolbar: [
+						['style', ['style']],
+						['font', ['bold', 'underline', 'clear']],
+						['fontname', ['fontname']],
+						['fontsize', ['fontsize']],
+						['color', ['color']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['table', ['table']],
+						['insert', ['link', 'picture', 'video']],
+						['view', ['fullscreen', 'codeview', 'help']],
+					],
+				});
+			});
+			function uploadImage(file) {
+				var formData = new FormData();
+				formData.append("uploadedFiles", file);
+				$.ajax({
+					data: formData,
+					type: "POST",
+					url: '/BlogPosts/UploadFile',
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function (FileUrl) {
+						alert(FileUrl);
+						var imgNode = document.createElement('img');
+						imgNode.src = FileUrl;
+						$('.content-editor').summernote('insertNode', imgNode);
+					},
+					error: function (data) {
+						alert(data.responseText);
+					}
+				});
+			}
+			//view image thumb////////////////////////////////////////////////////////////////////////
+			$(document).ready(function () {
+				$("#imageBrowes").change(function () {
+					var File = this.files;
+					if (File && File[0]) {
+						ReadImage(File[0]);
+					}
+				})
+			})
+			var ReadImage = function (file) {
+				var reader = new FileReader;
+				var image = new Image;
+				reader.readAsDataURL(file);
+				reader.onload = function (_file) {
+					image.src = _file.target.result;
+					image.onload = function () {
+						var height = this.height;
+						var width = this.width;
+						var type = file.type;
+						var size = ~~(file.size / 1024) + "KB";
+						$("#targetImg").attr('src', _file.target.result);
+						$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+						$("#imgPreview").show();
+					}
+				}
+			}
+			var ClearPreview = function () {
+				$("#imageBrowes").val('');
+				$("#description").text('');
+				$("#imgPreview").hide();
+			}
+			$(function () {
+				function togglePackage() {
+					var isPackage = $("#package-checkbox").is(":checked");
+					if (isPackage) {
+						$("#datapoint-checkbox").prop("checked", true).prop("disabled", true);
+						$("input[type='hidden'][name='isPublic']").val("true");
+					}
+					else {
+						$("#datapoint-checkbox").prop("disabled", false);
+						$("input[type='hidden'][name='isHotNews']").val("false");
+					}
+				};
+				$(document).on('change', '#package-checkbox', togglePackage);
+				togglePackage();
+			});
+	<!--
+	include summernote css/js -->
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.css" integrity="sha512-vff/nplkvWotqQwl1EM/zjrIqsbIeUKRUgLk+qeiZZkjAimu/BGmDg4OjZBG6r+GV0HcJwrZPjRVi0wPvUJuhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.js" integrity="sha512-iiWBczJtlBRDbGK5MLRgLii3o9B5qTOp7FKUl7NLCzejJL7upsHPAg2li8LIV49y5pTLNMfnxYIRajAB+Ph4rw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$(".content-editor").summernote({
+				height: 300,
+				minHeight: null,
+				maxHeight: null,
+				codemirror: {
+					theme: "monokai"
+				},
+				callbacks: {
+					onImageUpload: function (files) {
+						for (var i = 0; i < files.length; i++) {
+
+							uploadImage(files[i]);
+						}
+					}
+				},
+				fontSizes: ['12', '14', '16', '18', '24', '36', '48'],
+				toolbar: [
+					['style', ['style']],
+					['font', ['bold', 'underline', 'clear']],
+					['fontname', ['fontname']],
+					['fontsize', ['fontsize']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']],
+					['table', ['table']],
+					['insert', ['link', 'picture', 'video']],
+					['view', ['fullscreen', 'codeview', 'help']],
+				],
+			});
+});
+		function uploadImage(file) {
+var formData = new FormData();
+		formData.append("uploadedFiles", file);
+		$.ajax({
+			data: formData,
+		type: "POST",
+		url: '/BlogPosts/UploadFile',
+		cache: false,
+		contentType: false,
+
+		processData: false,
+		success: function (FileUrl) {
+			alert(FileUrl);
+		var imgNode = document.createElement('img');
+		imgNode.src = FileUrl;
+		$('.content-editor').summernote('insertNode', imgNode);
+	},
+		error: function (data) {
+			alert(data.responseText);
+	}
+});
+}
+		//view image thumb////////////////////////////////////////////////////////////////////////
+		$(document).ready(function () {
+
+			$("#imageBrowes").change(function () {
+
+				var File = this.files;
+
+				if (File && File[0]) {
+					ReadImage(File[0]);
+				}
+
+			})
+
+
+		})
+
+
+		var ReadImage = function (file) {
+
+var reader = new FileReader;
+		var image = new Image;
+
+		reader.readAsDataURL(file);
+		reader.onload = function (_file) {
+
+			image.src = _file.target.result;
+		image.onload = function () {
+
+		var height = this.height;
+		var width = this.width;
+		var type = file.type;
+		var size = ~~(file.size / 1024) + "KB";
+
+		$("#targetImg").attr('src', _file.target.result);
+		$("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+		$("#imgPreview").show();
+
+	}
+
+}
+
+}
+
+		var ClearPreview = function () {
+			$("#imageBrowes").val('');
+		$("#description").text('');
+		$("#imgPreview").hide();
+
+}
+
+		$(function () {
+			function togglePackage() {
+				var isPackage = $("#package-checkbox").is(":checked");
+				if (isPackage) {
+					$("#datapoint-checkbox").prop("checked", true).prop("disabled", true);
+					$("input[type='hidden'][name='isPublic']").val("true");
+				}
+				else {
+					$("#datapoint-checkbox").prop("disabled", false);
+					$("input[type='hidden'][name='isHotNews']").val("false");
+				}
+			};
+
+		$(document).on('change', '#package-checkbox', togglePackage);
+		togglePackage();
+});
+	</script>
+}

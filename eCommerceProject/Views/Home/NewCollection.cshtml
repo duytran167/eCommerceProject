@@ -1,0 +1,62 @@
+﻿@model IEnumerable<eCommerceProject.Models.Collection>
+@{
+
+	Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+<style>
+	.block4-txt:hover {
+		background-color: rgba(0,0,0,0.7);
+	}
+
+		.block4-txt:hover .block1-txt-child2 {
+			-webkit-transform: scaleX(1);
+			-moz-transform: scaleX(1);
+			-ms-transform: scaleX(1);
+			-o-transform: scaleX(1);
+			transform: scaleX(1);
+		}
+
+		.block4-txt:hover .block1-link {
+			-webkit-transform: translateY(0%);
+			-moz-transform: translateY(0%);
+			-ms-transform: translateY(0%);
+			-o-transform: translateY(0%);
+			transform: translateY(0%);
+		}
+
+		.block4-txt:hover .block1-name,
+		.block4-txt:hover .block1-info {
+			color: #fff;
+		}
+
+</style>
+<div class="sec-banner bg0 p-t-30 p-b-55" >
+
+	<div class="container">
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				<div class="col-md-6 p-b-30 m-lr-auto" >
+					<!-- Block1 -->
+
+					<div class="block1 wrap-pic-w align-content-between text-center" style="height: 700px" >
+						<img src="@Url.Content(item.ImagePath)"  style="height: 700px; object-fit:cover" alt="IMG-BANNER">
+
+						<a href="@Url.Action("DetailsCollection","Home",new {id=item.Id})" class="block1-txt block4-txt ab-t-l s-full flex-col-l-sb trans-03 respon3">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class=" text-center block1-name ltext-110 trans-04 p-t-280 ">
+									@item.Name
+								</span>
+
+
+							</div>
+
+							
+						</a>
+					</div>
+
+				</div>
+			}
+		</div>
+	</div>
+</div>

@@ -1,63 +1,113 @@
 ﻿@using eCommerceProject.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+	ViewBag.Title = "Log in";
 }
+<style>
+	@@font-face {
+		font-family: 'Courier Prime', monospace;
+		src: url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+	}
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+	.button {
+		background-color: black;
+		width: 100%;
+		color: white;
+		padding: 15px;
+		margin: 10px 0px;
+		border: none;
+		cursor: pointer;
+	}
+
+	label {
+		font-family: 'Courier Prime', monospace;
+		font-size: 15px;
+	}
+
+	input[type=text], input[type=password] {
+		width: 100%;
+		margin: 8px 0;
+		padding: 20px 30px;
+		display: inline-block;
+		border: 2px solid black;
+		box-sizing: border-box;
+		height: 40px;
+	}
+
+	.fontTittle {
+		text-align: center;
+		padding-top: 80px;
+		padding-bottom: 40px;
+	}
+
+	button:hover {
+		opacity: 0.7;
+	}
+
+	.ctn {
+		justify-content: center;
+		margin: auto;
+		width: 30%;
+		padding-bottom: 200px;
+	}
+
+	@@media (max-width: 767px) {
+		.ctn {
+			justify-content: center;
+			margin: auto;
+			width: 70%;
+		}
+	}
+</style>
+<div class="fontTittle">
+	<span class="ltext-111 cl2 respon2">
+		@ViewBag.Title
+	</span>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+	<form>
+
+		
+		<div class="ctn">
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+			@Html.LabelFor(m => m.Email, new { @class = "" })
+
+			@Html.TextBoxFor(m => m.Email, new { @class = "" })
+			@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+			<br />
+			@Html.LabelFor(m => m.Password, new { @class = "" })
+
+			@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+			<div class="form-check">
+				@Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+				@Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label" })
+			</div>
+
+			<button class="button" style="background-color: black" type="submit" value="Log in">LOGIN</button>
+
+
+			<p>
+				@Html.ActionLink("Register as a new user", "Register")
+			</p>
+		</div>
+
+		
+	</form>
+
 }
+
+	<!-- Footer -->
+	@{
+		Html.RenderAction("_footer", "Home");
+	}
+
+
+	@section Scripts {
+		@Scripts.Render("~/bundles/jqueryval")
+	}

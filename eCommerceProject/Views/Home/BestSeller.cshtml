@@ -1,0 +1,207 @@
+﻿@model IEnumerable<eCommerceProject.Models.Product>
+@{
+	ViewBag.Title = "Best Seller";
+	Layout = "~/Views/Shared/_BlankLayout.cshtml";
+
+}
+
+
+<section class="bg0 p-t-23 p-b-10">
+	<div class="container">
+		<div class="p-b-10">
+			<h6 class="ltext-101 cl5 text-center">
+				BEST SELLER
+			</h6>
+
+		</div>
+
+
+
+		<div class="row isotope-grid">
+			@foreach (var item in Model)
+			{
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+					<!-- Block2 -->
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							@foreach (var photo in item.ImageProducts.GroupBy(x => x.FileName).First())
+							{
+								<img src="@Url.Content(photo.FileName)" alt="IMG-PRODUCT">
+							}
+						
+							@if (item.BestSellers == true)
+							{
+								<div class="flex-col-c-m size-105 bg1 how-pos5 ">
+
+									<span class="stext-109 cl0 txt-center">
+										Best Seller
+									</span>
+								</div>
+							}
+							@if (item.Discount != null)
+							{<div class="flex-col-c-m size-105  bg7 how-pos5 ">
+
+									<span class="stext-109 cl0 txt-center">
+										-@item.Discount%
+									</span>
+								</div>}
+						
+							
+
+							@Html.ActionLink(" ", "DetailsProduct", new { id = item.Id }, new
+										 {
+											 @class = "anticon anticon-zoom-in block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04",
+											 //onclick = "return confirm('Are you sure you want to remove " + Model.BlogPost.Title + " to list ?');"
+											 })
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									@item.ProductName
+								</a>
+
+								@if (item.Discount != null)
+								{
+									<span class="stext-105 cl3">
+										<del>@item.Price.ToString("#,##0") VND </del>
+									</span>
+									<span class="stext-105 cl3">
+
+										@item.PriceSale.ToString("#,##0") VND
+									</span>
+								}
+								else
+								{
+									<span class="stext-105 cl3">
+
+										@item.PriceSale.ToString("#,##0") VND
+									</span>
+
+								}
+
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04" src="~/Content/ImageProduct/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Content/ImageProduct/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+
+			<!--<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">-->
+			<!-- Block2 -->
+			<!--<div class="block2">
+					<div class="block2-pic hov-img0">
+						<img src="~/Content/ImageProduct/product-02.jpg" alt="IMG-PRODUCT">
+						<div class="flex-col-c-m size-105 bg7 how-pos5">
+
+
+							<span class="stext-109 cl0 txt-center">
+								-15%
+							</span>
+						</div>
+
+						<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+							Quick View
+						</a>
+					</div>
+
+					<div class="block2-txt flex-w flex-t p-t-14">
+						<div class="block2-txt-child1 flex-col-l ">
+							<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								Herschel supply
+							</a>
+							<span class="stext-105 cl3">
+								<del>$35.31</del>
+								$35.31
+							</span>
+
+						</div>
+
+						<div class="block2-txt-child2 flex-r p-t-3">
+							<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+								<img class="icon-heart1 dis-block trans-04" src="~/Content/ImageProduct/icons/icon-heart-01.png" alt="ICON">
+								<img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Content/ImageProduct/icons/icon-heart-02.png" alt="ICON">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>-->
+			<!--<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">-->
+			<!-- Block2 -->
+			<!--<div class="block2">
+					<div class="block2-pic hov-img0">
+						<img src="~/Content/ImageProduct/product-03.jpg" alt="IMG-PRODUCT">
+
+						<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+							Quick View
+						</a>
+					</div>
+
+					<div class="block2-txt flex-w flex-t p-t-14">
+						<div class="block2-txt-child1 flex-col-l ">
+							<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								Only Check Trouser
+							</a>
+
+							<span class="stext-105 cl3">
+								$25.50
+							</span>
+						</div>
+
+						<div class="block2-txt-child2 flex-r p-t-3">
+							<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+								<img class="icon-heart1 dis-block trans-04" src="~/Content/ImageProduct/icons/icon-heart-01.png" alt="ICON">
+								<img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Content/ImageProduct/icons/icon-heart-02.png" alt="ICON">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>-->
+			<!--<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">-->
+			<!-- Block2 -->
+			<!--<div class="block2">
+					<div class="block2-pic hov-img0">
+						<img src="~/Content/ImageProduct/product-04.jpg" alt="IMG-PRODUCT">
+
+						<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+							Quick View
+						</a>
+					</div>
+
+					<div class="block2-txt flex-w flex-t p-t-14">
+						<div class="block2-txt-child1 flex-col-l ">
+							<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								Classic Trench Coat
+							</a>
+
+							<span class="stext-105 cl3">
+								$75.00
+							</span>
+						</div>
+
+						<div class="block2-txt-child2 flex-r p-t-3">
+							<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+								<img class="icon-heart1 dis-block trans-04" src="~/Content/ImageProduct/icons/icon-heart-01.png" alt="ICON">
+								<img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Content/ImageProduct/icons/icon-heart-02.png" alt="ICON">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>-->
+
+
+
+
+
+		</div>
+
+
+	</div>
+</section>
+

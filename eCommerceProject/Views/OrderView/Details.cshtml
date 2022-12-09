@@ -1,0 +1,134 @@
+﻿@model eCommerceProject.ViewModel.OrderViewModel
+@{
+	var total = Model.OrderDetails.Sum(x => x.TotalMoney).Value.ToString("#,##0");
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Order Detail " + @Model.Orders.OrderId;
+}
+<link href="~/Content/mainNew.css" rel="stylesheet" />
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h3>Order Information: #@Model.Orders.OrderId</h3>
+			<br />
+
+			<p>
+				Order Status: @Model.Orders.TransactStatus.Status @if (Model.Orders.TransactStatusId == 1)
+				{<button class="btn btn-danger btn-tone" onclick="cancel(@Model.Orders.OrderId)">Cancel Order</button>}
+			</p>
+			
+			<p>Total Amount: <strong> @total VNĐ</strong></p>
+			<p>Order Date: @Model.Orders.OrderDate</p>
+			<p>Package Date: @Model.Orders.PackageDate</p>
+			<p>Deli Date: @Model.Orders.ShipDate</p>
+		</div>
+		<div class="col-md-6">
+			<br />
+			<br />
+			<br />
+			<p>Payments: <span class="text-primary">@Model.Orders.PaymentMethod</span></p>
+			<p>
+				Payment Status:
+				@if (@Model.Orders.Paid == true)
+				{
+					<span class="text-success">
+						Pay
+					</span>
+				}
+				else
+				{
+					<span class="text-success">
+						Not Pay
+					</span>
+				}
+			</p>
+
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<tbody>
+				<tr>
+					<th>#</th>
+					<th>Items</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+				</tr>
+
+				@foreach (var item in Model.OrderDetails)
+				{
+					<tr>
+						<td>@item.ProductId</td>
+						<td>@item.Product.ProductName (<strong>@item.Size.SizeName</strong>)</td>
+						<td>@item.Amount</td>
+						<td>@item.Product.PriceSale.ToString("#,##0") VNĐ</td>
+						<td>@item.TotalMoney.Value.ToString("#,##0") VNĐ</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+@section scripts{
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+				function Details(id) {
+						$.get("@Url.Action("ChangeStatus","Order")/" + id,
+								function (data) {
+										$('.modal-body').html(data);
+								});
+
+								$("#myModal").modal("show");
+		}
+		//delete
+		function cancel(id) {
+			swal({
+				title: "Are you want to cancel this order?",
+				text: "Once deleted, you will not be able to recover order!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					event.preventDefault()
+					if (willDelete) {
+						$.ajax({
+							type: "POST",
+							url: "/OrderView/CancelOrder/" + id,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (response) {
+								swal("Cancel Orde Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+
+							},
+							failure: function (response) {
+								swal("Cancel Orde Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							},
+							error: function (response) {
+								swal("Cancel Orde Success!", {
+									icon: "success",
+								}).then(function () {
+									window.location.reload();
+								});
+							}
+
+						});
+
+					}
+					else {
+						swal("Let's Continue!");
+					}
+				});
+		}
+	</script>
+}

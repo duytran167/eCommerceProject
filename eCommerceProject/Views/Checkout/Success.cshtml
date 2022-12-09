@@ -1,0 +1,85 @@
+﻿@model eCommerceProject.ViewModel.MuaHangSuccessVM
+@{
+	ViewBag.Title = "Success";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+	<style type="text/css">
+		.nice-select .list {
+			border-radius: 0px;
+			overflow-y: auto;
+			overflow: hidden;
+			max-height: 200px;
+			overflow-y: scroll;
+		}
+
+		.nice-select .option:hover, .nice-select .option.focus, .nice-select .option.selected.focus {
+			color: red;
+			background: none;
+		}
+	</style>
+
+<link href="~/Content/mainNew.css" rel="stylesheet" />
+
+
+
+<main class="main-content">
+	<div class="container">
+		<div class="row h-100">
+			<div class="col-sm-12 align-self-center">
+				<div class="col d-flex align-items-center justify-content-center">
+
+					<div class="breadcrumb-item">
+						<h2 class="breadcrumb-heading">ORDER SUCCESSFULLY!</h2>
+						<a> @ViewBag.Message </a>
+						<ul>
+							<li>
+								<a href="/">Home <i class="pe-7s-angle-right"></i></a>
+							</li>
+							<li>ORDER SUCCESS</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+		<div class="container h-100 justify-content-between">
+			<div class="row h-100">
+				<div class="col-lg-12">
+					
+				</div>
+			</div>
+		
+	</div>
+	<div class="checkout-area section-space-y-axis-100">
+		<div class="container">
+			<form>
+
+				<div class="row">
+					<div class="col-lg-6 col-12">
+
+						<div class="checkbox-form">
+							<h3>Order SuccessFully</h3>
+							<p>Order ID: #@Model.DonHangID <a href="@Url.Action("Details","OrderView",new {id=Model.DonHangID})">View</a></p> 
+							<p>Thanks for your shopping</p>
+							<br />
+							<h3>ORDER INFORMATION</h3>
+							<p>DELIVERY INFOMATION</p>
+							<p>Customer Name: <strong>@Model.FullName</strong></p>
+							<p>Phone Number: <strong>@Model.Phone</strong></p>
+							<p>Address: <strong>@Model.Address</strong></p>
+							<br />
+							For more information of an order please follow <a asp-controller="Accounts" asp-action="Dashboard"><strong>Tài khoản cá nhân.</strong></a> Cần hỗ trợ? Liên hệ với chúng tôi qua số điện thoại 0963102916
+						</div>
+					</div>
+					<div class="col-lg-6 col-12">
+						<img src="https://github.com/phuongdu0511/DiChoSaiGon/blob/master/WebShop/wwwroot/assets/images/thanh-cong.jpeg?raw=true" />
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</main>
