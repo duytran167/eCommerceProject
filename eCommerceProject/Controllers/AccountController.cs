@@ -93,10 +93,10 @@ namespace eCommerceProject.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
-					if (User.IsInRole("Admin"))
+					if (user.Roles.Any(t => t.RoleId == "171a820b-5fc7-404f-8eb6-b42c82240539"))
 					{
 						TempData["success"] = "Login Success!";
-						return RedirectToAction("Index", "Admin");
+						return RedirectToAction("Index", "Admin", new { area = "Admin" });
 					}
 					TempData["success"] = "Login Success!";
 					return RedirectToLocal(returnUrl);
@@ -108,7 +108,7 @@ namespace eCommerceProject.Controllers
 				case SignInStatus.Failure:
 				default:
 					ModelState.AddModelError("", "Invalid login attempt.");
-					TempData["error"] = "Login Success!";
+					TempData["error"] = "Login Failed!";
 					return View(model);
 			}
 		}

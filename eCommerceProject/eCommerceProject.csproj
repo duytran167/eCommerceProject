@@ -1669,6 +1669,7 @@
     <Content Include="Areas\Admin\Views\Collections\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Collections\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Collections\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\isotope.pkgd.min.js" />

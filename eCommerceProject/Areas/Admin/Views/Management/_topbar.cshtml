@@ -38,31 +38,38 @@
 		<ul class="nav-right">
 			
 			<li class="dropdown dropdown-animated scale-left">
-				
-					@{
-						Html.RenderAction("adminTopbar", "Management", new { area = "Admin" });
 
-					}
-					<a href="@Url.Action("Index", "Management")" class="dropdown-item d-block p-h-15 p-v-10">
-						<div class="d-flex align-items-center justify-content-between">
-							<div>
-								<i class="anticon opacity-04 font-size-16 anticon-user"></i>
-								<span class="m-l-10">Profile</span>
-							</div>
+				@{
+					Html.RenderAction("adminTopbar", "Management", new { area = "Admin" });
 
+				}
+				<a href="@Url.Action("Index", "Management")" class="dropdown-item d-block p-h-15 p-v-10">
+					<div class="d-flex align-items-center justify-content-between">
+						<div>
+							<i class="anticon opacity-04 font-size-16 anticon-user"></i>
+							<span class="m-l-10">Profile</span>
 						</div>
-					</a>
-					
-					<a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+
+					</div>
+				</a>
+				@using (Html.BeginForm("LogOff", "AdminAccount", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+				{
+					<a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item d-block p-h-15 p-v-10">
 						<div class="d-flex align-items-center justify-content-between">
+							@Html.AntiForgeryToken()
 							<div>
 								<i class="anticon opacity-04 font-size-16 anticon-logout"></i>
-								<span class="m-l-10">Logout</span>
+								<span class="m-l-10">Log off</span>
 							</div>
-							<i class="anticon font-size-10 anticon-right"></i>
+
+
+
+
+
 						</div>
 					</a>
-				</div>
+				}
+</div>
 			</li>
 			
 		</ul>

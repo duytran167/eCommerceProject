@@ -108,7 +108,7 @@ namespace eCommerceProject.Controllers
 
 				//tao danh sach don hang
 				var body = new StringBuilder();
-				var viewId = "/OrderView/Details/" + donhang.OrderId;
+				var viewId = "https://localhost:44347/OrderView/Details/" + donhang.OrderId;
 
 
 
@@ -408,7 +408,7 @@ namespace eCommerceProject.Controllers
 
 					//tao danh sach don hang
 
-					var viewId = "/OrderView/Details/" + donhang.OrderId;
+					var viewId = "https://localhost:44347/OrderView/Details/" + donhang.OrderId;
 
 
 
@@ -534,7 +534,8 @@ namespace eCommerceProject.Controllers
 
 				//email
 				var body = new StringBuilder();
-				var viewId = "/OrderView/Details/" + donhang.OrderId;
+
+				var viewId = "https://localhost:44347/OrderView/Details/" + donhang.OrderId;
 				foreach (var item in gh)
 				{
 					OrderDetail orderDetail = new OrderDetail();
@@ -676,6 +677,7 @@ namespace eCommerceProject.Controllers
 					donhang.Paid = false;
 					db.SaveChanges();
 					TempData["success"] = "Order Success!";
+					HttpContext.Session.Remove("GioHang");
 					return View(successVM);
 				}
 				return View();

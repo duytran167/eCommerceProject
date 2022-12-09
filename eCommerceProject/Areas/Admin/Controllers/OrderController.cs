@@ -92,6 +92,10 @@ namespace eCommerceProject.Areas.Admin.Controllers
 					.AsNoTracking()
 					.Include(x => x.Customer)
 					.FirstOrDefaultAsync(x => x.OrderId == id);
+
+			order.Noti = true;
+			db.SaveChanges();
+
 			if (order == null)
 			{
 				return RedirectToAction("Error", "Admin");
@@ -118,9 +122,11 @@ namespace eCommerceProject.Areas.Admin.Controllers
 						donhang.Paid = order.Paid;
 						donhang.Deleted = order.Deleted;
 						donhang.TransactStatusId = order.TransactStatusId;
+						donhang.Noti = true;
 						if (donhang.Paid == true)
 						{
 							donhang.PaymentDate = DateTime.Now;
+
 						}
 						if (donhang.TransactStatusId == 5) donhang.Deleted = true;
 						if (donhang.TransactStatusId == 3) donhang.PackageDate = DateTime.Now;

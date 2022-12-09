@@ -62,7 +62,7 @@
 				<td class="col-sm-3">
 
 					<button type="button" value="Delete" class="btn btn-danger btn-tone" onclick="remove(@item.Id)"><i class="fas fa-trash"></i></button>
-					<button type="button" class="btn btn-success btn-tone" data-toggle="modal" data-target="#myModalS"><i class="fas fa-edit"></i></button>
+					<button data-id="@item.Id" data-toggle="modal" class="btn btn-success btn-tone btnEdit" data-target="#myModalS"><i class="fas fa-edit"></i></button>
 
 					@*@Html.ActionLink("Delete", "DeleteBanner", new { id = item.Id },
 						new { onclick = "return confirm('Are you sure wants to delete?');" })*@
@@ -80,9 +80,7 @@
 							</button>
 						</div>
 						<div class="modal-body" id="updateBanner">
-							@{
-								Html.RenderAction("Edit", "BlogCategories", new { id = @item.Id });
-							}
+							<div id="modal-content"></div>
 						</div>
 					</div>
 				</div>
@@ -144,6 +142,8 @@
 					}
 				});
 		}
-
+		$('.btnEdit').click(function (eve) {
+			$('#modal-content').load("/Admin/BlogCategories/Edit/" + $(this).data("id"));
+		});
 	</script>
 }

@@ -33,7 +33,7 @@ namespace eCommerceProject.Controllers
 				Session["giohang"] = new List<Cart>(); // Khởi tạo Session["giohang"] là 1 List<CartItem>
 			}
 
-			List<Cart> giohang = Session["giohang"] as List<Cart>; // Gán qua biến giohang dễ code
+			List<Cart> giohang = Session["giohang"] as List<Cart>; // Gán qua biến giohang
 
 
 			// Kiểm tra xem sản phẩm khách đang chọn đã có trong giỏ hàng chưa

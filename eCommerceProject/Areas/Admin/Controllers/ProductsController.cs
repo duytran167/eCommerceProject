@@ -67,7 +67,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 			ViewBag.category = db.Categories.ToList();
 
 			var products = from stu in db.Products.Include(t => t.Categories).AsNoTracking()
-										 .OrderByDescending(t => t.CreatedDate)
+										 .OrderBy(t => t.CreatedDate)
 										 .Include(t => t.ImageProducts)
 										 .Include(t => t.Categories).ToList()
 										 select stu;

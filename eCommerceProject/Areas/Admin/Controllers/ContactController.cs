@@ -44,19 +44,7 @@ namespace eCommerceProject.Areas.Admin.Controllers
 
 
 		//GET: Contacts/Delete/5
-		public ActionResult Delete(int? id)
-		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-			Contact contact = db.Contacts.Find(id);
-			if (contact == null)
-			{
-				return HttpNotFound();
-			}
-			return View(contact);
-		}
+
 		public ActionResult CountNoti()
 		{
 			var noti = db.Contacts.Where(t => t.Noti == false).ToList();
@@ -65,15 +53,8 @@ namespace eCommerceProject.Areas.Admin.Controllers
 		}
 
 		// POST: Contacts/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public ActionResult DeleteConfirmed(int id)
-		{
-			Contact contact = db.Contacts.Find(id);
-			db.Contacts.Remove(contact);
-			db.SaveChanges();
-			return RedirectToAction("Index");
-		}
+
+
 
 		protected override void Dispose(bool disposing)
 		{
@@ -82,6 +63,15 @@ namespace eCommerceProject.Areas.Admin.Controllers
 				db.Dispose();
 			}
 			base.Dispose(disposing);
+		}
+		public ActionResult Delete(int id)
+		{
+			var order = db.Contacts.SingleOrDefault(t => t.Id == id);
+
+			db.Contacts.Remove(order);
+			db.SaveChanges();
+			TempData["danger"] = "Delete Success!";
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }

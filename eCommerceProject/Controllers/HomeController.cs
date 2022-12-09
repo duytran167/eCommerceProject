@@ -343,7 +343,7 @@ namespace eCommerceProject.Controllers
 					break;
 			}
 
-			int Size_Of_Page = 16;
+			int Size_Of_Page = 8;
 			int No_Of_Page = (Page_No ?? 1);
 			return View(products.ToPagedList(No_Of_Page, Size_Of_Page));
 		}
